@@ -4,9 +4,18 @@ import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
-    <div>
+    <nav className="navbar">
+      <div className="logo">
+        {/* <img src="">
 
-    </div>
+        </img> */}
+      </div>
+      <div className="nav-links">
+        <div>
+
+        </div>
+      </div>
+    </nav>
   );
 }
 
