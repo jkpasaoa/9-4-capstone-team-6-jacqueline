@@ -22,7 +22,7 @@ function NavBar() {
       <label htmlFor="burger">&#9776;</label>
       <input type="checkbox" id="burger" />
       <ul id="nav-links">
-        <Link to="/">
+        <Link to="/home">
           <li><strong>Home</strong></li>
         </Link>
         <Link to="/about">
