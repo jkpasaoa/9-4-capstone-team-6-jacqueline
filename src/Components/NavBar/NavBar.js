@@ -19,6 +19,7 @@ function NavBar() {
           <img
             src={logo}
             alt="logo"
+            style={{ width: "100px", height: "100px" }}
             />
         </Link>
       </span>
@@ -31,10 +32,11 @@ function NavBar() {
         <Link to="/about">
           <li><strong>About</strong></li>
         </Link>
+        </ul>
         <Link to="/createnewtour">
-          <li><strong>Create New Tour</strong></li>
+          <button><strong>Create New Tour</strong>
+          </button>
         </Link>
-      </ul>
     </nav>
   );
 }
