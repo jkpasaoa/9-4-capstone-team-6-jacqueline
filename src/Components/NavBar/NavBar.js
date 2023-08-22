@@ -28,7 +28,9 @@ function NavBar() {
         <Link to="/about">
           <li><strong>About</strong></li>
         </Link>
-        <Link to="/createnewtour">Create New Tour</Link>
+        <Link to="/createnewtour">
+          <li><strong>Create New Tour</strong></li>
+        </Link>
       </ul>
     </nav>
   );
