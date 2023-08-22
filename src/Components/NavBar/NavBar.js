@@ -11,24 +11,25 @@ function NavBar() {
       className="navbar"
     // style={loc.pathname === '/' ? { display: 'none' } : { display: 'flex' }}
     >
-      <div className="logo">
+      <span className="logo">
         <Link to="/">
           {/* <img src={logo} alt="logo" /> */}
         </Link>
         <h1>
           <Link to="/home">City Whisperer</Link>
         </h1>
-      </div>
-      <div className="nav-links">
-        <div>
-          <h3>
-            {/* <Link to="/about">About</Link> */}
-          </h3>
-          <h3>
-            <Link to="/createnewtour">Create New Tour</Link>
-          </h3>
-        </div>
-      </div>
+      </span>
+      <label htmlFor="burger">&#9776;</label>
+      <input type="checkbox" id="burger" />
+      <ul id="nav-links">
+        <Link to="/">
+          <li><strong>Home</strong></li>
+        </Link>
+        <Link to="/about">
+          <li><strong>About</strong></li>
+        </Link>
+        <Link to="/createnewtour">Create New Tour</Link>
+      </ul>
     </nav>
   );
 }

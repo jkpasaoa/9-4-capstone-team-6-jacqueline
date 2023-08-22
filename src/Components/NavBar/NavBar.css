@@ -6,6 +6,13 @@
   background-color: #183759;
 } 
 
+li {
+  list-style: none;
+  display: inline;
+  font-family: 'Comic Sans MS';
+  padding-left: 25px;
+}
+
 /* .logo {
   font-size: 2.0rem;
   margin-right: 20px;
