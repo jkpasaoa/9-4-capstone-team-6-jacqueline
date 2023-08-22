@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './NavBar.css';
-//import logo from "../Assets/CityWhispererLogo.png"
+import logo from "../../Assets/CityWhispererLogo.png"
 
 function NavBar() {
   //let loc = useLocation();
@@ -11,13 +11,16 @@ function NavBar() {
       className="navbar"
     // style={loc.pathname === '/' ? { display: 'none' } : { display: 'flex' }}
     >
+      {/* <h1>
+        <Link to="/home">City Whisperer</Link>
+      </h1> */}
       <span className="logo">
-        <Link to="/">
-          {/* <img src={logo} alt="logo" /> */}
+        <Link to="/home">
+          <img
+            src={logo}
+            alt="logo"
+            />
         </Link>
-        <h1>
-          <Link to="/home">City Whisperer</Link>
-        </h1>
       </span>
       <label htmlFor="burger">&#9776;</label>
       <input type="checkbox" id="burger" />

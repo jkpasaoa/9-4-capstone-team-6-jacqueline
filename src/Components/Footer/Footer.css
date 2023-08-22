@@ -2,8 +2,8 @@
 .Footer {
   background-color: #E36E43;
   font-family: sans-serif;
-  padding: 3vh;
-  /* margin-top: 15vh; */
+  /* padding: 3vh; */
+  margin-top: 15vh;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -26,9 +26,9 @@
 
 .footerImg {
   width: 10%;
-  max-width: 100px; /* Limiting the max width of the image */
-  display: block; /* Ensuring the image is a block-level element */
-  margin: 0 auto; /* Centering the image within its container */
+  max-width: 100px;
+  display: block;
+  margin: 0 auto;
 }
 
 @media(max-width: 767px) {
