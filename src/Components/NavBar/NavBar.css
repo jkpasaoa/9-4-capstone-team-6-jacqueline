@@ -4,9 +4,53 @@
   align-items: center;
   padding: 10px;
   background-color: #183759;
-}
+} 
 
 /* .logo {
   font-size: 2.0rem;
   margin-right: 20px;
+}
+
+/* .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #183759;
+}
+
+.hamburger-icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+.line {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 2px auto; /* Adjust the margin to center the lines vertically
+  transition: transform 0.3s ease-in-out;
+}
+
+.hamburger-icon.active .line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-icon.active .line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-icon.active .line:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
 } */
