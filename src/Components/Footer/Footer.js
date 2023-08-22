@@ -11,8 +11,8 @@ function Footer() {
       <div className='footerText'>
         <p className='footerContact'><Link to='/contact'>Contact Us</Link></p>&nbsp;
         <img className='footerImg'
-        // src={logo}
-        alt="Logo" />&nbsp;
+          // src={logo}
+          alt="Logo" />&nbsp;
         <p className='footerAbout'><Link to='/about'>About Us</Link></p>
       </div>
     </div>
