@@ -5,6 +5,7 @@
   padding: 10px;
   background-color: #dbd4db;
   flex-grow: 1;
+  position: relative;
   opacity: 0.6;
 } 
 
@@ -13,11 +14,17 @@
   align-items: center;
 }
 
+.create-new-tour {
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
 /* .logo img {
   /* margin-left: 120px;  */
   /* Add spacing between logo and text if needed
 } */
-
 
 li {
   list-style: none;
@@ -51,6 +58,8 @@ li {
   }
   #nav-links{
       display: none;
+      /* align-items: center;
+      gap: 20px; */
   }
   .navbar input:checked ~ #nav-links{
       display: block;

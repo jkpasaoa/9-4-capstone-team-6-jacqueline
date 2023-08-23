@@ -20,23 +20,26 @@ function NavBar() {
             src={logo}
             alt="logo"
             style={{ width: "100px", height: "100px" }}
-            />
+          />
         </Link>
       </span>
+      <Link to="/createnewtour">
+        <button className='create-new-tour'><strong>Create New Tour</strong>
+        </button>
+      </Link>
       <label htmlFor="burger">&#9776;</label>
       <input type="checkbox" id="burger" />
       <ul id="nav-links">
-        <Link to="/home">
+        {/* <Link to="/home">
           <li><strong>Home</strong></li>
-        </Link>
+        </Link> */}
         <Link to="/about">
           <li><strong>About</strong></li>
         </Link>
-        </ul>
-        <Link to="/createnewtour">
-          <button><strong>Create New Tour</strong>
-          </button>
+        <Link to="/browsetours">
+          <li><strong>Browse Tours</strong></li>
         </Link>
+      </ul>
     </nav>
   );
 }
