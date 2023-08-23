@@ -17,7 +17,7 @@ function App() {
         <NavBar />
         <main>
           <Routes>
-            <Route path="/home" element={<LandingPage />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/createnewtour" element={<CreateNewTour />} />
