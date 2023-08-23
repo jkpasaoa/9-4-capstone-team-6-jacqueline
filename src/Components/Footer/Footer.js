@@ -10,9 +10,10 @@ function Footer() {
     <div className="Footer" style={loc.pathname === "/" ? { display: "none" } : { display: "block" }}>
       <div className='footerText'>
         <p className='footerContact'><Link to='/contact'>Contact Us</Link></p>&nbsp;
-        <img className='footerImg'
+        {/* <img className='footerImg'
           // src={logo}
-          alt="Logo" />&nbsp;
+          alt="Logo" /> */}
+          &nbsp;
         <p className='footerAbout'><Link to='/about'>About Us</Link></p>
       </div>
     </div>

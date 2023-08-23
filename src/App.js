@@ -3,7 +3,8 @@ import './App.css';
 
 import NavBar from './Components/NavBar/NavBar';
 import Footer from './Components/Footer/Footer';
-//import CreateNewTour from './Components/CreateNewTour/CreateNewTour
+//import CreateNewTour from './Components/CreateNewTour/CreateNewTour'
+//import BrowseTours from './Components/BrowseTours'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           {/* <Route path="/about" element={<About />} /> */}
           {/* <Route path="*" element={<NotFound />} /> */}
            {/* <Route path="/createnewtour" element={<CreateNewTour />} /> */}
+           {/* <Route path="/browsetours" element={<BrowseTours />} /> */}
         </Routes>
         </main>
         <Footer />
