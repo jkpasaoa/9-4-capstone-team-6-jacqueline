@@ -1,9 +1,146 @@
 
+import React, { useState } from 'react';
+import axios from 'axios';
+// import MapContainer from './MapContainer';
+
+const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
 export default function CreateNewTour() {
-    return (
-        <div>
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+  const [state, setState] = useState('');
+  const [duration, setDuration] = useState('Full-day');
+  const [difficulty, setDifficulty] = useState('Medium');
+  const [tourType, setTourType] = useState('Historic');
+  const [tourContent, setTourContent] = useState('');
+  const [loading, setLoading] = useState(false);
 
+  const parsePointsOfInterest = (generatedTour) => {
+    const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
+    const matches = [];
+    let match;
+    while ((match = bulletPattern.exec(generatedTour)) !== null) {
+      matches.push(match[1]);
+    }
+    return matches;
+  };
+
+  const generateWalkingTour = async () => {
+    try {
+      setLoading(true);
+
+      const prompt = `Walking Tour in ${city}, ${state}, ${country}\nTour Duration: ${duration}\nDifficulty Level: ${difficulty}\nTour Type: ${tourType}`;
+
+      const requestBody = {
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'system',
+            content: 'Create a self guided walking tour where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only want the tour route and what points of interest are on that route. I will ask later for an in depth tour or each point of interest.',
+          },
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+      };
+
+      const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`,
+        },
+      });
+
+      const generatedTour = response.data.choices[0]?.message.content;
+      setTourContent(generatedTour);
+
+      // Parse points of interest
+      const pointsOfInterest = parsePointsOfInterest(generatedTour);
+      console.log('Points of Interest:', pointsOfInterest);
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error:', error);
+      setTourContent('Error generating the walking tour. Please try again.');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="container mt-5">
+      <h1 className="text-center mb-4">Walking Tour Generator</h1>
+      <div className="row mb-3">
+        <div className="col-md-4">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="City"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+          />
         </div>
-    )
-}
+        <div className="col-md-4">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="State/County/Province"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+          />
+        </div>
+        <div className="col-md-4">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Country"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-md-4">
+          <select className="form-control" value={duration} onChange={(e) => setDuration(e.target.value)}>
+            <option value="Full-day">Full-day</option>
+            <option value="Half-day">Half-day</option>
+            <option value="2 hours">2 hours</option>
+          </select>
+        </div>
+        <div className="col-md-4">
+          <select className="form-control" value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
+        <div className="col-md-4">
+          <select className="form-control" value={tourType} onChange={(e) => setTourType(e.target.value)}>
+            <option value="Historic">Historic</option>
+            <option value="Scenic">Scenic</option>
+            <option value="Fun">Fun</option>
+          </select>
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col">
+          <button className="btn btn-primary" onClick={generateWalkingTour} disabled={!city || loading}>
+            Generate Walking Tour
+          </button>
+        </div>
+      </div>
+      {loading && <p>Loading...</p>}
+      <div className="row">
+        <div className="col">
+          <textarea className="form-control" rows="10" value={tourContent} readOnly />
+        </div>
+      </div>
+      <div className="row">
+        {/* <div className="col">
+          <MapContainer generatedTour={tourContent} />
+        </div> */}
+      </div>
+    </div>
+  );
+};
+
