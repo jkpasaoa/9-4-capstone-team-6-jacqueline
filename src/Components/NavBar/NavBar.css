@@ -1,4 +1,4 @@
-.navbar {
+/* .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,15 +21,15 @@
   justify-content: center;
 }
 
-/* .logo img {
-  /* margin-left: 120px;  */
-  /* Add spacing between logo and text if needed
-} */
+.logo img {
+  margin-left: 120px; 
+  Add spacing between logo and text if needed
+}
 
 li {
   list-style: none;
   display: inline;
-  /* padding-left: 25px; */
+  padding-left: 25px;
   margin-right: 25px;
 }
 
@@ -58,10 +58,10 @@ li {
   }
   #nav-links{
       display: none;
-      /* align-items: center;
-      gap: 20px; */
+      align-items: center;
+      gap: 20px;
   }
   .navbar input:checked ~ #nav-links{
       display: block;
   }
-}
+}  */
