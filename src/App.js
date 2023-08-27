@@ -17,12 +17,15 @@ function App() {
       <Router>
         <NavBar />
         <main>
+        <div className="content-container">
+        {/* Check App.css for content-container for padding */}
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/createnewtour" element={<CreateNewTour />} />
           </Routes>
+          </div>
         </main>
         <Footer />
       </Router>
