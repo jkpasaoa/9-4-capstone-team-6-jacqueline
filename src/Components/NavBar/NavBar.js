@@ -10,7 +10,7 @@ function NavBar() {
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <span className="logo">
             <Link to="/home">
-              <img src={logo} className="h-8 mr-3" alt="CityWhisperer Logo" />
+              <img src={logo} className="h-24 mr-3" alt="CityWhisperer Logo" />
             </Link>
           </span>
           <div className="flex md:order-2">
