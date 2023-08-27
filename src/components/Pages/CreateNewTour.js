@@ -110,7 +110,7 @@ export default function CreateNewTour() {
   }
 
   return (
-    <div className="container mt-5" style={{ paddingTop: "160px" }}>
+    <div className="container mt-5">
       <h1 className="text-center mb-4">Walking Tour Generator</h1>
       <div className="row mb-3">
         <div className="col-md-4">
