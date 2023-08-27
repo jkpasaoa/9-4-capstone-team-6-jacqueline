@@ -1,3 +1,13 @@
+/* Center the logo */
+.logo {
+  display: flex;
+  justify-content: center;
+}
+
+#navbar-toggle {
+  order: -1;
+  margin-right: 1rem; /* Adjust the margin as needed */
+}
 /* .navbar {
   display: flex;
   justify-content: space-between;
