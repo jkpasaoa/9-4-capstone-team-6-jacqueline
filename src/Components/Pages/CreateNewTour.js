@@ -6,15 +6,40 @@ import axios from 'axios';
 const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
 export default function CreateNewTour() {
-  const [city, setCity] = useState('');
-  const [region, setRegion] = useState('');
-  const [country, setCountry] = useState('');
-  const [state, setState] = useState('');
-  const [duration, setDuration] = useState('Full-day');
-  const [difficulty, setDifficulty] = useState('Medium');
-  const [tourType, setTourType] = useState('Historic');
-  const [tourContent, setTourContent] = useState('');
+  const [tour, setTour] = useState({
+    country: '',
+    region: '',
+    state: '',
+    city: '',
+    duration: 'Full-day',
+    difficulty: 'Medium',
+    tourType: 'Historic',
+    theme: '',
+  });
+
+  const [pointsOfInterest, setPointsOfInterest] = useState({
+    latitude: 0.0,
+    longitude: 0.0,
+    name: '',
+    image_url: '',
+  });
+
+  const [commentary, setCommentary] = useState({
+    name: '',
+    description: '',
+    audio_url: '',
+  });
+
+  // const [city, setCity] = useState('');
+  // const [region, setRegion] = useState('');
+  // const [country, setCountry] = useState('');
+  // const [state, setState] = useState('');
+  // const [duration, setDuration] = useState('Full-day');
+  // const [difficulty, setDifficulty] = useState('Medium');
+  // const [tourType, setTourType] = useState('Historic');
+
   const [loading, setLoading] = useState(false);
+  const [tourContent, setTourContent] = useState('');
 
   const parsePointsOfInterest = (generatedTour) => {
     const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
@@ -30,7 +55,7 @@ export default function CreateNewTour() {
     try {
       setLoading(true);
 
-      const prompt = `Walking Tour in ${city}, ${region}, ${state}, ${country}\nTour Duration: ${duration}\nDifficulty Level: ${difficulty}\nTour Type: ${tourType},`;
+      const prompt = `Walking Tour in ${tour.city}, ${tour.region}, ${tour.state}, ${tour.country}\nTour Duration: ${tour.duration}\nDifficulty Level: ${tour.difficulty}\nTour Type: ${tour.tourType},`;
 
       const requestBody = {
         model: 'gpt-3.5-turbo',
@@ -77,8 +102,8 @@ export default function CreateNewTour() {
             type="text"
             className="form-control"
             placeholder="City"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            value={tour.city}
+          // onChange={(e) => setCity(e.target.value)}
           />
         </div>
 
@@ -87,8 +112,8 @@ export default function CreateNewTour() {
             type="text"
             className="form-control"
             placeholder="Borough/Region"
-            value={region}
-            onChange={(e) => setRegion(e.target.value)}
+            value={tour.region}
+          // onChange={(e) => setRegion(e.target.value)}
           />
         </div>
 
@@ -97,8 +122,8 @@ export default function CreateNewTour() {
             type="text"
             className="form-control"
             placeholder="State/County/Province"
-            value={state}
-            onChange={(e) => setState(e.target.value)}
+            value={tour.state}
+          // onChange={(e) => setState(e.target.value)}
           />
         </div>
         <div className="col-md-4">
@@ -106,28 +131,28 @@ export default function CreateNewTour() {
             type="text"
             className="form-control"
             placeholder="Country"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
+            value={tour.country}
+          // onChange={(e) => setCountry(e.target.value)}
           />
         </div>
       </div>
       <div className="row mb-3">
         <div className="col-md-4">
-          <select className="form-control" value={duration} onChange={(e) => setDuration(e.target.value)}>
+          <select className="form-control" value={tour.duration} onChange={true}>
             <option value="Full-day">Full-day</option>
             <option value="Half-day">Half-day</option>
             <option value="2 hours">2 hours</option>
           </select>
         </div>
         <div className="col-md-4">
-          <select className="form-control" value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+          <select className="form-control" value={tour.difficulty} onChange={true}>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
           </select>
         </div>
         <div className="col-md-4">
-          <select className="form-control" value={tourType} onChange={(e) => setTourType(e.target.value)}>
+          <select className="form-control" value={tour.tourType} onChange={true}>
             <option value="Historic">Historic</option>
             <option value="Scenic">Scenic</option>
             <option value="Fun">Fun</option>
@@ -138,7 +163,7 @@ export default function CreateNewTour() {
       </div>
       <div className="row mb-3">
         <div className="col">
-          <button className="btn btn-primary" onClick={generateWalkingTour} disabled={!city || loading}>
+          <button className="btn btn-primary" onClick={generateWalkingTour} disabled={!tour.city || loading}>
             Generate Walking Tour
           </button>
         </div>
