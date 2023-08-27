@@ -37,7 +37,7 @@ export default function CreateNewTour() {
         messages: [
           {
             role: 'system',
-            content: 'Create a self guided walking tour, where start point and end point are the same place, and where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only want the tour route and what points of interest are on that route. Do not give commentary, or directions for or any point of interest.',
+            content: 'Create a self guided walking tour, where start point and end point are the same place. return the names of the points of interest along the tour route as numbered bullet points. Do not give commentary, or directions for any point of interest.',
           },
           {
             role: 'user',
