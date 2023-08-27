@@ -7,6 +7,7 @@ const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
 export default function CreateNewTour() {
   const [city, setCity] = useState('');
+  const [region, setRegion] = useState('');
   const [country, setCountry] = useState('');
   const [state, setState] = useState('');
   const [duration, setDuration] = useState('Full-day');
@@ -29,14 +30,14 @@ export default function CreateNewTour() {
     try {
       setLoading(true);
 
-      const prompt = `Walking Tour in ${city}, ${state}, ${country}\nTour Duration: ${duration}\nDifficulty Level: ${difficulty}\nTour Type: ${tourType}`;
+      const prompt = `Walking Tour in ${city}, ${region}, ${state}, ${country}\nTour Duration: ${duration}\nDifficulty Level: ${difficulty}\nTour Type: ${tourType},`;
 
       const requestBody = {
         model: 'gpt-3.5-turbo',
         messages: [
           {
             role: 'system',
-            content: 'Create a self guided walking tour where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only want the tour route and what points of interest are on that route. Do not give commentary for any point of interest.',
+            content: 'Create a self guided walking tour, where start point and end point are the same place, and where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only want the tour route and what points of interest are on that route. Do not give commentary, or directions for or any point of interest.',
           },
           {
             role: 'user',
@@ -80,6 +81,17 @@ export default function CreateNewTour() {
             onChange={(e) => setCity(e.target.value)}
           />
         </div>
+
+        <div className="col-md-4">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Borough/Region"
+            value={region}
+            onChange={(e) => setRegion(e.target.value)}
+          />
+        </div>
+
         <div className="col-md-4">
           <input
             type="text"
@@ -119,6 +131,8 @@ export default function CreateNewTour() {
             <option value="Historic">Historic</option>
             <option value="Scenic">Scenic</option>
             <option value="Fun">Fun</option>
+            <option value="Museums">Museums</option>
+            <option value="Pubs">Pubs</option>
           </select>
         </div>
       </div>
