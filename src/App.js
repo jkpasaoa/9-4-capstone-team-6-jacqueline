@@ -8,8 +8,8 @@ import CreateNewTour from './ourComponents/Pages/CreateNewTour';
 
 import NavBar from './ourComponents/NavBar/NavBar';
 import Footer from './ourComponents/Footer/Footer';
-//import CreateNewTour from './Components/CreateNewTour/CreateNewTour'
-//import BrowseTours from './Components/BrowseTours'
+//import CreateNewTour from './ourComponents/CreateNewTour/CreateNewTour'
+//import BrowseTours from './ourComponents/BrowseTours'
 
 function App() {
   return (

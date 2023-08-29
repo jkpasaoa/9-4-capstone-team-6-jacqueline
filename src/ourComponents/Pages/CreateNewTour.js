@@ -97,10 +97,6 @@ export default function CreateNewTour() {
     }
   };
 
-  const handleTextChange = (event) => {
-    setTour({ ...tour, [event.target.id]: event.target.value });
-  }
-
   const addTour = (newTour) => {
     axios.post(`${API}/tours`, newTour)
       .then(() => navigate('/tours'))
@@ -114,7 +110,7 @@ export default function CreateNewTour() {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{ paddingTop: "160px" }}>
       <h1 className="text-center mb-4">Walking Tour Generator</h1>
       <div className="row mb-3">
         <div className="col-md-4">
@@ -123,7 +119,7 @@ export default function CreateNewTour() {
             className="form-control"
             placeholder="City"
             value={tour.city}
-            onChange={handleTextChange}
+          // onChange={(e) => setCity(e.target.value)}
           />
         </div>
 
@@ -133,7 +129,7 @@ export default function CreateNewTour() {
             className="form-control"
             placeholder="Borough/Region"
             value={tour.region}
-            onChange={handleTextChange}
+          // onChange={(e) => setRegion(e.target.value)}
           />
         </div>
 
@@ -143,7 +139,7 @@ export default function CreateNewTour() {
             className="form-control"
             placeholder="State/County/Province"
             value={tour.state}
-            onChange={handleTextChange}
+          // onChange={(e) => setState(e.target.value)}
           />
         </div>
         <div className="col-md-4">
@@ -152,27 +148,27 @@ export default function CreateNewTour() {
             className="form-control"
             placeholder="Country"
             value={tour.country}
-            onChange={handleTextChange}
+          // onChange={(e) => setCountry(e.target.value)}
           />
         </div>
       </div>
       <div className="row mb-3">
         <div className="col-md-4">
-          <select className="form-control" value={tour.duration} onChange={handleTextChange}>
+          <select className="form-control" value={tour.duration} onChange={true}>
             <option value="Full-day">Full-day</option>
             <option value="Half-day">Half-day</option>
             <option value="2 hours">2 hours</option>
           </select>
         </div>
         <div className="col-md-4">
-          <select className="form-control" value={tour.difficulty} onChange={handleTextChange}>
+          <select className="form-control" value={tour.difficulty} onChange={true}>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
           </select>
         </div>
         <div className="col-md-4">
-          <select className="form-control" value={tour.tourType} onChange={handleTextChange}>
+          <select className="form-control" value={tour.tourType} onChange={true}>
             <option value="Historic">Historic</option>
             <option value="Scenic">Scenic</option>
             <option value="Fun">Fun</option>
