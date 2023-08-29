@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
-import LandingPage from './Components/Pages/LandingPage';
-import About from './Components/Pages/About';
-import NotFound from './Components/Pages/NotFound';
-import CreateNewTour from './Components/Pages/CreateNewTour';
+import LandingPage from './ourComponents/Pages/LandingPage';
+import About from './ourComponents/Pages/About';
+import NotFound from './ourComponents/Pages/NotFound';
+import CreateNewTour from './ourComponents/Pages/CreateNewTour';
 
-import NavBar from './Components/NavBar/NavBar';
-import Footer from './Components/Footer/Footer';
-//import CreateNewTour from './components/CreateNewTour/CreateNewTour'
-//import BrowseTours from './components/BrowseTours'
+import NavBar from './ourComponents/NavBar/NavBar';
+import Footer from './ourComponents/Footer/Footer';
+//import CreateNewTour from './ourComponents/CreateNewTour/CreateNewTour'
+//import BrowseTours from './ourComponents/BrowseTours'
 
 function App() {
   return (
