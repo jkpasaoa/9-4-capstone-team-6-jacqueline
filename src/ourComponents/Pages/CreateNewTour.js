@@ -66,7 +66,7 @@ export default function CreateNewTour() {
         messages: [
           {
             role: 'system',
-            content: 'Create a self guided walking tour, where start point and end point are the same place. return the names of the points of interest along the tour route as numbered bullet points. Do not give commentary, or directions for any point of interest.',
+            content: 'Create a self guided walking tour, where start point and end point are the same place, and where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only want the tour route and what points of interest are on that route. Do not give commentary, or directions for or any point of interest.',
           },
           {
             role: 'user',
@@ -97,6 +97,10 @@ export default function CreateNewTour() {
     }
   };
 
+  const handleTextChange = (event) => {
+    setTour({ ...tour, [event.target.id]: event.target.value });
+  }
+
   const addTour = (newTour) => {
     axios.post(`${API}/tours`, newTour)
       .then(() => navigate('/tours'))
@@ -110,7 +114,7 @@ export default function CreateNewTour() {
   }
 
   return (
-    <div className="container mt-5" style={{ paddingTop: "160px" }}>
+    <div className="container mt-5">
       <h1 className="text-center mb-4">Walking Tour Generator</h1>
       <div className="row mb-3">
         <div className="col-md-4">
@@ -119,7 +123,7 @@ export default function CreateNewTour() {
             className="form-control"
             placeholder="City"
             value={tour.city}
-          // onChange={(e) => setCity(e.target.value)}
+            onChange={handleTextChange}
           />
         </div>
 
@@ -129,7 +133,7 @@ export default function CreateNewTour() {
             className="form-control"
             placeholder="Borough/Region"
             value={tour.region}
-          // onChange={(e) => setRegion(e.target.value)}
+            onChange={handleTextChange}
           />
         </div>
 
@@ -139,7 +143,7 @@ export default function CreateNewTour() {
             className="form-control"
             placeholder="State/County/Province"
             value={tour.state}
-          // onChange={(e) => setState(e.target.value)}
+            onChange={handleTextChange}
           />
         </div>
         <div className="col-md-4">
@@ -148,27 +152,27 @@ export default function CreateNewTour() {
             className="form-control"
             placeholder="Country"
             value={tour.country}
-          // onChange={(e) => setCountry(e.target.value)}
+            onChange={handleTextChange}
           />
         </div>
       </div>
       <div className="row mb-3">
         <div className="col-md-4">
-          <select className="form-control" value={tour.duration} onChange={true}>
+          <select className="form-control" value={tour.duration} onChange={handleTextChange}>
             <option value="Full-day">Full-day</option>
             <option value="Half-day">Half-day</option>
             <option value="2 hours">2 hours</option>
           </select>
         </div>
         <div className="col-md-4">
-          <select className="form-control" value={tour.difficulty} onChange={true}>
+          <select className="form-control" value={tour.difficulty} onChange={handleTextChange}>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
           </select>
         </div>
         <div className="col-md-4">
-          <select className="form-control" value={tour.tourType} onChange={true}>
+          <select className="form-control" value={tour.tourType} onChange={handleTextChange}>
             <option value="Historic">Historic</option>
             <option value="Scenic">Scenic</option>
             <option value="Fun">Fun</option>
@@ -198,4 +202,3 @@ export default function CreateNewTour() {
     </div>
   );
 };
-
