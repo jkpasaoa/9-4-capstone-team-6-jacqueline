@@ -106,3 +106,4 @@ export default function TourDetailsForm({ tour, handleTextChange, handleDropdown
     </div>
   );
 }
+

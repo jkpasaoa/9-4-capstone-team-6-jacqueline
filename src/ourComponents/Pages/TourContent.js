@@ -1,6 +1,5 @@
 
 import React from 'react';
-import PointsOfInterestList from './PointsOfInterestList';
 
 export default function TourContent({ tourContent, loading }) {
   return (
@@ -8,10 +7,10 @@ export default function TourContent({ tourContent, loading }) {
       {loading && <p>Loading...</p>}
       <div className="row">
         <div className="col">
-          <textarea className="form-control" style={{ width: '20%' }} rows="10" value={tourContent} readOnly />
+          <textarea className="form-control" style={{ width: '30%' }} rows="10" value={tourContent} readOnly />
         </div>
       </div>
-      <PointsOfInterestList tourContent={tourContent} />
     </div>
   );
 }
+

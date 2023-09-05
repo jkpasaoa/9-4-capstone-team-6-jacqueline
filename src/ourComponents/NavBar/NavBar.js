@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './NavBar.css'; // Import your CSS file if needed
+import './NavBar.css'; 
 import logo from "../../assets/CityWhispererLogo.png";
 
 function NavBar() {
