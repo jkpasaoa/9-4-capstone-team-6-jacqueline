@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './NavBar.css'; 
+import './NavBar.css';
 import logo from "../../assets/CityWhispererLogo.png";
 
 function NavBar() {
@@ -15,7 +15,7 @@ function NavBar() {
       <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <span className="logo">
-            <Link to="/home">
+            <Link to="/home" className="flex items-center">
               <img src={logo} className="h-24 mr-3" alt="CityWhisperer Logo" />
             </Link>
           </span>
