@@ -12,7 +12,7 @@ function NavBar() {
 
   return (
     <div>
-      <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+      <nav className="bg-opacity-0 dark:bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <span className="logo">
             <Link to="/home" className="flex items-center">
@@ -92,13 +92,13 @@ function NavBar() {
           {/* Desktop Menu & Tablet Menu */}
           <ul className="DESKTOP-MENU hidden space-x-8 md:flex lg:flex">
             <li>
-              <Link to="/home">Home</Link>
+              <Link to="/home" className="text-white">Home</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/about" className="text-white">About</Link>
             </li>
             <li>
-              <Link to="/browsetours">Browse Tours</Link>
+              <Link to="/browsetours" className="text-white">Browse Tours</Link>
             </li>
           </ul>
         </div>
