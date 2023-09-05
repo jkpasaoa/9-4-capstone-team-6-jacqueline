@@ -3,7 +3,7 @@
 export default function NotFound() {
     return (
         <div>
-<h1>WTF you talkin bout.  No page found</h1>
+<p className="NotFound-content">WTF you talkin bout.  No page found</p>
         </div>
     )
 }
