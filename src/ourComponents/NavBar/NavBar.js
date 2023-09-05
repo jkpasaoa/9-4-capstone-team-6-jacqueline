@@ -89,8 +89,8 @@ function NavBar() {
               </li>
             </ul>
           </div>
-          {/* Desktop Menu */}
-          <ul className="DESKTOP-MENU hidden space-x-8 lg:flex">
+          {/* Desktop Menu & Tablet Menu */}
+          <ul className="DESKTOP-MENU hidden space-x-8 md:flex lg:flex">
             <li>
               <Link to="/home">Home</Link>
             </li>
