@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Map from "../Map/Map"
+import TourCard from './TourCard';
 import axios from 'axios';
 
 const API = process.env.REACT_APP_API_URL;
@@ -13,8 +14,11 @@ export default function TourIndex() {
 
     return (
         <div>
-            <Map />
-
+            {
+                tours.map((tour) => {
+                    return <TourCard key={tour.id} tour={tour} />
+                })
+            }
         </div>
     )
 }
