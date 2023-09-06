@@ -29,7 +29,7 @@ function NavBar() {
                 <Link to="/about" className="nav-link about text-black text-shadow-white">About</Link>
               </li>
               <li>
-                <Link to="/browsetours" className="nav-link browsetours text-black text-shadow-white">Browse Tours</Link>
+                <Link to="/tours" className="nav-link browsetours text-black text-shadow-white">Browse Tours</Link>
               </li>
               <li>
                 <Link
