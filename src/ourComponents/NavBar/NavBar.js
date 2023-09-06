@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
-import logo from '../../assets/CityWhispererLogo.png';
+import logo from '../../assets/CityWhispererLogoWebsite.png';
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,7 +17,8 @@ function NavBar() {
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <span className="logo">
             <Link to="/home" className="flex items-center">
-              <img src={logo} className="h-24 mr-3" alt="CityWhisperer Logo" />
+              <img src={logo} className="h-24 mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)
+]" alt="CityWhisperer Logo" />
             </Link>
           </span>
           <div className="flex md:order-2">
@@ -64,7 +65,7 @@ function NavBar() {
                 <Link
                   to="/home"
                   onClick={toggleMenu}
-                  className="nav-link home block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                   aria-current="page"
                 >
                   Home
@@ -74,7 +75,7 @@ function NavBar() {
                 <Link
                   to="/about"
                   onClick={toggleMenu}
-                  className="nav-link about block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   About
                 </Link>
@@ -83,7 +84,7 @@ function NavBar() {
                 <Link
                   to="/browsetours"
                   onClick={toggleMenu}
-                  className="nav-link browsetours block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Browse Tours
                 </Link>
@@ -93,13 +94,13 @@ function NavBar() {
           {/* Desktop Menu & Tablet Menu */}
           <ul className="DESKTOP-MENU hidden space-x-8 md:flex lg:flex">
             <li>
-              <Link to="/home" className="text-black">Home</Link>
+              <Link to="/home" className="nav-link home text-black text-shadow-white">Home</Link>
             </li>
             <li>
-              <Link to="/about" className="text-black">About</Link>
+              <Link to="/about" className="nav-link about text-black text-shadow-white">About</Link>
             </li>
             <li>
-              <Link to="/browsetours" className="text-black">Browse Tours</Link>
+              <Link to="/browsetours" className="nav-link browsetours text-black text-shadow-white">Browse Tours</Link>
             </li>
           </ul>
         </div>

@@ -10,7 +10,10 @@ export default function Home() {
 
   return (
     <div className="fullscreen-video">
-      <video autoPlay loop muted={isMuted}>
+      <video autoPlay loop muted={isMuted}
+        controls
+        // comment out controls once finished mvp, it is used for testing
+      >
         <source src={videoUrl} type="video/mp4" />
         Your browser does not support the video tag.
       </video>

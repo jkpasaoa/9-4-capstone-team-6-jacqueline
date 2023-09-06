@@ -4,15 +4,21 @@
 }
 
 .logo img {
-  height: 115px;
+  height: 70px;
 }
 
+/* .shadow-custom {
+  filter: drop-shadow(6px 4px 1px rgba(255, 0, 0, 0.7)); /* Change the color values here
+}
+*/
+
 .nav-link {
-  font-size: 18px; 
+  font-size: 18px;
+  text-shadow: 0px 0px 9.5px rgba(255, 255, 255, 1);
 }
 
 .nav-link.home {
-  font-size: 18px; 
+  font-size: 18px;
 }
 
 .nav-link.about {
