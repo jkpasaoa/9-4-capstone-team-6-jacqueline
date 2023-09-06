@@ -28,6 +28,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/createnewtour" element={<CreateNewTour />} />
+            <Route path="/tours" element={<TourIndex />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
 
