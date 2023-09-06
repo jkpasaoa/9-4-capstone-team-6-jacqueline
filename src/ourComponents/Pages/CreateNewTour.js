@@ -35,6 +35,7 @@ export default function CreateNewTour() {
         messages: [
           {
             role: 'system',
+
             content: 'Create a self-guided walking tour, where the start point and end point are the same place, and where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only want the tour route and what points of interest are on that route. Do not give commentary, or directions for any point of interest.',
           },
           {
@@ -62,6 +63,7 @@ export default function CreateNewTour() {
     }
   };
 
+
   // Function to handle changes in text inputs
   const handleTextChange = (event) => {
     const { name, value } = event.target;
@@ -73,6 +75,7 @@ export default function CreateNewTour() {
     const { id, value } = event.target;
     setTour({ ...tour, [id]: value });
   };
+
 
   // Function to handle form submission
   const handleSubmit = (e) => {
@@ -109,6 +112,7 @@ export default function CreateNewTour() {
   };
 
   return (
+
     <div className="container mt-5" style={{ paddingTop: '160px' }}>
       <h1 className="text-center mb-4">Walking Tour Generator</h1>
       <TourDetailsForm
