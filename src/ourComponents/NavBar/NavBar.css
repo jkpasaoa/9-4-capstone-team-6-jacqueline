@@ -4,7 +4,7 @@
 }
 
 .logo img {
-  height: 70px;
+  height: 85px;
 }
 
 .nav-link {
@@ -17,9 +17,17 @@
 }
 
 .nav-link.about {
-  font-size: 18px; 
+  font-size: 18px;
 }
 
 .nav-link.browsetours {
   font-size: 18px;
+}
+
+.custom-border {
+  width: 90%;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  margin: 0 0 0 30px;
 }
