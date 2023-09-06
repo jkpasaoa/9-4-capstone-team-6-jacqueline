@@ -17,7 +17,7 @@ function NavBar() {
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <span className="logo">
             <Link to="/home" className="flex items-center">
-              <img src={logo} className="h-24 mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)" alt="CityWhisperer Logo" />
+              <img src={logo} className="h-24 mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]" alt="CityWhisperer Logo" />
             </Link>
           </span>
           <div className="flex md:order-2 ml-auto">
