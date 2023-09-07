@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import TourCard from './TourCard';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 
 const API = process.env.REACT_APP_API_URL;
 
 export default function TourIndex() {
     const [tours, setTours] = useState([])
+    const [expandedIndex, setExpandedIndex] = useState(null)
+
+    const handleCardClick = (index) => {
+        setExpandedIndex(index === expandedIndex ? -1 : index)
+    }
+
+    const cardVariants = {
+        expanded: {
+            width: "400px"
+        },
+        collapsed: {
+            width: "200px"
+        }
+    }
 
     useEffect(() => {
         axios.get(`${API}/tours`)
