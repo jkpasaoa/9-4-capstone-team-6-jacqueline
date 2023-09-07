@@ -40,11 +40,19 @@ export default function TourIndex() {
             <br></br>
             <br></br>
             <br></br>
-            {
-                tours.map((tour) => {
-                    return <TourCard key={tour.id} tour={tour} />
-                })
-            }
+            <section className='py-16 pb-[300px] bg-gradient-to-r from-purple-800 to-indigo-800'>
+                <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+                    <h1 className='text-3xl font-extrabold text-white'>TOURS</h1>
+                    <p className='mt-4 text-xl text-gray-300'></p>
+                </div>
+                <div className='mt-12 flex flex-col md:flex-row justify-center items-center gap-5'>
+                    {
+                        tours.map((tour) => {
+                            return <TourCard key={tour.id} tour={tour} />
+                        })
+                    }
+                </div>
+            </section>
         </div>
     )
 }
