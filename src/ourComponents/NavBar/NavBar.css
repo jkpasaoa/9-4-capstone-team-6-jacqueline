@@ -25,9 +25,9 @@
 }
 
 .custom-border {
-  width: 95%;
+  width: 100%;
   /* display: flex; */
   /* justify-content: center; */
   /* align-items: center; */
-  margin: 0 0 0 15px;
+  /* margin: 0 0 0 15px; */
 }
