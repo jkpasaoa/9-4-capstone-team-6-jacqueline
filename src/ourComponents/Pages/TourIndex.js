@@ -25,7 +25,6 @@ export default function TourIndex() {
             <br></br>
             <br></br>
             <br></br>
-            <h1>hello Jacq</h1>
             {
                 tours.map((tour) => {
                     return <TourCard key={tour.id} tour={tour} />
