@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TourCard from './TourCard';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import im from '../../assets/S_LogoWhite.png'
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -48,7 +49,19 @@ export default function TourIndex() {
                 <div className='mt-12 flex flex-col md:flex-row justify-center items-center gap-5'>
                     {
                         tours.map((tour) => {
-                            return <TourCard key={tour.id} tour={tour} />
+                            <motion.div
+                                key={tour.id}
+                                className={`card cursor-pointer h-[500px] bg-cover bg-center rounded-[20px] ${tour.id === expandedIndex ? 'expanded' : ''}`}
+                                variants={cardVariants}
+                                initial='collapsed'
+                                animate={tour.id === expandedIndex ? 'expanded' : 'collapsed'}
+                                transition={{ duration: 0.5 }}
+                                onClick={() => handleCardClick(tour.id)}
+                                style={{
+                                    backgroundImage: `url(${im})`,
+                                }}
+                            >
+                            </motion.div>
                         })
                     }
                 </div>
