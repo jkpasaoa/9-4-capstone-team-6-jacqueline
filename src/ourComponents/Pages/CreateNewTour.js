@@ -22,7 +22,6 @@ export default function CreateNewTour() {
     theme: 'Historic', // Updated: theme instead of tourType
   });
 
-  const [loading, setLoading] = useState(false);
   const [tourContent, setTourContent] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Added isLoading state
 
@@ -89,7 +88,8 @@ export default function CreateNewTour() {
 
   const generateTourName = () => {
     const { city, country, theme, duration, difficulty } = tour;
-    const name = `${city}, ${country} - Theme: ${theme}, Duration: ${duration}, Difficulty: ${difficulty}`;
+    const name = `${city}, ${country} ${theme} tour - lasting ${duration} with ${difficulty} difficulty.`;
+    console.log('Generated Tour Name:', name);
     return name;
   };
 
@@ -218,24 +218,26 @@ export default function CreateNewTour() {
   </div>
 </div>
 {isLoading ? (
-  // Conditional rendering for loading animation
-  <div className="row text-center">
-    <div className="col">
-      <div style={{ margin: '16px 0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <video autoPlay loop muted width="250" height="250">
-          <source src={loadingAnimation} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
-  </div>
-) : (
-  <div className="row">
-    <div className="col">
-      <textarea className="form-control" style={{ width: '20%' }} rows="10" value={tourContent} readOnly />
-    </div>
-  </div>
-)}
+        // Conditional rendering for loading animation
+        <div className="row text-center">
+          <div className="col">
+            <p>Loading...</p> {/* Add "Loading..." text here */}
+            <div style={{ margin: '16px 0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <video autoPlay loop muted width="250" height="250">
+                <source src={loadingAnimation} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="row">
+          <div className="col">
+            <textarea className="form-control" style={{ width: '20%' }} rows="10" value={tourContent} readOnly />
+          </div>
+        </div>
+      )}
     </div>
   );
+
 }
