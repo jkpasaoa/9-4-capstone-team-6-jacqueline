@@ -48,19 +48,30 @@ export default function TourIndex() {
                 </div>
                 <div className='mt-12 flex flex-col md:flex-row justify-center items-center gap-5'>
                     {
-                        tours.map((tour) => {
-                            <motion.div
-                                key={tour.id}
-                                className={`card cursor-pointer h-[500px] bg-cover bg-center rounded-[20px] ${tour.id === expandedIndex ? 'expanded' : ''}`}
+                        tours.map((tour, index) => {
+                            return <motion.div
+                                key={index}
+                                className={`card cursor-pointer h-[500px] bg-cover bg-center rounded-[20px] ${index === expandedIndex ? 'expanded' : ''}`}
                                 variants={cardVariants}
                                 initial='collapsed'
-                                animate={tour.id === expandedIndex ? 'expanded' : 'collapsed'}
+                                animate={index === expandedIndex ? 'expanded' : 'collapsed'}
                                 transition={{ duration: 0.5 }}
-                                onClick={() => handleCardClick(tour.id)}
+                                onClick={() => handleCardClick(index)}
                                 style={{
                                     backgroundImage: `url(${im})`,
                                 }}
                             >
+                                <div className='card-content h-full flex flex-col justify-end'>
+                                    <div className='card-footer rounded-b-[20px] bg-gray-800 bg-opacity-75 min-h-[100px] flex flex-col items-center justify-center'>
+                                        <h2 className='text-xl font-semibold text-white text-center'>{tour.city}</h2>
+                                        {index === expandedIndex && (
+                                            <p className='mt-2 text-gray-300 text-center'>{<TourCard tour={tour} key={tour.id} />}</p>
+                                        )
+
+                                        }
+                                    </div>
+
+                                </div>
                             </motion.div>
                         })
                     }
