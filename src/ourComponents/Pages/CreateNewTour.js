@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import loadingAnimation from '../../assets/S-Loop_transnparent.gif'; // Import the loading animation
 
 const config = {
@@ -239,6 +240,16 @@ export default function CreateNewTour() {
           </div>
         </div>
       )}
+
+      {/* "Start Tour" button */}
+      <div className="row">
+        <div className="col text-center">
+          <Link to="/tourlive">
+            <button className="btn btn-success">Start Tour</button>
+          </Link>
+        </div>
+      </div>
+
     </div>
   );
 }
