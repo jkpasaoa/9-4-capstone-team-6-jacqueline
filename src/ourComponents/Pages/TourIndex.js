@@ -14,6 +14,8 @@ export default function TourIndex() {
         setExpandedIndex(index === expandedIndex ? -1 : index)
     }
 
+    //for testing purposes
+
     const cardVariants = {
         expanded: {
             width: "400px"
