@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import loadingAnimation from '../../assets/S-Loop_transnparent.gif'; // Import the loading animation
 
 const config = {
@@ -10,6 +11,24 @@ const config = {
   unsplashApiKey: process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY,
   unsplashApiSecretKey: process.env.REACT_APP_UNSPLASH_API_SECRET_KEY,
 };
+
+// Define the fetchCityPhoto function
+const fetchCityPhoto = async (cityName) => {
+  try {
+    const response = await axios.get(
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(cityName)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`
+    );
+
+    // Extract the photo URL from the response
+    const photoUrl = response.data.results[0]?.urls?.regular || '';
+
+    return photoUrl;
+  } catch (error) {
+    console.error('Error fetching city photo:', error);
+    return ''; // Return an empty string in case of an error
+  }
+};
+
 
 export default function CreateNewTour() {
   const [tour, setTour] = useState({
@@ -103,6 +122,9 @@ export default function CreateNewTour() {
 
     const pointsOfInterest = parsePointsOfInterest(generatedWalkingTour); // Parse points of interest from tourContent
 
+      // Fetch the city photo
+    const cityPhoto = await fetchCityPhoto(tour.city);
+
     const newTour = {
       country: tour.country,
       region: tour.region,
@@ -112,6 +134,7 @@ export default function CreateNewTour() {
       difficulty: tour.difficulty,
       theme: tour.theme,
       tour_name: generateTourName(), // Generate the tour name
+      image_url: cityPhoto, // Include the city photo URL
       ordered_points_of_interest: pointsOfInterest, // Use pointsOfInterest from tourContent
     };
 
@@ -239,6 +262,16 @@ export default function CreateNewTour() {
           </div>
         </div>
       )}
+
+      {/* "Start Tour" button */}
+      <div className="row">
+        <div className="col text-center">
+          <Link to="/tourlive">
+            <button className="btn btn-success">Start Tour</button>
+          </Link>
+        </div>
+      </div>
+
     </div>
   );
 }
