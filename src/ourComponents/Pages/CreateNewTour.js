@@ -265,7 +265,7 @@ export default function CreateNewTour() {
           <div className="col">
             {/* Display the city photo */}
             {cityPhoto && (
-              <img src={cityPhoto} alt={`Photo of ${tour.city}`} style={{ width: '30%', display: 'block', margin: '0 auto' }} />
+              <img src={cityPhoto} alt={`${tour.city}`} style={{ width: '30%', display: 'block', margin: '0 auto' }} />
             )}
             <textarea className="form-control" style={{ width: '20%' }} rows="10" value={tourContent} readOnly />
           </div>
