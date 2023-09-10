@@ -33,6 +33,7 @@ export default function CreateNewTour() {
       matches.push(match[1]);
     }
     return matches;
+    console.log(matches)
   };
 
   const generateWalkingTour = async () => {
@@ -93,8 +94,10 @@ export default function CreateNewTour() {
     return name;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    await generateWalkingTour();
 
     const pointsOfInterest = parsePointsOfInterest(tourContent); // Parse points of interest from tourContent
 
@@ -107,23 +110,19 @@ export default function CreateNewTour() {
       difficulty: tour.difficulty,
       theme: tour.theme,
       tour_name: generateTourName(), // Generate the tour name
-      ordered_points_of_interest: pointsOfInterest,
+      ordered_points_of_interest: pointsOfInterest, // Use pointsOfInterest from tourContent
     };
 
-    axios
-      .post(`${config.apiUrl}/tours`, newTour, {
+    try {
+      const response = await axios.post(`${config.apiUrl}/tours`, newTour, {
         headers: {
           'Content-Type': 'application/json',
         },
-      })
-      .then((response) => {
-        console.log('Tour added successfully:', response.data);
-      })
-      .catch((error) => {
-        console.error('Error adding tour:', error);
       });
-
-    generateWalkingTour();
+      console.log('Tour added successfully:', response.data);
+    } catch (error) {
+      console.error('Error adding tour:', error);
+    }
   };
 
   return (
