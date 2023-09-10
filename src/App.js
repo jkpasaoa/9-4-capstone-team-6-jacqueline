@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 import Home from './ourComponents/Pages/Home';
-import About from './ourComponents/Pages/About';
+import About from './ourComponents/Pages/About/About';
 import NotFound from './ourComponents/Pages/NotFound';
 import CreateNewTour from './ourComponents/Pages/CreateNewTour';
 import TourIndex from './ourComponents/Pages/TourIndex';

@@ -1,0 +1,40 @@
+.home-content {
+  padding-top: 200px;
+}
+
+.about {
+  margin-bottom: 40px;
+}
+
+.about h1 {
+  font-weight: bold;
+}
+
+.about p {
+  margin-bottom: 10px;
+}
+
+.team {
+  margin-top: 40px;
+}
+
+.team h1 {
+  font-weight: bold;
+}
+
+.team-member-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.team-member-card h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.social-links a {
+  margin-right: 10px;
+  text-decoration: none;
+}
