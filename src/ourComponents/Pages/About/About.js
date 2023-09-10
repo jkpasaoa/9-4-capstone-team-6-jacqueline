@@ -66,28 +66,25 @@ function About() {
           </p>
         </div>
         <div className="team">
-          <h1>Meet the Team</h1>
-          <div className="team-members">
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              {teamMembers.map((member, index) => (
-                <div key={index} className="team-member-card">
-                  <img src={member.photo}
+          <h1 className="font-bold text-xl">Meet the Team</h1>
+          <div className="team-members mt-4">
+            {teamMembers.map((member, index) => (
+              <div key={index} className="team-member-card mb-6 p-4 bg-white rounded-lg shadow-lg">
+                <div className="relative w-40 h-44 mx-auto overflow-hidden rounded-full">
+                  <img
+                    src={member.photo}
                     alt="memberphoto"
-                    style={{
-                      width: '150px',
-                      height: '170px',
-                      borderRadius: '0px',
-                      objectFit: 'cover',
-                    }} />
-                  <h2 className="text-lg font-semibold">{member.name}</h2>
-                  <p>{member.bio}</p>
-                  <div className="social-links">
-                    <Link to={member.github}>GitHub</Link>
-                    <Link to={member.linkedin}>LinkedIn</Link>
-                  </div>
+                    className="w-full h-full object-cover absolute top-0 left-0"
+                  />
                 </div>
-              ))}
-            </div>
+                <h2 className="text-lg font-semibold mt-2">{member.name}</h2>
+                <p>{member.bio}</p>
+                <div className="social-links mt-2">
+                  <Link to={member.github}>GitHub</Link>
+                  <Link to={member.linkedin}>LinkedIn</Link>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
