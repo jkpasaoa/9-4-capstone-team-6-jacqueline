@@ -13,7 +13,7 @@ const config = {
 };
 
 // Define the fetchCityPhoto function
-const fetchCityPhoto = async (cityName) => {
+const fetchCityPhoto = async (cityName, setCityPhoto) => {
   try {
     const response = await axios.get(
       `https://api.unsplash.com/search/photos?query=${encodeURIComponent(cityName)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`
@@ -21,6 +21,8 @@ const fetchCityPhoto = async (cityName) => {
 
     // Extract the photo URL from the response
     const photoUrl = response.data.results[0]?.urls?.regular || '';
+
+    setCityPhoto(photoUrl); // Set the city photo URL in state
 
     return photoUrl;
   } catch (error) {
@@ -43,6 +45,8 @@ export default function CreateNewTour() {
 
   const [tourContent, setTourContent] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Added isLoading state
+  const [cityPhoto, setCityPhoto] = useState('');
+
 
   const parsePointsOfInterest = (generatedTour) => {
     const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
@@ -122,8 +126,8 @@ export default function CreateNewTour() {
 
     const pointsOfInterest = parsePointsOfInterest(generatedWalkingTour); // Parse points of interest from tourContent
 
-      // Fetch the city photo
-    const cityPhoto = await fetchCityPhoto(tour.city);
+    // Fetch the city photo
+    const cityPhoto = await fetchCityPhoto(tour.city, setCityPhoto);
 
     const newTour = {
       country: tour.country,
@@ -256,8 +260,13 @@ export default function CreateNewTour() {
           </div>
         </div>
       ) : (
+
         <div className="row">
           <div className="col">
+            {/* Display the city photo */}
+            {cityPhoto && (
+              <img src={cityPhoto} alt={`Photo of ${tour.city}`} style={{ width: '30%', display: 'block', margin: '0 auto' }} />
+            )}
             <textarea className="form-control" style={{ width: '20%' }} rows="10" value={tourContent} readOnly />
           </div>
         </div>
