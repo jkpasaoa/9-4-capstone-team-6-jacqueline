@@ -68,9 +68,10 @@ export default function CreateNewTour() {
       const pointsOfInterest = parsePointsOfInterest(generatedTour);
       console.log('Points of Interest: ', pointsOfInterest);
 
+      setIsLoading(false); // Set loading to false when loading is complete
+
       return generatedTour
 
-      setIsLoading(false); // Set loading to false when loading is complete
     } catch (error) {
       console.error('Error:', error);
       setTourContent('Error generating the walking tour. Please try again.');
