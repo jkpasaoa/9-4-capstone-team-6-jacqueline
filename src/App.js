@@ -7,6 +7,7 @@ import About from './ourComponents/Pages/About';
 import NotFound from './ourComponents/Pages/NotFound';
 import CreateNewTour from './ourComponents/Pages/CreateNewTour';
 import TourIndex from './ourComponents/Pages/TourIndex';
+import TourLive from './ourComponents/Pages/TourLive';
 
 
 import NavBar from './ourComponents/NavBar/NavBar';
@@ -29,6 +30,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/createnewtour" element={<CreateNewTour />} />
             <Route path="/tours" element={<TourIndex />} />
+            <Route path="/tourlive" element={<TourLive />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
 
