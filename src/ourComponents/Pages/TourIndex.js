@@ -65,7 +65,7 @@ export default function TourIndex() {
                             >
                                 <div className='card-content h-full flex flex-col justify-end'>
                                     <div className='card-footer rounded-b-[20px] bg-gray-800 bg-opacity-75 min-h-[100px] flex flex-col items-center justify-center'>
-                                        <h2 className='text-xl font-semibold text-white text-center'>{tour.city}, {tour.state ? `${tour.state},` : null} {tour.country}</h2>
+                                        <h1 className='text-xl font-bold text-white text-center'>{tour.city}, {tour.state ? `${tour.state},` : null} {tour.country}</h1>
                                         {index === expandedIndex && (
                                             <p className='mt-2 text-gray-300 text-center'>{<TourCard tour={tour} key={tour.id} />}</p>
                                         )
