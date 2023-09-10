@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import TourCard from './TourCard';
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -11,7 +10,7 @@ export default function TourIndex() {
     const [tours, setTours] = useState([])
     const [expandedIndex, setExpandedIndex] = useState(null)
 
-    const handleCardClick = (index) => {
+    const handleShowClick = (index) => {
         setExpandedIndex(index === expandedIndex ? -1 : index)
     }
 
@@ -59,7 +58,7 @@ export default function TourIndex() {
                                 initial='collapsed'
                                 animate={index === expandedIndex ? 'expanded' : 'collapsed'}
                                 transition={{ duration: 0.5 }}
-                                onClick={() => handleCardClick(index)}
+                                onClick={() => handleShowClick(index)}
                                 style={{
                                     backgroundImage: `url(${im})`,
                                 }}
@@ -73,7 +72,6 @@ export default function TourIndex() {
 
                                         }
                                     </div>
-
                                 </div>
                             </motion.div>
                         })
