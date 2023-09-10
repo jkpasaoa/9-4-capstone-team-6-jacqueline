@@ -50,33 +50,16 @@ function About() {
   return (
     <div className="home-content">
       <div>
-        <br />
-
-        <div className="about"><br /><br />
+        <div className="about">
           <h1 style={{ fontWeight: 'bold' }}>About the App: City Whisperer</h1>
           <br />
-
-          <p>
-            Overview:
-          </p>
-          <p>
-            Summary of App   , when it was made
-          </p>
-          <p>
-            Features:
-          </p>
-          <p>
-            Explain the App with Features
-          </p>
-          <p>
-            Explain special things app can do compared to other existing apps
-          </p>
-          <p>
-            Mission: What is the mission? what is it doing?
-          </p>
-          <p>
-            About the Developers:
-          </p>
+          <p>Overview:</p>
+          <p>Summary of App, when it was made</p>
+          <p>Features:</p>
+          <p>Explain the App with Features</p>
+          <p>Explain special things app can do compared to other existing apps</p>
+          <p>Mission: What is the mission? what is it doing?</p>
+          <p>About the Developers:</p>
           <p>
             City Whisperer is created by a team of dedicated individuals who firmly believe in the profound impact of...explain/describe the team
           </p>
