@@ -49,7 +49,7 @@ function About() {
   ];
 
   return (
-    <div className="home-content">
+    <div className="home-content flex justify-center items-center">
       <div>
         <div className="about">
           <h1 style={{ fontWeight: 'bold' }}>About the App: City Whisperer</h1>
@@ -67,21 +67,39 @@ function About() {
         </div>
         <div className="team">
           <h1 className="font-bold text-xl">Meet the Team</h1>
-          <div className="team-members mt-4">
+          <div className="team-members mt-4 justify-center items-center">
             {teamMembers.map((member, index) => (
-              <div key={index} className="team-member-card mb-6 p-4 bg-white rounded-lg shadow-lg">
-                <div className="relative w-40 h-44 mx-auto overflow-hidden rounded-full">
+              <div key={index} className="block max-w-[17rem] rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+                <div className="mt-8 relative overflow-hidden bg-cover bg-no-repeat">
                   <img
+                    className="rounded-t-lg"
                     src={member.photo}
-                    alt="memberphoto"
-                    className="w-full h-full object-cover absolute top-0 left-0"
+                    alt=""
                   />
                 </div>
-                <h2 className="text-lg font-semibold mt-2">{member.name}</h2>
-                <p>{member.bio}</p>
-                <div className="social-links mt-2">
-                  <Link to={member.github}>GitHub</Link>
-                  <Link to={member.linkedin}>LinkedIn</Link>
+                <div className="p-6">
+                  <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                    {member.name}
+                  </h5>
+                  <p className="text-base text-neutral-600 dark:text-neutral-200">
+                    {member.bio}
+                  </p>
+                </div>
+                <div className="p-6">
+                  <Link
+                    type="button"
+                    to={member.github}
+                    className="pointer-events-auto mr-5 inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
+                  >
+                    Github
+                  </Link>
+                  <Link
+                    type="button"
+                    to={member.linkedin}
+                    className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
+                  >
+                    Linkedin
+                  </Link>
                 </div>
               </div>
             ))}
