@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import videoUrl from '../../assets/LandingPageVid.mp4';
+import videoUrl from '../../assets/LandingPageVideo.mp4';
 
 export default function Home() {
   const [isMuted, setIsMuted] = useState(false);
