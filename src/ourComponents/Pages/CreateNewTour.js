@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import loadingAnimation from '../../assets/S_Loop 3(1).mp4'; // Import the loading animation
+import loadingAnimation from '../../assets/S-Loop_transnparent.gif'; // Import the loading animation
 
 const config = {
   openaiApiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -46,7 +46,7 @@ export default function CreateNewTour() {
         messages: [
           {
             role: 'system',
-            content: 'Create a self-guided walking tour, where the start point and end point are the same place, and where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only want the tour route and what points of interest are on that route. Do not give commentary, or directions for any point of interest.',
+            content: 'Create a self-guided walking tour, where the start point and end point are the same place, and where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only what a list of the points of interest that are on the tour route. Do not give commentary, or directions for any point of interest.',
           },
           {
             role: 'user',
@@ -96,6 +96,8 @@ export default function CreateNewTour() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const pointsOfInterest = parsePointsOfInterest(tourContent); // Parse points of interest from tourContent
+
     const newTour = {
       country: tour.country,
       region: tour.region,
@@ -104,7 +106,8 @@ export default function CreateNewTour() {
       duration: tour.duration,
       difficulty: tour.difficulty,
       theme: tour.theme,
-      name: generateTourName(), // Generate the tour name
+      tour_name: generateTourName(), // Generate the tour name
+      ordered_points_of_interest: pointsOfInterest,
     };
 
     axios
@@ -221,12 +224,10 @@ export default function CreateNewTour() {
         // Conditional rendering for loading animation
         <div className="row text-center">
           <div className="col">
-            <p>Loading...</p> {/* Add "Loading..." text here */}
+            <p>Loading...</p> 
+
             <div style={{ margin: '16px 0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <video autoPlay loop muted width="250" height="250">
-                <source src={loadingAnimation} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+            <img src={loadingAnimation} alt="Loading..." width="250" height="250" />
             </div>
           </div>
         </div>
@@ -239,5 +240,4 @@ export default function CreateNewTour() {
       )}
     </div>
   );
-
 }
