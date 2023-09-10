@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import videoUrl from '../../assets/LandingPageVid.mp4';
+// import videoUrl from '../../assets/LandingPageVid.mp4';
 
 export default function Home() {
   const [isMuted, setIsMuted] = useState(false);
@@ -14,7 +14,7 @@ export default function Home() {
         controls
         // comment out controls once finished mvp, it is used for testing
       >
-        <source src={videoUrl} type="video/mp4" />
+        {/* <source src={videoUrl} type="video/mp4" /> */}
         Your browser does not support the video tag.
       </video>
       <button onClick={toggleMute}>
