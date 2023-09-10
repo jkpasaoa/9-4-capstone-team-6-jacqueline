@@ -33,7 +33,6 @@ export default function CreateNewTour() {
       matches.push(match[1]);
     }
     return matches;
-    // console.log(matches)
   };
 
   const generateWalkingTour = async () => {
@@ -67,7 +66,9 @@ export default function CreateNewTour() {
       setTourContent(generatedTour);
 
       const pointsOfInterest = parsePointsOfInterest(generatedTour);
-      console.log('Points of Interest:', pointsOfInterest);
+      console.log('Points of Interest: ', pointsOfInterest);
+
+      return generatedTour
 
       setIsLoading(false); // Set loading to false when loading is complete
     } catch (error) {
@@ -97,9 +98,9 @@ export default function CreateNewTour() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await generateWalkingTour();
+    let generatedWalkingTour = await generateWalkingTour();
 
-    const pointsOfInterest = parsePointsOfInterest(tourContent); // Parse points of interest from tourContent
+    const pointsOfInterest = parsePointsOfInterest(generatedWalkingTour); // Parse points of interest from tourContent
 
     const newTour = {
       country: tour.country,
