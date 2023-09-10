@@ -33,7 +33,7 @@ export default function CreateNewTour() {
       matches.push(match[1]);
     }
     return matches;
-    console.log(matches)
+    // console.log(matches)
   };
 
   const generateWalkingTour = async () => {
@@ -213,20 +213,20 @@ export default function CreateNewTour() {
         </div>
       </div>
       <div className="row mb-3">
-  <div className="col text-center">
-    <button className="btn btn-primary" onClick={handleSubmit} disabled={!tour.city || isLoading}>
-      Generate Walking Tour
-    </button>
-  </div>
-</div>
-{isLoading ? (
+        <div className="col text-center">
+          <button className="btn btn-primary" onClick={handleSubmit} disabled={!tour.city || isLoading}>
+            Generate Walking Tour
+          </button>
+        </div>
+      </div>
+      {isLoading ? (
         // Conditional rendering for loading animation
         <div className="row text-center">
           <div className="col">
-            <p>Loading...</p> 
+            <p>Loading...</p>
 
             <div style={{ margin: '16px 0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <img src={loadingAnimation} alt="Loading..." width="250" height="250" />
+              <img src={loadingAnimation} alt="Loading..." width="250" height="250" />
             </div>
           </div>
         </div>
