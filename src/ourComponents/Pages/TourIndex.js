@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import TourCard from './TourCard';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import im from '../../assets/S_LogoWhite.png'
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -43,9 +42,9 @@ export default function TourIndex() {
             <br></br>
             <br></br>
             <br></br>
-            <section className='py-16 pb-[300px] bg-gradient-to-r from-purple-800 to-indigo-800'>
+            <section className='py-16 pb-[300px] bg-gradient-to-r from-beige-800 to-white-800'>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-                    <h1 className='text-3xl font-extrabold text-white'>TOURS</h1>
+                    <h1 className='text-3xl font-extrabold'>TOURS</h1>
                     <p className='mt-4 text-xl text-gray-300'></p>
                 </div>
                 <div className='mt-12 flex flex-col md:flex-row justify-center items-center gap-5'>
@@ -60,7 +59,7 @@ export default function TourIndex() {
                                 transition={{ duration: 0.5 }}
                                 onClick={() => handleShowClick(index)}
                                 style={{
-                                    backgroundImage: `url(${im})`,
+                                    backgroundImage: `url(${tour.image_url})`,
                                 }}
                             >
                                 <div className='card-content h-full flex flex-col justify-end'>
