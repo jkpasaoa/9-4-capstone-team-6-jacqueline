@@ -16,6 +16,10 @@
   height: 100%;
 }
 
+.bio-paragraph {
+  margin: 0px 45px 10px 80px;
+}
+
 .about {
   margin-bottom: 40px;
 }

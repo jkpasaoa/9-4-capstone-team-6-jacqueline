@@ -11,7 +11,7 @@ function About() {
 
   const teamMembers = [
     {
-      name: "Joseph Rodriquez",
+      name: "Joseph Rodriguez",
       photo: JosephPhoto,
       bio: `I am Joseph Rodriguez, a compassionate and driven junior full stack developer. With a passion for technology and empathy for users, I excel in creating innovative solutions. Continuously seeking growth and learning, I aim to make a positive impact in the ever-changing world of software development.`,
       github: "https://github.com/jRodriguezIV",
@@ -92,7 +92,10 @@ function About() {
           <div className="team-members mt-4 justify-center items-center">
             {teamMembers.map((member, index) => (
               <div key={index} className="team-member-card">
-                <div className="mt-8 relative overflow-hidden bg-cover bg-no-repeat centered-photo">
+                   <h5 className="text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                    {member.name}
+                  </h5>
+                <div className="mt-4 relative overflow-hidden bg-cover bg-no-repeat centered-photo">
                   <motion.img
                     className="rounded-t-lg medium-photo"
                     src={member.photo}
@@ -102,16 +105,16 @@ function About() {
                     transition={{ duration: 0.5 }} // Animation duration
                   />
                 </div>
-                <div className="p-6">
-                  <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                <div className="p-4">
+                  {/* <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
                     {member.name}
-                  </h5>
+                  </h5> */}
                   <div
                     ref={scrollContainerRef}
                     className="scrollable-content" //custom styling for scrolling content
                   >
                     <motion.p
-                      className="text-base text-neutral-600 dark:text-neutral-200"
+                      className="text-base text-neutral-600 dark:text-neutral-200 bio-paragraph"
                       initial={{ opacity: 0, y: 100 }}
                       animate={scrollControls}
                       transition={{ duration: 0.5, delay: 0.2 }}
