@@ -7,7 +7,7 @@ export default function TourCard({ tour }) {
             <span>Difficulty: {tour.difficulty}</span>
             <hr />
             <br />
-            <p><span className='text-xl font-semibold text-white text-center'><Link to={`tours/${tour.id}`}>Take Me There ➡</Link></span></p>
+            <p><span className='text-xl font-semibold text-white text-center'><Link to={`/tours/${tour.id}`}>Take Me There ➡</Link></span></p>
             <br />
         </div>
     )
