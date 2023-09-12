@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import video1 from '../../assets/LandingPageVideo.mp4';
 import video2 from '../../assets/Page2_WebPage_Landscape.mp4'
 import { Carousel, initTE} from 'tw-elements'
