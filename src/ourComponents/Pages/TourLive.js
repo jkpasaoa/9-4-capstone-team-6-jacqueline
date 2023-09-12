@@ -36,8 +36,9 @@ export default function Tour() {
 
     return (
         <div className="TourLive-content">
-            <h1 className='text-3xl font-extrabold'>Welcome to your {tour.region ? tour.region : tour.city} {tour.duration} {tour.theme} Tour</h1>
+            <h1 className='text-3xl font-extrabold'>Welcome to your {tour.tour_name}</h1>
             {/* <p>Created on { }</p> */}
+            <img src={tour.image_url} alt={tour.city} />
             <div>
                 <Map />
             </div>
