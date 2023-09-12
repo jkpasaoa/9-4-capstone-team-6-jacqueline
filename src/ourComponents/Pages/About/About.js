@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { motion, useAnimation, useViewportScroll } from 'framer-motion';
 import JosephPhoto from '../../../assets/Joseph.jpg';
 import RaydelysPhoto from '../../../assets/Raydelys.jpg';
-import '../About/About.css';
 import JacquelinePhoto from '../../../assets/Jacqueline.jpg';
 import MarkPhoto from '../../../assets/Mark.jpg';
 import githubJPEG from '../../../assets/github.jpeg'
 import linkedinPNG from '../../../assets/linkedin.png'
+import '../About/About.css';
 
 function About() {
 
@@ -106,9 +106,6 @@ function About() {
                   />
                 </div>
                 <div className="p-4">
-                  {/* <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                    {member.name}
-                  </h5> */}
                   <div
                     ref={scrollContainerRef}
                     className="scrollable-content" //custom styling for scrolling content
