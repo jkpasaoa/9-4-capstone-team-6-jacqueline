@@ -1,14 +1,40 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import loadingAnimation from '../../assets/S-Loop_transnparent.gif'; // Import the loading animation
+
+// Sanitizer function to prevent SQL injection
+function sanitizeInput(input) {
+  // Escape single quotes by replacing them with double single quotes
+  return input.replace(/'/g, "''");
+}
 
 const config = {
   openaiApiKey: process.env.REACT_APP_OPENAI_API_KEY,
   apiUrl: process.env.REACT_APP_API_URL,
   googleApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
   unsplashApiKey: process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY,
-  unsplashApiSecretKey: process.env.REACT_APP_UNSPLASH_API_SECRET_KEY,
+  // unsplashApiSecretKey: process.env.REACT_APP_UNSPLASH_API_SECRET_KEY,
+};
+
+// Define the fetchCityPhoto function
+const fetchCityPhoto = async (cityName, setCityPhoto) => {
+  try {
+    const response = await axios.get(
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(cityName)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`
+    );
+
+    // Extract the photo URL from the response
+    const photoUrl = response.data.results[0]?.urls?.regular || '';
+
+    setCityPhoto(photoUrl); // Set the city photo URL in state
+
+    return photoUrl;
+  } catch (error) {
+    console.error('Error fetching city photo:', error);
+    return ''; // Return an empty string in case of an error
+  }
 };
 
 export default function CreateNewTour() {
@@ -24,6 +50,8 @@ export default function CreateNewTour() {
 
   const [tourContent, setTourContent] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Added isLoading state
+  const [cityPhoto, setCityPhoto] = useState('');
+
 
   const parsePointsOfInterest = (generatedTour) => {
     const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
@@ -39,18 +67,30 @@ export default function CreateNewTour() {
     try {
       setIsLoading(true); // Set loading to true
 
-      const prompt = `Walking Tour in ${tour.city}, ${tour.region}, ${tour.state}, ${tour.country}\nTour Duration: ${tour.duration}\nDifficulty Level: ${tour.difficulty}\nTour Theme: ${tour.theme},`; // Updated: theme instead of tourType
+      // const prompt = `Walking Tour in ${tour.city}, ${tour.region}, ${tour.state}, ${tour.country}\nTour Duration: ${tour.duration}\nDifficulty Level: ${tour.difficulty}\nTour Theme: ${tour.theme},`; // Updated: theme instead of tourType
+
+            // Sanitize the input values
+            const sanitizedCity = sanitizeInput(tour.city);
+            const sanitizedRegion = sanitizeInput(tour.region);
+            const sanitizedState = sanitizeInput(tour.state);
+            const sanitizedCountry = sanitizeInput(tour.country);
+            const sanitizedDuration = sanitizeInput(tour.duration);
+            const sanitizedDifficulty = sanitizeInput(tour.difficulty);
+            const sanitizedTheme = sanitizeInput(tour.theme);
+      
+            const prompt = `Walking Tour in ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme},`;
+      
 
       const requestBody = {
         model: 'gpt-3.5-turbo',
         messages: [
           {
             role: 'system',
-            content: 'Create a self-guided walking tour, where the start point and end point are the same place, and where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only what a list of the points of interest that are on the tour route. Do not give commentary, or directions for any point of interest.',
+            content: 'Create a self-guided walking tour.   It is imperative  that the start point and end point are the same place.  A person can start somewhere and follow a route from the start point to each point of interest and the last point of interest must be the same as the first point of interest. I only what a list of the points of interest that are on the tour route. Do not give commentary, or directions for any point of interest.',
           },
           {
             role: 'user',
-            content: prompt,
+            content: `Start and finish the tour at ${prompt}`,
           },
         ],
       };
@@ -66,7 +106,12 @@ export default function CreateNewTour() {
       setTourContent(generatedTour);
 
       const pointsOfInterest = parsePointsOfInterest(generatedTour);
-      console.log('Points of Interest: ', pointsOfInterest);
+
+      // Sanitize each point of interest
+      const sanitizedPointsOfInterest = pointsOfInterest.map(sanitizeInput);
+
+
+      console.log('Points of Interest: ', sanitizedPointsOfInterest);
 
       setIsLoading(false); // Set loading to false when loading is complete
 
@@ -101,18 +146,32 @@ export default function CreateNewTour() {
 
     let generatedWalkingTour = await generateWalkingTour();
 
-    const pointsOfInterest = parsePointsOfInterest(generatedWalkingTour); // Parse points of interest from tourContent
+    // Parse and sanitize points of interest
+    const pointsOfInterest = parsePointsOfInterest(generatedWalkingTour); 
+    const sanitizedPointsOfInterest = pointsOfInterest.map(sanitizeInput);
+
+
+    // Fetch the city photo
+    const cityPhoto = await fetchCityPhoto(tour.city, setCityPhoto);
 
     const newTour = {
-      country: tour.country,
-      region: tour.region,
-      state: tour.state,
-      city: tour.city,
-      duration: tour.duration,
-      difficulty: tour.difficulty,
-      theme: tour.theme,
+      // country: tour.country,
+      // region: tour.region,
+      // state: tour.state,
+      // city: tour.city,
+      // duration: tour.duration,
+      // difficulty: tour.difficulty,
+      // theme: tour.theme,
+      country: sanitizeInput(tour.country),
+      region: sanitizeInput(tour.region),
+      state: sanitizeInput(tour.state),
+      city: sanitizeInput(tour.city),
+      duration: sanitizeInput(tour.duration),
+      difficulty: sanitizeInput(tour.difficulty),
+      theme: sanitizeInput(tour.theme),
       tour_name: generateTourName(), // Generate the tour name
-      ordered_points_of_interest: pointsOfInterest, // Use pointsOfInterest from tourContent
+      image_url: cityPhoto, // Include the city photo URL
+      ordered_points_of_interest: sanitizedPointsOfInterest, // Use pointsOfInterest from tourContent
     };
 
     try {
@@ -127,6 +186,8 @@ export default function CreateNewTour() {
     }
   };
 
+
+  
   return (
     <div className="container mt-5" style={{ paddingTop: '160px' }}>
       <h1 className="text-center mb-4">Walking Tour Generator</h1>
@@ -233,12 +294,27 @@ export default function CreateNewTour() {
           </div>
         </div>
       ) : (
+
         <div className="row">
           <div className="col">
+            {/* Display the city photo */}
+            {cityPhoto && (
+              <img src={cityPhoto} alt={`${tour.city}`} style={{ width: '30%', display: 'block', margin: '0 auto' }} />
+            )}
             <textarea className="form-control" style={{ width: '20%' }} rows="10" value={tourContent} readOnly />
           </div>
         </div>
       )}
+
+      {/* "Start Tour" button */}
+      <div className="row">
+        <div className="col text-center">
+          <Link to="/tourlive">
+            <button className="btn btn-success">Start Tour</button>
+          </Link>
+        </div>
+      </div>
+
     </div>
   );
 }
