@@ -77,10 +77,7 @@ function About() {
       <div>
         <div className="about">
           <div className="app-summary-container">
-            <h1 style={{ fontWeight: 'bold' }}>About the App: City Whisperer</h1>
-            <br />
-            <p>Overview:</p>
-            <p>Summary of App, when it was made</p>
+            <p><strong>City Whisperer</strong> introduced in August and September 2023 as a capstone project, redefines the way travelers experience cities. This app empowers tourists with pre-planned walking routes and points of interest, complemented by audio commentary, facilitating efficient and immersive city exploration. By providing valuable insights and a user-friendly interface, City Whisperer enhances the overall travel experience, enabling users to make the most of their visits while enjoying the freedom of self-guided tours. It's the perfect companion for travelers seeking both convenience and adventure on their journeys.</p>
             <p>Features:</p>
             <p>Explain the App with Features</p>
             <p>Explain special things app can do compared to other existing apps</p>
