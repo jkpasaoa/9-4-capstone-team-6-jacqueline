@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Map from '../Map/Map.js'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './Pages.css';
 import { useEffect, useState } from 'react';
 import PointOfInterestCard from './PointOfInterestCard.js';
@@ -40,14 +40,17 @@ export default function Tour() {
             {/* <p>Created on { }</p> */}
             <div>
                 <Map />
-                <ul>
-                    {
-                        pointsOfInterest.map((poi, index) => {
-                            return <PointOfInterestCard poi={poi} key={index} />
-                        })
-                    }
-                </ul>
             </div>
+            <ul>
+                {
+                    pointsOfInterest.map((poi, index) => {
+                        return <PointOfInterestCard poi={poi} key={index} />
+                    })
+                }
+            </ul>
+            <p>
+                <button><Link to='/tours'>🔙 ALL TOURS</Link></button>
+            </p>
         </div>
     )
 }
