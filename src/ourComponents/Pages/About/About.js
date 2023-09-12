@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { motion, useAnimation, useViewportScroll } from 'framer-motion';
 import JosephPhoto from '../../../assets/Joseph.jpg';
 import RaydelysPhoto from '../../../assets/Raydelys.jpg';
-import '../About/About.css';
 import JacquelinePhoto from '../../../assets/Jacqueline.jpg';
 import MarkPhoto from '../../../assets/Mark.jpg';
 import githubJPEG from '../../../assets/github.jpeg'
 import linkedinPNG from '../../../assets/linkedin.png'
+import '../About/About.css';
 
 function About() {
 
@@ -44,7 +44,7 @@ function About() {
     {
       name: "Jacqueline Pasaoa",
       photo: JacquelinePhoto,
-      bio: `Jacqueline is full stack developer that studied under Pursuit. She underwent comprehensive training to master both front-end and back-end technologies. She loves to travel, eat ice cream, and wants to learn more coding languages. And hopes to add more cities to travel to in the near future.`,
+      bio: `I am a full stack developer that studied under Pursuit. I underwent comprehensive training to master both front-end and back-end technologies. I love to travel, eat ice cream, and to learn more coding languages. I hope to travel to more cities from my travel bucketlist in the near future.`,
       github: "https://github.com/jkpasaoa",
       linkedin: "https://www.linkedin.com/in/jacquelinepasaoa/",
     },
@@ -76,18 +76,16 @@ function About() {
     <div className="home-content flex justify-center items-center">
       <div>
         <div className="about">
-          <h1 style={{ fontWeight: 'bold' }}>About the App: City Whisperer</h1>
-          <br />
-          <p>Overview:</p>
-          <p>Summary of App, when it was made</p>
-          <p>Features:</p>
-          <p>Explain the App with Features</p>
-          <p>Explain special things app can do compared to other existing apps</p>
-          <p>Mission: What is the mission? what is it doing?</p>
-          <p>About the Developers:</p>
-          <p>
-            City Whisperer is created by a team of dedicated individuals who firmly believe in the profound impact of...explain/describe the team
-          </p>
+          <div className="app-summary-container">
+            <p><strong>City Whisperer</strong> introduced in August and September 2023 as a capstone project, redefines the way travelers experience cities. This app empowers tourists with pre-planned walking routes and points of interest, complemented by audio commentary, facilitating efficient and immersive city exploration. By providing valuable insights and a user-friendly interface, City Whisperer enhances the overall travel experience, enabling users to make the most of their visits while enjoying the freedom of self-guided tours. It's the perfect companion for travelers seeking both convenience and adventure on their journeys.</p>
+            <p><strong>City Whisperer Features:</strong></p>
+            <p>City Whisperer provides AI-generated walking tours, customizable filters, and seamless Google Maps integration, you can explore cities like never before. Enjoy audio commentary in multiple languages through Text-to-Speech (TTS) and experience secure and convenient login options.</p>
+            <strong>The Mission</strong>
+            <p>At City Whisperer, our mission is to empower travelers to experience cities like never before. We believe in enhancing the journey by offering self-guided walking tours that are not only informative but also deeply personalized. Our goal is to provide users with the freedom to explore at their own pace, uncover hidden gems, and connect with the culture and history of the places they visit. We're dedicated to curating an ever-growing library of AI-generated tours, fostering a sense of discovery, and making travel more accessible and enriching for everyone. City Whisperer is on a mission to redefine city exploration, one step at a time.</p>
+            <p><strong>- About the Developers -</strong></p>
+            <p>The City Whisperer development team is a dynamic and passionate group of full-stack developers, each bringing their unique skills and backgrounds to the project. Together, this dedicated team is committed to redefining city exploration through AI-generated walking tours, making travel more enriching and accessible for all.
+            </p>
+          </div>
         </div>
         <div className="team">
           <h1 className="font-bold text-xl">Meet the Team</h1>
@@ -108,9 +106,6 @@ function About() {
                   />
                 </div>
                 <div className="p-4">
-                  {/* <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                    {member.name}
-                  </h5> */}
                   <div
                     ref={scrollContainerRef}
                     className="scrollable-content" //custom styling for scrolling content
@@ -131,10 +126,10 @@ function About() {
                       transition={{ duration: 0.5, delay: 0.4 }} // Animation duration and delay
                     >
                       <Link
-                         to={member.github}
-                         className="pointer-events-auto mr-5 inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
-                       >
-                         <img src={githubJPEG} alt="github Logo" width={36} />
+                        to={member.github}
+                        className="pointer-events-auto mr-5 inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
+                      >
+                        <img src={githubJPEG} alt="github Logo" width={36} />
                       </Link>
                       <Link
                         to={member.linkedin}
