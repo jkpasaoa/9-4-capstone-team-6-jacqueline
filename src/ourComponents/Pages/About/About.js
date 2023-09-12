@@ -44,7 +44,7 @@ function About() {
     {
       name: "Jacqueline Pasaoa",
       photo: JacquelinePhoto,
-      bio: `Jacqueline is full stack developer that studied under Pursuit. She underwent comprehensive training to master both front-end and back-end technologies. She loves to travel, eat ice cream, and wants to learn more coding languages. And hopes to add more cities to travel to in the near future.`,
+      bio: `I am a full stack developer that studied under Pursuit. I underwent comprehensive training to master both front-end and back-end technologies. I love to travel, eat ice cream, and to learn more coding languages. I hope to travel to more cities from my travel bucketlist in the near future.`,
       github: "https://github.com/jkpasaoa",
       linkedin: "https://www.linkedin.com/in/jacquelinepasaoa/",
     },
