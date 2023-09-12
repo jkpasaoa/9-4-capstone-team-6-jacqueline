@@ -4,10 +4,9 @@ import { Link, useParams } from 'react-router-dom';
 import './Pages.css';
 import { useEffect, useState } from 'react';
 import PointOfInterestCard from './PointOfInterestCard.js';
+import './Pages.css'; 
 
 const API = process.env.REACT_APP_API_URL;
-
-import './Pages.css'; 
 
 export default function Tour() {
     const [tour, setTour] = useState({})
