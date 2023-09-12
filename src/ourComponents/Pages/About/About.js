@@ -82,9 +82,8 @@ function About() {
             <p>City Whisperer provides AI-generated walking tours, customizable filters, and seamless Google Maps integration, you can explore cities like never before. Enjoy audio commentary in multiple languages through Text-to-Speech (TTS) and experience secure and convenient login options.</p>
             <strong>The Mission</strong>
             <p>At City Whisperer, our mission is to empower travelers to experience cities like never before. We believe in enhancing the journey by offering self-guided walking tours that are not only informative but also deeply personalized. Our goal is to provide users with the freedom to explore at their own pace, uncover hidden gems, and connect with the culture and history of the places they visit. We're dedicated to curating an ever-growing library of AI-generated tours, fostering a sense of discovery, and making travel more accessible and enriching for everyone. City Whisperer is on a mission to redefine city exploration, one step at a time.</p>
-            <p>About the Developers:</p>
-            <p>
-              City Whisperer is created by a team of dedicated individuals who firmly believe in the profound impact of...explain/describe the team
+            <p><strong>- About the Developers -</strong></p>
+            <p>The City Whisperer development team is a dynamic and passionate group of full-stack developers, each bringing their unique skills and backgrounds to the project. Together, this dedicated team is committed to redefining city exploration through AI-generated walking tours, making travel more enriching and accessible for all.
             </p>
           </div>
         </div>
