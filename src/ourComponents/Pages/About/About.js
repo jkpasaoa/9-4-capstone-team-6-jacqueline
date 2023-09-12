@@ -6,6 +6,8 @@ import RaydelysPhoto from '../../../assets/Raydelys.jpg';
 import '../About/About.css';
 import JacquelinePhoto from '../../../assets/Jacqueline.jpg';
 import MarkPhoto from '../../../assets/Mark.jpg';
+import githubJPEG from '../../../assets/github.jpeg'
+import linkedinPNG from '../../../assets/linkedin.png'
 
 function About() {
 
@@ -92,9 +94,9 @@ function About() {
           <div className="team-members mt-4 justify-center items-center">
             {teamMembers.map((member, index) => (
               <div key={index} className="team-member-card">
-                   <h5 className="text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                    {member.name}
-                  </h5>
+                <h5 className="text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                  {member.name}
+                </h5>
                 <div className="mt-4 relative overflow-hidden bg-cover bg-no-repeat centered-photo">
                   <motion.img
                     className="rounded-t-lg medium-photo"
@@ -129,16 +131,16 @@ function About() {
                       transition={{ duration: 0.5, delay: 0.4 }} // Animation duration and delay
                     >
                       <Link
-                        to={member.github}
-                        className="pointer-events-auto mr-5 inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
-                      >
-                        Github
+                         to={member.github}
+                         className="pointer-events-auto mr-5 inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
+                       >
+                         <img src={githubJPEG} alt="github Logo" width={36} />
                       </Link>
                       <Link
                         to={member.linkedin}
                         className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
                       >
-                        Linkedin
+                        <img src={linkedinPNG} alt="LinkedIn Logo" width={40} />
                       </Link>
                     </motion.div>
                   </div>
