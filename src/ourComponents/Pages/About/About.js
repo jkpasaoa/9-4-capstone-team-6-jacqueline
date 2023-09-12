@@ -74,7 +74,7 @@ function About() {
 
   return (
     <div className="home-content flex justify-center items-center">
-      <div>
+      <div className="container mx-auto px-4">
         <div className="about">
           <div className="app-summary-container">
             <p><strong>City Whisperer</strong> introduced in August and September 2023 as a capstone project, redefines the way travelers experience cities. This app empowers tourists with pre-planned walking routes and points of interest, complemented by audio commentary, facilitating efficient and immersive city exploration. By providing valuable insights and a user-friendly interface, City Whisperer enhances the overall travel experience, enabling users to make the most of their visits while enjoying the freedom of self-guided tours. It's the perfect companion for travelers seeking both convenience and adventure on their journeys.</p>
@@ -87,9 +87,9 @@ function About() {
             </p>
           </div>
         </div>
-        <div className="team">
-          <h1 className="font-bold text-xl">Meet the Team</h1>
-          <div className="team-members mt-4 justify-center items-center">
+        <div className="team-container flex flex-col items-center">
+          <h1 className="font-bold text-xl text-center my-4">Meet the Team</h1>
+          <div className="team-members mt-4">
             {teamMembers.map((member, index) => (
               <div key={index} className="team-member-card">
                 <h5 className="text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">

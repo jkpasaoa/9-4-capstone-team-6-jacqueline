@@ -1,18 +1,16 @@
 .home-content {
-  padding-top: 0px;
+  padding-top: 125px;
 }
 
 .app-summary-container {
-  margin: 150px 150px 25px 150px;
+  margin: 0px 150px 25px 150px;
 }
 
-/* medium-sized photos */
 .medium-photo {
   width: 200px;
-  height: auto; /* Maintain aspect ratio */
+  height: auto;
 }
 
-/* centering photos */
 .centered-photo {
   display: flex;
   justify-content: center;
@@ -26,7 +24,6 @@
 
 .about {
   margin: 0px;
-  margin-bottom: 40px;
   text-align: left;
 }
 
@@ -34,13 +31,8 @@
   font-weight: bold;
 }
 
-.about p {
-  margin-bottom: 10px;
-}
-
 .team {
   margin-top: 40px;
-  margin: 0px 400px 0px;
 }
 
 .team h1 {
@@ -52,6 +44,8 @@
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .team-member-card h2 {
@@ -62,4 +56,28 @@
 .social-links a {
   margin-right: 10px;
   text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+  .app-summary-container {
+    margin: 50px 50px 15px 50px;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-summary-container {
+    margin: 20px 20px 10px 20px;
+  }
+
+  .team {
+    margin: 0;
+  }
+}
+
+.team-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* height: 100vh; */
 }

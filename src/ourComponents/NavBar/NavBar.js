@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './NavBar.css';
 import logo from '../../assets/OfficialCityWhispererLogo.png';
+import './NavBar.css';
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
