@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../About/About.css'
-// import TeamMemberCard from "./TeamMemberCard";
-import JosephPhoto from "../../../assets/Joseph.jpg"
-import RaydelysPhoto from "../../../assets/Raydelys.jpg"
-import JacquelinePhoto from "../../../assets/Jacqueline.jpg"
-import MarkPhoto from "../../../assets/Mark.jpg"
+import { motion, useAnimation, useViewportScroll } from 'framer-motion';
+import JosephPhoto from '../../../assets/Joseph.jpg';
+import RaydelysPhoto from '../../../assets/Raydelys.jpg';
+import '../About/About.css';
+import JacquelinePhoto from '../../../assets/Jacqueline.jpg';
+import MarkPhoto from '../../../assets/Mark.jpg';
+import githubJPEG from '../../../assets/github.jpeg'
+import linkedinPNG from '../../../assets/linkedin.png'
 
 function About() {
 
   const teamMembers = [
     {
-      name: "Joseph Rodriquez",
+      name: "Joseph Rodriguez",
       photo: JosephPhoto,
       bio: `I am Joseph Rodriguez, a compassionate and driven junior full stack developer. With a passion for technology and empathy for users, I excel in creating innovative solutions. Continuously seeking growth and learning, I aim to make a positive impact in the ever-changing world of software development.`,
       github: "https://github.com/jRodriguezIV",
@@ -47,6 +49,28 @@ function About() {
       linkedin: "https://www.linkedin.com/in/jacquelinepasaoa/",
     },
   ];
+  const { scrollY } = useViewportScroll();
+
+  const scrollContainerRef = useRef(null);
+  const scrollControls = useAnimation();
+
+  useEffect(() => {
+    const scrollTrigger = 200;
+
+    const handleScroll = () => {
+      if (scrollY.get() >= scrollTrigger) {
+        scrollControls.start({ opacity: 1, y: 0 }); // animation when scrolled past the trigger point
+      } else {
+        scrollControls.start({ opacity: 0, y: 100 }); // Reset animation when not scrolled past the trigger point
+      }
+    };
+
+    scrollY.onChange(handleScroll);
+
+    return () => {
+      scrollY.clearListeners();
+    };
+  }, [scrollControls, scrollY]);
 
   return (
     <div className="home-content flex justify-center items-center">
@@ -69,37 +93,57 @@ function About() {
           <h1 className="font-bold text-xl">Meet the Team</h1>
           <div className="team-members mt-4 justify-center items-center">
             {teamMembers.map((member, index) => (
-              <div key={index} className="block max-w-[17rem] rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-                <div className="mt-8 relative overflow-hidden bg-cover bg-no-repeat">
-                  <img
-                    className="rounded-t-lg"
+              <div key={index} className="team-member-card">
+                <h5 className="text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                  {member.name}
+                </h5>
+                <div className="mt-4 relative overflow-hidden bg-cover bg-no-repeat centered-photo">
+                  <motion.img
+                    className="rounded-t-lg medium-photo"
                     src={member.photo}
-                    alt=""
+                    alt={member.name}
+                    initial={{ opacity: 0, y: 100 }} // Initial animation state
+                    animate={scrollControls} // the animation controls
+                    transition={{ duration: 0.5 }} // Animation duration
                   />
                 </div>
-                <div className="p-6">
-                  <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                <div className="p-4">
+                  {/* <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
                     {member.name}
-                  </h5>
-                  <p className="text-base text-neutral-600 dark:text-neutral-200">
-                    {member.bio}
-                  </p>
-                </div>
-                <div className="p-6">
-                  <Link
-                    type="button"
-                    to={member.github}
-                    className="pointer-events-auto mr-5 inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
+                  </h5> */}
+                  <div
+                    ref={scrollContainerRef}
+                    className="scrollable-content" //custom styling for scrolling content
                   >
-                    Github
-                  </Link>
-                  <Link
-                    type="button"
-                    to={member.linkedin}
-                    className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
-                  >
-                    Linkedin
-                  </Link>
+                    <motion.p
+                      className="text-base text-neutral-600 dark:text-neutral-200 bio-paragraph"
+                      initial={{ opacity: 0, y: 100 }}
+                      animate={scrollControls}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      style={{ textAlign: 'left' }}
+                    >
+                      {member.bio}
+                    </motion.p>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }} // Initial animation state
+                      animate={scrollControls} // animation controls
+                      transition={{ duration: 0.5, delay: 0.4 }} // Animation duration and delay
+                    >
+                      <Link
+                         to={member.github}
+                         className="pointer-events-auto mr-5 inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
+                       >
+                         <img src={githubJPEG} alt="github Logo" width={36} />
+                      </Link>
+                      <Link
+                        to={member.linkedin}
+                        className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
+                      >
+                        <img src={linkedinPNG} alt="LinkedIn Logo" width={40} />
+                      </Link>
+                    </motion.div>
+                  </div>
                 </div>
               </div>
             ))}

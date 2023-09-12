@@ -2,6 +2,24 @@
   padding-top: 200px;
 }
 
+/* medium-sized photos */
+.medium-photo {
+  width: 200px;
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* centering photos */
+.centered-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.bio-paragraph {
+  margin: 0px 45px 10px 80px;
+}
+
 .about {
   margin-bottom: 40px;
 }
