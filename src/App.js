@@ -21,19 +21,17 @@ function App() {
       <Router>
         <NavBar />
         <main>
-
-        <div className="content-container">
-        {/* Check App.css for content-container for padding */}
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/createnewtour" element={<CreateNewTour />} />
-            <Route path="/tours" element={<TourIndex />} />
-            <Route path="/tourlive" element={<TourLive />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-
+          <div className="content-container">
+            {/* Check App.css for content-container for padding */}
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/createnewtour" element={<CreateNewTour />} />
+              <Route path="/tours" element={<TourIndex />} />
+              <Route path="/tours/:id" element={<TourLive />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </div>
         </main>
         <Footer />
