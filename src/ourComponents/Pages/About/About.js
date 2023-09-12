@@ -80,8 +80,8 @@ function About() {
             <p><strong>City Whisperer</strong> introduced in August and September 2023 as a capstone project, redefines the way travelers experience cities. This app empowers tourists with pre-planned walking routes and points of interest, complemented by audio commentary, facilitating efficient and immersive city exploration. By providing valuable insights and a user-friendly interface, City Whisperer enhances the overall travel experience, enabling users to make the most of their visits while enjoying the freedom of self-guided tours. It's the perfect companion for travelers seeking both convenience and adventure on their journeys.</p>
             <p><strong>City Whisperer Features:</strong></p>
             <p>City Whisperer provides AI-generated walking tours, customizable filters, and seamless Google Maps integration, you can explore cities like never before. Enjoy audio commentary in multiple languages through Text-to-Speech (TTS) and experience secure and convenient login options.</p>
-            <p>Explain special things app can do compared to other existing apps</p>
-            <p>Mission: What is the mission? what is it doing?</p>
+            <strong>The Mission</strong>
+            <p>At City Whisperer, our mission is to empower travelers to experience cities like never before. We believe in enhancing the journey by offering self-guided walking tours that are not only informative but also deeply personalized. Our goal is to provide users with the freedom to explore at their own pace, uncover hidden gems, and connect with the culture and history of the places they visit. We're dedicated to curating an ever-growing library of AI-generated tours, fostering a sense of discovery, and making travel more accessible and enriching for everyone. City Whisperer is on a mission to redefine city exploration, one step at a time.</p>
             <p>About the Developers:</p>
             <p>
               City Whisperer is created by a team of dedicated individuals who firmly believe in the profound impact of...explain/describe the team
