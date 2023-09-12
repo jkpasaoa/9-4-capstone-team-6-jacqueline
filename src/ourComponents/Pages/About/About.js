@@ -92,7 +92,7 @@ function About() {
           <div className="team-members mt-4">
             {teamMembers.map((member, index) => (
               <div key={index} className="team-member-card">
-                <h5 className="text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                <h5 className="text-xl font-medium leading-tight text-neutral-800">
                   {member.name}
                 </h5>
                 <div className="mt-4 relative overflow-hidden bg-cover bg-no-repeat centered-photo">
@@ -111,7 +111,7 @@ function About() {
                     className="scrollable-content" //custom styling for scrolling content
                   >
                     <motion.p
-                      className="text-base text-neutral-600 dark:text-neutral-200 bio-paragraph"
+                      className="text-base text-neutral-600 bio-paragraph"
                       initial={{ opacity: 0, y: 100 }}
                       animate={scrollControls}
                       transition={{ duration: 0.5, delay: 0.2 }}
@@ -127,12 +127,16 @@ function About() {
                     >
                       <Link
                         to={member.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="pointer-events-auto mr-5 inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
                       >
                         <img src={githubJPEG} alt="github Logo" width={36} />
                       </Link>
                       <Link
                         to={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
                       >
                         <img src={linkedinPNG} alt="LinkedIn Logo" width={40} />
