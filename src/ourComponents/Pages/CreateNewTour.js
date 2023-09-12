@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import loadingAnimation from '../../assets/S-Loop_transnparent.gif'; // Import the loading animation
+import Map from '../Map/Map';
 
 // Sanitizer function to prevent SQL injection
 function sanitizeInput(input) {
@@ -339,6 +340,9 @@ export default function CreateNewTour() {
             )}
             <textarea className="form-control" style={{ width: '20%' }} rows="10" value={tourContent} readOnly />
           </div>
+
+        {/* Include the Map component here */}
+          <Map />
         </div>
       )}
 
