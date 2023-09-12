@@ -3,6 +3,7 @@ import Map from '../Map/Map.js'
 import { useParams } from 'react-router-dom';
 import './Pages.css';
 import { useEffect, useState } from 'react';
+import PointOfInterestCard from './PointOfInterestCard.js';
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -42,7 +43,7 @@ export default function Tour() {
                 <ul>
                     {
                         pointsOfInterest.map((poi, index) => {
-                            return <li>{poi}</li>
+                            return <PointOfInterestCard poi={poi} key={index} />
                         })
                     }
                 </ul>

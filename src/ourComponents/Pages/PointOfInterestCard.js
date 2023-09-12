@@ -1,6 +1,6 @@
 
 
-export default function PointOfInterestCard() {
+export default function PointOfInterestCard({poi}) {
     return (
         <div>
 
