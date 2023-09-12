@@ -76,18 +76,20 @@ function About() {
     <div className="home-content flex justify-center items-center">
       <div>
         <div className="about">
-          <h1 style={{ fontWeight: 'bold' }}>About the App: City Whisperer</h1>
-          <br />
-          <p>Overview:</p>
-          <p>Summary of App, when it was made</p>
-          <p>Features:</p>
-          <p>Explain the App with Features</p>
-          <p>Explain special things app can do compared to other existing apps</p>
-          <p>Mission: What is the mission? what is it doing?</p>
-          <p>About the Developers:</p>
-          <p>
-            City Whisperer is created by a team of dedicated individuals who firmly believe in the profound impact of...explain/describe the team
-          </p>
+          <div className="app-summary-container">
+            <h1 style={{ fontWeight: 'bold' }}>About the App: City Whisperer</h1>
+            <br />
+            <p>Overview:</p>
+            <p>Summary of App, when it was made</p>
+            <p>Features:</p>
+            <p>Explain the App with Features</p>
+            <p>Explain special things app can do compared to other existing apps</p>
+            <p>Mission: What is the mission? what is it doing?</p>
+            <p>About the Developers:</p>
+            <p>
+              City Whisperer is created by a team of dedicated individuals who firmly believe in the profound impact of...explain/describe the team
+            </p>
+          </div>
         </div>
         <div className="team">
           <h1 className="font-bold text-xl">Meet the Team</h1>
@@ -131,10 +133,10 @@ function About() {
                       transition={{ duration: 0.5, delay: 0.4 }} // Animation duration and delay
                     >
                       <Link
-                         to={member.github}
-                         className="pointer-events-auto mr-5 inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
-                       >
-                         <img src={githubJPEG} alt="github Logo" width={36} />
+                        to={member.github}
+                        className="pointer-events-auto mr-5 inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
+                      >
+                        <img src={githubJPEG} alt="github Logo" width={36} />
                       </Link>
                       <Link
                         to={member.linkedin}
