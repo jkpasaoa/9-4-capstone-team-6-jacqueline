@@ -81,23 +81,6 @@ export default function Home() {
         </p>
       </div>
     </div>
-    <div
-      class="relative float-left -mr-[100%] hidden w-full !transform-none opacity-0 transition-opacity duration-[600ms] ease-in-out motion-reduce:transition-none"
-      data-te-carousel-fade
-      data-te-carousel-item>
-      <video class="w-full" autoplay loop muted>
-        <source
-          src="https://tecdn.b-cdn.net/img/video/Agua-natural.mp4"
-          type="video/mp4" />
-      </video>
-      <div
-        class="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block">
-        <h5 class="text-xl">Third slide label</h5>
-        <p>
-          Some representative placeholder content for the third slide.
-        </p>
-      </div>
-    </div>
   </div>
   <button
     class="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
