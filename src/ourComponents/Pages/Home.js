@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import videoUrl from '../../assets/LandingPageVideo.mp4';
+import video1 from '../../assets/LandingPageVideo.mp4';
+import video2 from '../../assets/Page2_WebPage_Landscape.mp4'
 import { Carousel, initTE} from 'tw-elements'
 
 export default function Home() {
@@ -52,7 +53,7 @@ export default function Home() {
       data-te-carousel-active>
       <video class="w-full" controls>
         <source
-          src={videoUrl}
+          src={video1}
           type="video/mp4" />
       </video>
       <div
@@ -67,9 +68,9 @@ export default function Home() {
       class="relative float-left -mr-[100%] hidden w-full !transform-none opacity-0 transition-opacity duration-[600ms] ease-in-out motion-reduce:transition-none"
       data-te-carousel-fade
       data-te-carousel-item>
-      <video class="w-full" autoplay loop muted>
+      <video class="w-full" controls>
         <source
-          src="https://tecdn.b-cdn.net/img/video/forest.mp4"
+          src={video2}
           type="video/mp4" />
       </video>
       <div
