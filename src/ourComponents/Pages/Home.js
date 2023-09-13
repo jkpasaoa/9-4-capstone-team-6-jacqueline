@@ -145,7 +145,7 @@ export default function Home() {
       </div>
 
       {/* partition 3 */}
-      <div></div>
+      {/* <div></div> */}
     </div>
   );
 }
