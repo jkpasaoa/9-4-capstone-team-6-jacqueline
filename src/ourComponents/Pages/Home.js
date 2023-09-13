@@ -127,10 +127,10 @@ export default function Home() {
       </div>
 
       {/* partition 1 */}
-      <div class="h-screen flex flex-row items-center justify-center">
+      <div class="h-screen flex flex-row items-center justify-center ">
         <div class="w-screen">
-          <div class="" >
-            <div class="inline-block">Customize your Experience</div>
+          <div class="flex justify-evenly" >
+            <div class="inline-block ">Customize your Experience</div>
             <div class="inline-block">image PlaceHolder</div>
           </div>
           
