@@ -128,21 +128,20 @@ export default function Home() {
 
       {/* partition 1 */}
       <div class="h-screen flex flex-row items-center justify-center ">
-        <div class="w-screen">
-          <div class="flex justify-evenly" >
+
+          <div class="flex w-screen justify-evenly">
             <div class="inline-block ">Customize your Experience</div>
             <div class="inline-block">image PlaceHolder</div>
           </div>
-          
-          <div>
-          </div>
-        </div>
+
       </div>
 
       {/* partition 2 */}
-      <div class="h-screen bg-[#cdc6cd]">
-        <div>Peace of Mind</div>
-        <div>Freedom of Choice</div>
+      <div class="h-screen bg-[#cdc6cd] flex flex-row items-center justify-center">
+        <div class=" w-screen flex justify-evenly">
+          <div class="inline-block">Peace of Mind</div>
+          <div class="inline-block">Freedom of Choice</div>
+        </div>
       </div>
 
       {/* partition 3 */}
