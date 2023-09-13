@@ -47,7 +47,7 @@ export default function TourIndex() {
                     <h1 className='text-3xl font-extrabold'>TOURS</h1>
                     <p className='mt-4 text-xl text-gray-300'></p>
                 </div>
-                <div className='mt-12 flex flex-col md:flex-row justify-center items-center gap-5'>
+                <div className='mt-12 flex flex-col md:flex-row justify-center items-center gap-5 overflow-x-auto overscroll-none'>
                     {
                         tours.map((tour, index) => {
                             return <motion.div
