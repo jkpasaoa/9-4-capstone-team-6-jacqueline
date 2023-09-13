@@ -62,7 +62,7 @@ export default function Home() {
           data-te-carousel-fade
           data-te-carousel-item
         >
-          <video class="w-full" controls>
+          <video class="w-full" controls autoPlay muted>
             <source src={video2} type="video/mp4" />
           </video>
           <div class="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block">
