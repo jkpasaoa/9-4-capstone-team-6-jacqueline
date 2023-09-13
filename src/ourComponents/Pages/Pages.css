@@ -12,10 +12,13 @@
 }
 
 .TourLive-content {
-  padding-top: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.tourLive{
+  padding-top: 130px;
 }
 
 /* .live-img{
