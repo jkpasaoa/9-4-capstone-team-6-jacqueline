@@ -15,6 +15,7 @@ export default function Home() {
   }, []);
 
   return (
+    <div>
     <div
       id="carouselExampleCaptions"
       class="relative"
@@ -123,6 +124,7 @@ export default function Home() {
           Next
         </span>
       </button>
+    </div>
     </div>
   );
 }
