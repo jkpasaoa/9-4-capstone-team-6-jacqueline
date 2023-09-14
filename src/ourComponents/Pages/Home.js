@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import video1 from "../../assets/LandingPageVideo.mp4";
 import video2 from "../../assets/Page2_WebPage_Landscape.mp4";
 import image1 from "../../assets/travelPhotos/cristina-gottardi--YzMZYqwoH4-unsplash (1).jpg";
-import { Carousel, initTE } from "tw-elements";
+import { Carousel, Ripple, initTE } from "tw-elements";
 
 export default function Home() {
   // const [isMuted, setIsMuted] = useState(false);
@@ -12,7 +12,7 @@ export default function Home() {
   // };
 
   useEffect(() => {
-    initTE({ Carousel });
+    initTE({ Carousel, Ripple });
   }, []);
 
   return (
@@ -130,15 +130,22 @@ export default function Home() {
       {/* partition 1 */}
       <div class="h-screen flex items-center justify-center shadow-2xl">
         <div class="flex w-screen justify-between max-[760px]:flex-col-reverse">
-          <div class="flex flex-col items-center justify-center font-serif">
-            <div class="text-3xl font-bold max-[760px]:mt-16">Customize your Experience</div>
-            <div class="w-6/12 pt-5 text-sm max-[760px]:mt-3">
+          <div class="flex flex-col items-center justify-center text-[#183759] font-serif drop-shadow-lg">
+            <div class="text-3xl md:text-4xl font-bold max-[760px]:mt-20">Customize your Experience</div>
+            <div class="w-6/12 pt-5 text-sm md:text-base max-[760px]:mt-3">
               You can use our Web App with the help of ChatGpt and Google Maps
               to create your own personal tour anywhere you want!
             </div>
+            <button
+  type="button"
+  data-te-ripple-init
+  data-te-ripple-color="light"
+  class="mt-6 inline-block rounded bg-[#183759] px-6 pb-2 pt-2.5 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+  Create New Tour
+</button>
           </div>
-          <div class="md:inline-block md:w-8/12">
-            <img class="w-full rounded-lg shadow-" src={image1} alt="Venice"/>
+          <div class="md:inline-block md:w-8/12 shadow-lg">
+            <img class="w-full rounded-lg shadow-2xl" src={image1} alt="Venice"/>
           </div>
         </div>
       </div>
