@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import video1 from "../../assets/LandingPageVideo.mp4";
 import video2 from "../../assets/Page2_WebPage_Landscape.mp4";
+import image1 from "../../assets/travelPhotos/cristina-gottardi--YzMZYqwoH4-unsplash (1).jpg";
 import { Carousel, initTE } from "tw-elements";
 
 export default function Home() {
@@ -127,13 +128,19 @@ export default function Home() {
       </div>
 
       {/* partition 1 */}
-      <div class="h-screen flex flex-row items-center justify-center ">
-
-          <div class="flex w-screen justify-evenly">
-            <div class="inline-block ">Customize your Experience</div>
-            <div class="inline-block">image PlaceHolder</div>
+      <div class="h-screen flex lg:flex-row md:flex-col lg:items-center justify-center shadow-2xl">
+        <div class="flex w-screen justify-between">
+          <div class="flex flex-col items-center justify-center font-sans">
+            <div>Customize your Experience</div>
+            <div class="w-3/5 md:w-2/5 pt-5">
+              You can use our Web App with the help of ChatGpt and Google Maps
+              to create your own personal tour anywhere you want!
+            </div>
           </div>
-
+          <div class="lg:inline-block md:w-9/12 sm:w-full">
+            <img class="w-full rounded-lg shadow-2xl" src={image1} alt="Venice"/>
+          </div>
+        </div>
       </div>
 
       {/* partition 2 */}
