@@ -128,26 +128,26 @@ export default function Home() {
       </div>
 
       {/* partition 1 */}
-      <div class="h-screen flex lg:flex-row md:flex-col lg:items-center justify-center shadow-2xl">
-        <div class="flex w-screen justify-between">
-          <div class="flex flex-col items-center justify-center font-sans">
-            <div>Customize your Experience</div>
-            <div class="w-3/5 md:w-2/5 pt-5">
+      <div class="h-screen flex items-center justify-center shadow-2xl">
+        <div class="flex w-screen justify-between max-[760px]:flex-col-reverse">
+          <div class="flex flex-col items-center justify-center font-serif">
+            <div class="text-3xl font-bold max-[760px]:mt-16">Customize your Experience</div>
+            <div class="w-6/12 pt-5 text-sm max-[760px]:mt-3">
               You can use our Web App with the help of ChatGpt and Google Maps
               to create your own personal tour anywhere you want!
             </div>
           </div>
-          <div class="lg:inline-block md:w-9/12 sm:w-full">
-            <img class="w-full rounded-lg shadow-2xl" src={image1} alt="Venice"/>
+          <div class="md:inline-block md:w-8/12">
+            <img class="w-full rounded-lg shadow-" src={image1} alt="Venice"/>
           </div>
         </div>
       </div>
 
       {/* partition 2 */}
       <div class="h-screen bg-[#cdc6cd] flex flex-row items-center justify-center">
-        <div class=" w-screen flex justify-evenly">
-          <div class="inline-block">Peace of Mind</div>
-          <div class="inline-block">Freedom of Choice</div>
+        <div class="w-screen flex justify-evenly">
+          <div class="lg:inline-block">Peace of Mind</div>
+          <div class="lg:inline-block">Freedom of Choice</div>
         </div>
       </div>
 
