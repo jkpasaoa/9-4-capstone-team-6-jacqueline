@@ -17,22 +17,26 @@ function EndTour() {
   };
 
   return (
-  <div className="message-container">
-     <label className="form-label" htmlFor="message">
-                Your Message:
-              </label>
-              <br />
-              <textarea
-                className="form-control"
-                id="message"
-                rows={5}
-                style={{ width: '100%' }}
-                onChange={handleTextChange}
-                value={userMessage.message}
-                placeholder="Write your message here"
-                required
-              />
-  </div>
+    <div className="message-container">
+      <label className="form-label" htmlFor="message">
+        <div className="improve-container" style={{ fontSize: '24px'}}>
+          Help us Improve!
+        </div>
+        <br />
+        Customer Feedback:
+      </label>
+      <br />
+      <textarea
+        className="form-control"
+        id="message"
+        rows={5}
+        style={{ width: '50%', height: '200px' }}
+        onChange={handleTextChange}
+        value={userMessage.message}
+        placeholder="Write your message here"
+        required
+      />
+    </div>
   )
 }
 
