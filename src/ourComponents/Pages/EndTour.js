@@ -1,11 +1,36 @@
 import { Link } from "react-router-dom";
-import React, { useEffect } from 'react';
+import React, { useState, useNavigate, useEffect } from 'react';
 
 function EndTour() {
+  const navigate = useNavigate();
+  const [userMessage, setUserMessage] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: "",
+    issue: "General Inquiry",
+  });
+
+  const handleTextChange = (event) => {
+    setUserMessage({ ...userMessage, [event.target.id]: event.target.value });
+  };
 
   return (
   <div>
-    {/* test */}
+     <label className="form-label" htmlFor="message">
+                Your Message:
+              </label>
+              <br />
+              <textarea
+                className="form-control"
+                id="message"
+                rows={5}
+                style={{ width: '100%' }}
+                onChange={handleTextChange}
+                value={userMessage.message}
+                placeholder="Write your message here"
+                required
+              />
   </div>
   )
 }
