@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import React, { useState, useNavigate, useEffect } from 'react';
+// import { Link } from "react-router-dom";
+import React, { useState} from 'react'; //useEffect, useNavigate
 import "../EndTour/EndTour.css"
 
 function EndTour() {
