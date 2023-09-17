@@ -38,16 +38,12 @@ export default function TourIndex() {
         <div>
             <br></br>
             <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
             <section className='py-16 pb-[300px] bg-gradient-to-r from-beige-800 to-white-800'>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-                    <h1 className='text-3xl font-extrabold'>TOURS</h1>
+                    <h1 className='text-3xl font-extrabold text-sky-950'>TOURS</h1>
                     <p className='mt-4 text-xl text-gray-300'></p>
                 </div>
-                <div className='mt-12 flex flex-col md:flex-row justify-center items-center gap-5'>
+                <div className='mt-12 flex flex-col md:flex-row justify-center items-center gap-5 overflow-x-auto overscroll-none'>
                     {
                         tours.map((tour, index) => {
                             return <motion.div
