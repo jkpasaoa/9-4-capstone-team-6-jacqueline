@@ -5,6 +5,7 @@ import image1 from "../../assets/travelPhotos/cristina-gottardi--YzMZYqwoH4-unsp
 import image2 from "../../assets/travelPhotos/dominik-dancs-tzt-w1TCTNw-unsplash.jpg";
 import image3 from "../../assets/travelPhotos/bjorn-agerbeek-ak8uY9rVDOs-unsplash.jpg";
 import image4 from "../../assets/travelPhotos/dan-novac-1naE8177_bI-unsplash.jpg";
+import image5 from "../../assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg"
 import { Carousel, Ripple, initTE } from "tw-elements";
 
 export default function Home() {
@@ -163,14 +164,14 @@ export default function Home() {
       
 
       {/* partition 2 */}
-      <div class="w-screen h-screen bg-[#cdc6cd] shadow-md relative">
+      <div class=" w-screen h-screen bg-[#cdc6cd] shadow-md relative">
         <div>
-          <div class="absolute top-[43.4%] w-1/2 text-[#cdc6cd] font-mono text-7xl  drop-shadow-[3px_3px_rgba(24,55,89,.7)] z-10">Freedom of Choice</div>
+          <div class="absolute top-[43.4%] w-1/2 text-[#cdc6cd] font-mono text-7xl  drop-shadow-[3px_3px_rgba(24,55,89,.9)] z-10">Freedom of Choice</div>
           <img class="w-1/2 h-screen object-center inline-block shadow-md" src={image3} alt="Ibiza"/>
-          <div class="w-1/2 inline-block text-[#183759] font-serif text-7xl drop-shadow-2xl">
+          <div class="w-1/2 inline-block text-[#183759] font-serif text-7xl drop-shadow-2xl bg-clouds">
           Peace of Mind
           </div>
-        </div>
+        </div>                      
       </div>
 
       {/* partition 3 */}
