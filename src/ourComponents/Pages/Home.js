@@ -2,6 +2,10 @@ import React, { useEffect } from "react";
 import video1 from "../../assets/LandingPageVideo.mp4";
 import video2 from "../../assets/Page2_WebPage_Landscape.mp4";
 import image1 from "../../assets/travelPhotos/cristina-gottardi--YzMZYqwoH4-unsplash (1).jpg";
+import image2 from "../../assets/travelPhotos/dominik-dancs-tzt-w1TCTNw-unsplash.jpg";
+import image3 from "../../assets/travelPhotos/bjorn-agerbeek-ak8uY9rVDOs-unsplash.jpg";
+import image4 from "../../assets/travelPhotos/dan-novac-1naE8177_bI-unsplash.jpg";
+import image5 from "../../assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg"
 import { Carousel, Ripple, initTE } from "tw-elements";
 
 export default function Home() {
@@ -142,7 +146,7 @@ export default function Home() {
               type="button"
               data-te-ripple-init
               data-te-ripple-color="light"
-              class="mt-6 inline-block rounded bg-[#183759] px-6 pb-2 pt-2.5 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+              class="mt-6 inline-block rounded bg-[#183759] px-6 pb-2 pt-2.5 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
             >
               Create New Tour
             </button>
@@ -157,18 +161,30 @@ export default function Home() {
         </div>
       </div>
 
+      
+
       {/* partition 2 */}
-      <div class="h-screen bg-[#cdc6cd] flex flex-row items-center justify-center">
+      <div class=" w-screen h-screen bg-[#cdc6cd] relative">
+        <div>
+          <div class="absolute max-[760px]:w-screen max-[760px]:text-4xl max-[760px]:top-[21.7%]  top-[43.4%] w-1/2 text-[#cdc6cd] font-semibold text-7xl  drop-shadow-[4px_4px_rgba(24,55,89,.9)] z-10">Freedom of Choice</div>
+          <img class="w-1/2 max-[760px]:w-screen max-[760px]:h-[50%] h-screen object-center inline-block shadow-md" src={image3} alt="Ibiza"/>
+          <div class="w-1/2 max-[760px]:w-screen max-[760px]:text-4xl  max-[760px]:mt-28 inline-block text-[#183759] font-serif text-7xl shadow-2xl bg-clouds">
+          Peace of Mind
+          </div>
+        </div>                      
+      </div>
+
+      {/* partition 3 */}
+      <div class="h-screen flex flex-row items-center justify-center">
         <div class="w-screen flex justify-evenly">
           <div class="">
-            <div class="lg:inline-block">Peace of Mind</div>
-            <div class="lg:inline-block">Freedom of Choice</div>
+            <div class="md:inline-block">Peace of Mind</div>
+            <div class="md:inline-block">Freedom of Choice</div>
           </div>
         </div>
       </div>
 
-      {/* partition 3 */}
-      {/* <div></div> */}
+
     </div>
   );
 }
