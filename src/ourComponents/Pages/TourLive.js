@@ -53,6 +53,7 @@ export default function Tour() {
                     <Map />
                 </div>
                 <br></br>
+                <h2 class="text-4xl font-bold dark:text-white text-sky-950">Points of Interest:</h2>
                 <ul>
                     {
                         pointsOfInterest.map((poi, index) => {
