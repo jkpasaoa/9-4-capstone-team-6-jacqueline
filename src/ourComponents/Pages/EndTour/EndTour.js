@@ -19,7 +19,7 @@ function EndTour() {
   return (
     <div className="message-container">
       <label className="form-label" htmlFor="message">
-        <div className="improve-container" style={{ fontSize: '24px'}}>
+        <div className="improve-container" style={{ fontSize: '24px' }}>
           Help us Improve!
         </div>
         <br />
