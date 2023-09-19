@@ -54,6 +54,9 @@ export default function CreateNewTour() {
   const [isLoading, setIsLoading] = useState(false); // Added isLoading state
   const [cityPhoto, setCityPhoto] = useState('');
 
+  //for dropdown select
+  // const [selectedOption, setSelectedOption] = useState('');
+
 
   const parsePointsOfInterest = (generatedTour) => {
     const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
@@ -170,6 +173,11 @@ export default function CreateNewTour() {
     setTour({ ...tour, [name]: value });
   };
 
+  //for drop down select
+  // const handleOptionChange = (event) => {
+  //   setSelectedOption(event.target.value);
+  // };
+
   const generateTourName = () => {
     const { city, country, theme, duration, difficulty } = tour;
     const name = `${city}, ${country} ${theme} tour - lasting ${duration} with ${difficulty} difficulty.`;
@@ -285,7 +293,8 @@ export default function CreateNewTour() {
             onChange={handleDropdownChange}
             id="duration"
           >
-            <option value="" disabled selected>Select Day Duration</option>
+
+            <option value="" disabled>Select Day Duration</option>
             <option value="Full-day">Full-day</option>
             <option value="Half-day">Half-day</option>
             <option value="2 hours">2 hours</option>
@@ -300,7 +309,8 @@ export default function CreateNewTour() {
             onChange={handleDropdownChange}
             id="difficulty"
           >
-            <option value="" disabled selected>Select Walking Difficulty</option>
+            {/* <select value={selectedOption} onChange={handleOptionChange}></select> */}
+            <option value="" disabled>Select Walking Difficulty</option>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
@@ -315,7 +325,7 @@ export default function CreateNewTour() {
             onChange={handleDropdownChange}
             id="theme"
           >
-            <option value="" disabled selected>Select Tour Theme</option>
+            <option value="" disabled>Select Tour Theme</option>
             <option value="Historic">Historic</option>
             <option value="Scenic">Scenic</option>
             <option value="Fun">Fun</option>
