@@ -13,25 +13,35 @@ function NavBar() {
   return (
     <div>
       <nav className="bg-white-200 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border">
-        {/* opacity-50 */}
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <span className="logo">
-            <Link to="/home" className="flex items-center">
-              <img src={logo} className="h-24 mr-3
-              drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
-              alt="CityWhisperer Logo" />
+            <Link to="/home" className="flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
+              <img
+                src={logo}
+                className="h-24 mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
+                alt="CityWhisperer Logo"
+              />
+              <span className="text-center">Powered by chatGPT</span> {/* Add the text here */}
             </Link>
           </span>
+
           <div className="flex md:order-2 ml-auto">
             {/* Desktop Menu & Tablet Menu */}
             <ul className="DESKTOP-MENU hidden space-x-8 md:flex lg:flex">
               <li>
-                <Link to="/home" className="nav-link home text-black text-shadow-white">Home</Link>
-              </li>             <li>
-                <Link to="/about" className="nav-link about text-black text-shadow-white">About</Link>
+                <Link to="/home" className="nav-link home text-black text-shadow-white">
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/tours" className="nav-link browsetours text-black text-shadow-white">Browse Tours</Link>
+                <Link to="/about" className="nav-link about text-black text-shadow-white">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/tours" className="nav-link browsetours text-black text-shadow-white">
+                  Browse Tours
+                </Link>
               </li>
               <li>
                 <Link
@@ -73,7 +83,7 @@ function NavBar() {
           {/* Mobile Menu */}
           <div
             className={`items-center justify-between w-full md:w-auto md:order-1 ${menuOpen ? 'block' : 'hidden'
-              } md:hidden`} // Show on mobile screens
+              } md:hidden`}
             id="navbar-sticky"
           >
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
@@ -98,11 +108,20 @@ function NavBar() {
               </li>
               <li>
                 <Link
-                  to="/browsetours"
+                  to="/tours"
                   onClick={toggleMenu}
                   className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
                 >
                   Browse Tours
+                </Link>
+              </li>
+              <li className="md:hidden">
+                <Link
+                  to="/createnewtour"
+                  onClick={toggleMenu}
+                  className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+                >
+                  Create New Tour
                 </Link>
               </li>
             </ul>
