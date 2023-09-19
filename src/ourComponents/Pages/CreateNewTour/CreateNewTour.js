@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import loadingAnimation from '../../../assets/S-Loop_transnparent.gif'; // Import the loading animation
 import Map from '../../Map/Map';
+import '../CreateNewTour/CreateNewTour.css'
 
 // Sanitizer function to prevent SQL injection
 function sanitizeInput(input) {
@@ -44,9 +45,9 @@ export default function CreateNewTour() {
     region: '',
     state: '',
     city: '',
-    duration: 'Full-day',
-    difficulty: 'Medium',
-    theme: 'Historic', // Updated: theme instead of tourType
+    duration: '',
+    difficulty: '',
+    theme: '', // Updated: theme instead of tourType
   });
 
   const [tourContent, setTourContent] = useState('');
@@ -223,93 +224,98 @@ export default function CreateNewTour() {
     }
   };
 
-
-
   return (
-    <div className="container flex-col items-center justify-center mt-5" style={{ paddingTop: '160px' }}>
-      <h1 className="text-4xl text-center mb-4 underline">Walking Tour Generator</h1>
-      <div className="row mb-3">
-        <div className="col-md-4">
-          <br />
+    <div className="flex flex-col items-center justify-center min-h-screen" style={{ paddingTop: '160px' }}>
+      <div className="container flex flex-col items-center justify-center ">
+        <h1 className="text-3xl text-center mb-4 underline">Walking Tour Generator</h1>
+
+        {/* City Input */}
+        <div className="field mb-3">
           <input
             type="text"
-            className="form-control text-center rounded-lg"
-            style={{ width: '25%', height: '45px' }}
-            placeholder="City"
+            className="rounded-lg border w-full p-2"
+            placeholder="Enter a City to Explore"
             name="city"
             value={tour.city}
             onChange={handleTextChange}
           />
         </div>
-<br/ >
-        <div className="col-md-4">
+
+        {/* Region Input */}
+        <div className="field mb-3">
           <input
             type="text"
-            className="form-control text-center rounded-lg"
-            style={{ width: '25%', height: '45px' }}
-            placeholder="Borough/Region"
+            className="rounded-lg border w-full p-2"
+            placeholder="Borough/Region if applicable"
             name="region"
             value={tour.region}
             onChange={handleTextChange}
           />
         </div>
-<br />
-        <div className="col-md-4">
+
+        {/* State Input */}
+        <div className="field mb-3">
           <input
             type="text"
-            className="form-control text-center rounded-lg"
-            style={{ width: '25%', height: '45px' }}
-            placeholder="State/County/Province"
+            className="rounded-lg border w-full p-2"
+            placeholder="State/County/Province if applicable"
             name="state"
             value={tour.state}
             onChange={handleTextChange}
           />
         </div>
-        <br />
-        <div className="col-md-4">
+
+        {/* Country Input */}
+        <div className="field mb-3">
           <input
             type="text"
-            className="form-control text-center rounded-lg"
-            style={{ width: '25%', height: '45px' }}
-            placeholder="Country"
+            className="rounded-lg border w-full p-2"
+            placeholder="Enter the Country"
             name="country"
             value={tour.country}
             onChange={handleTextChange}
           />
         </div>
-      </div>
-      <div className="row mb-3">
-        <div className="col-md-4">
+
+        {/* Duration Dropdown */}
+        <div className="field mb-3">
           <select
-            className="form-control"
+            className="rounded-lg border w-full p-2"
             value={tour.duration}
             onChange={handleDropdownChange}
             id="duration"
           >
+            <option value="" disabled selected>Select Day Duration</option>
             <option value="Full-day">Full-day</option>
             <option value="Half-day">Half-day</option>
             <option value="2 hours">2 hours</option>
           </select>
         </div>
-        <div className="col-md-4">
+
+        {/* Difficulty Dropdown */}
+        <div className="field mb-3">
           <select
-            className="form-control"
+            className="rounded-lg border w-full p-2"
             value={tour.difficulty}
             onChange={handleDropdownChange}
             id="difficulty"
           >
+            <option value="" disabled selected>Select Walking Difficulty</option>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
           </select>
         </div>
-        <div className="col-md-4">
+
+        {/* Theme Dropdown */}
+        <div className="field mb-3">
           <select
-            className="form-control"
-            value={tour.theme} // Updated: theme instead of tourType
+            className="rounded-lg border w-full p-2"
+            value={tour.theme}
             onChange={handleDropdownChange}
-            id="theme" // Updated: theme instead of tourType
+            id="theme"
           >
+            <option value="" disabled selected>Select Tour Theme</option>
             <option value="Historic">Historic</option>
             <option value="Scenic">Scenic</option>
             <option value="Fun">Fun</option>
@@ -317,51 +323,204 @@ export default function CreateNewTour() {
             <option value="Pubs">Pubs</option>
           </select>
         </div>
-      </div>
-      <div className="row mb-3">
-        <div className="col text-center">
-          <button className="btn btn-primary" onClick={handleSubmit} disabled={!tour.city || isLoading}>
+
+        {/* Generate Button */}
+        <div className="mb-3 text-center">
+          <button
+            onClick={handleSubmit}
+            disabled={!tour.city || isLoading}
+            type="button"
+            className="mt-6 inline-block rounded bg-[#183759] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
+          >
             Generate Walking Tour
           </button>
         </div>
-      </div>
-      {isLoading ? (
-        // Conditional rendering for loading animation
-        <div className="row text-center">
-          <div className="col">
+
+        {isLoading ? (
+          // Conditional rendering for loading animation
+          <div className="text-center">
             <p>Loading...</p>
 
-            <div style={{ margin: '16px 0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <img src={loadingAnimation} alt="Loading..." width="250" height="250" />
+            <div style={{ margin: '16px 0' }}>
+              <img src={loadingAnimation} alt="Loading..." className="w-32 mx-auto" />
             </div>
           </div>
-        </div>
-      ) : (
-
-        <div className="row">
-          <div className="col">
+        ) : (
+          <div className="flex flex-col sm:flex-row">
             {/* Display the city photo */}
             {cityPhoto && (
-              <img src={cityPhoto} alt={`${tour.city}`} style={{ width: '30%', display: 'block', margin: '0 auto' }} />
+              <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" />
             )}
+
             <br />
-            <textarea className="form-control" style={{ width: '20%' }} rows="10" value={tourContent} readOnly />
+
+            <textarea className="route-container border rounded-lg w-full p-2" rows="10" value={tourContent} readOnly />
           </div>
+        )}
 
-          {/* Include the Map component here */}
-          <Map />
-        </div>
-      )}
-
-      {/* "Start Tour" button */}
-      <div className="row">
-        <div className="col text-center">
+        {/* "Start Tour" button */}
+        <div className="mb-3 text-center">
           <Link to="/tourlive">
-            <button className="btn btn-success">Start Tour</button>
+            <button className="mt-6 inline-block rounded bg-[#E36E43] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110">Start Tour</button>
           </Link>
         </div>
       </div>
-
     </div>
   );
 }
+
+//Commented out in case anyone needs to revisit previous code for HTML
+//   return (
+//     <div className="mx-auto p-4" style={{ paddingTop: '160px' }}>
+//       <h1 className="text-3xl text-center mb-4 underline">Walking Tour Generator</h1>
+//       {/* City Input */}
+//       <div className="mb-3">
+//           <input
+//             type="text"
+//             className="text-center rounded-lg border w-full p-2"
+//             style={{ width: '25%', height: '45px' }}
+//             placeholder="Enter a City to Explore"
+//             name="city"
+//             value={tour.city}
+//             onChange={handleTextChange}
+//           />
+//         <br />
+//         {/* Region Input */}
+//         <div className="mb-3">
+//           <input
+//             type="text"
+//             className="text-center rounded-lg border w-full p-2"
+//             style={{ width: '25%', height: '45px' }}
+//             placeholder="Borough/Region if applicable"
+//             name="region"
+//             value={tour.region}
+//             onChange={handleTextChange}
+//           />
+//         </div>
+//         {/* State Input */}
+//         <div className="mb-3">
+//           <input
+//             type="text"
+//             className="rounded-lg border text-center w-full p-2"
+//             style={{ width: '35%', height: '45px' }}
+//             placeholder="State/County/Province if applicable"
+//             name="state"
+//             value={tour.state}
+//             onChange={handleTextChange}
+//           />
+//         </div>
+//         <br />
+//         {/* Country Input */}
+//         <div className="mb-3">
+//           <input
+//             type="text"
+//             className="text-center rounded-lg"
+//             style={{ width: '25%', height: '45px' }}
+//             placeholder="Enter the Country"
+//             name="country"
+//             value={tour.country}
+//             onChange={handleTextChange}
+//           />
+//         </div>
+//       </div>
+//       <br />
+//       <div className="row mb-3">
+//         <div className="col-md-4">
+//           <select
+//             className="form-control text-center rounded-lg"
+//             style={{ width: '15%', height: '40px' }}
+//             value={tour.duration}
+//             onChange={handleDropdownChange}
+//             id="duration"
+//           >
+//             <option value="Full-day">Full-day</option>
+//             <option value="Half-day">Half-day</option>
+//             <option value="2 hours">2 hours</option>
+//           </select>
+//         </div>
+//         <br />
+//         <div className="col-md-4">
+//           <select
+//             className="form-control text-center rounded-lg"
+//             style={{ width: '15%', height: '40px' }}
+//             value={tour.difficulty}
+//             onChange={handleDropdownChange}
+//             id="difficulty"
+//           >
+//             <option value="Easy">Easy</option>
+//             <option value="Medium">Medium</option>
+//             <option value="Hard">Hard</option>
+//           </select>
+//         </div>
+//         <br />
+//         <div className="col-md-4">
+//           <select
+//             className="form-control text-center rounded-lg"
+//             style={{ width: '15%', height: '40px' }}
+//             value={tour.theme} // Updated: theme instead of tourType
+//             onChange={handleDropdownChange}
+//             id="theme" // Updated: theme instead of tourType
+//           >
+//             <option value="Historic">Historic</option>
+//             <option value="Scenic">Scenic</option>
+//             <option value="Fun">Fun</option>
+//             <option value="Museums">Museums</option>
+//             <option value="Pubs">Pubs</option>
+//           </select>
+//         </div>
+//       </div>
+//       <div className="row mb-3">
+//         <div className="col text-center">
+//           <button
+//             onClick={handleSubmit}
+//             disabled={!tour.city || isLoading}
+//             type="button"
+//             data-te-ripple-init
+//             data-te-ripple-color="light"
+//             class="mt-6 inline-block rounded bg-[#183759] px-6 pb-2 pt-2.5 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
+//           >
+//             Generate Walking Tour
+//           </button>
+//         </div>
+//       </div>
+//       {isLoading ? (
+//         // Conditional rendering for loading animation
+//         <div className="row text-center">
+//           <div className="col">
+//             <p>Loading...</p>
+
+//             <div style={{ margin: '16px 0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+//               <img src={loadingAnimation} alt="Loading..." width="250" height="250" />
+//             </div>
+//           </div>
+//         </div>
+//       ) : (
+
+//         <div className="row">
+//           <div className="col">
+//             {/* Display the city photo */}
+//             {cityPhoto && (
+//               <img src={cityPhoto} alt={`${tour.city}`} style={{ width: '30%', display: 'block', margin: '0 auto' }} />
+//             )}
+//             <br />
+//             <textarea className="form-control" style={{ width: '20%' }} rows="10" value={tourContent} readOnly />
+//           </div>
+
+//           {/* Include the Map component here */}
+//           <Map />
+//         </div>
+//       )}
+
+//       {/* "Start Tour" button */}
+//       <div className="row">
+//         <div className="col text-center">
+//           <Link to="/tourlive">
+//             <button className="btn btn-success">Start Tour</button>
+//           </Link>
+//         </div>
+//       </div>
+
+//     </div>
+//   );
+// }
+
