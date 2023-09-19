@@ -161,17 +161,17 @@ export default function Home() {
         </div>
       </div>
 
-      
+
 
       {/* partition 2 */}
       <div className=" w-screen h-screen bg-[#cdc6cd] relative">
         <div>
           <div className="absolute max-[760px]:w-screen max-[760px]:text-4xl max-[760px]:top-[21.7%]  top-[43.4%] w-1/2 text-[#cdc6cd] font-semibold text-7xl  drop-shadow-[4px_4px_rgba(24,55,89,.9)] z-10">Freedom of Choice</div>
-          <img className="w-1/2 max-[760px]:w-screen max-[760px]:h-[50%] h-screen object-center inline-block shadow-md" src={image3} alt="Ibiza"/>
+          <img className="w-1/2 max-[760px]:w-screen max-[760px]:h-[50%] h-screen object-center inline-block shadow-md" src={image3} alt="Ibiza" />
           <div className="w-1/2 max-[760px]:w-screen max-[760px]:text-4xl  max-[760px]:mt-28 inline-block text-[#183759] font-serif text-7xl shadow-2xl bg-clouds">
-          Peace of Mind
+            Peace of Mind
           </div>
-        </div>                      
+        </div>
       </div>
 
       {/* partition 3 */}
