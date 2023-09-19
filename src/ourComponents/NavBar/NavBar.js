@@ -15,14 +15,16 @@ function NavBar() {
       <nav className="bg-white-200 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <span className="logo">
-            <Link to="/home" className="flex items-center">
+            <Link to="/home" className="flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
               <img
                 src={logo}
                 className="h-24 mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
                 alt="CityWhisperer Logo"
               />
+              <span className="text-center">Powered by chatGPT</span> {/* Add the text here */}
             </Link>
           </span>
+
           <div className="flex md:order-2 ml-auto">
             {/* Desktop Menu & Tablet Menu */}
             <ul className="DESKTOP-MENU hidden space-x-8 md:flex lg:flex">
@@ -80,9 +82,8 @@ function NavBar() {
           </div>
           {/* Mobile Menu */}
           <div
-            className={`items-center justify-between w-full md:w-auto md:order-1 ${
-              menuOpen ? 'block' : 'hidden'
-            } md:hidden`}
+            className={`items-center justify-between w-full md:w-auto md:order-1 ${menuOpen ? 'block' : 'hidden'
+              } md:hidden`}
             id="navbar-sticky"
           >
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
