@@ -349,12 +349,12 @@ export default function CreateNewTour() {
           <div className="flex flex-col sm:flex-row">
             {/* Display the city photo */}
             {cityPhoto && (
-              <img src={cityPhoto} alt={`${tour.city}`} className="w-3/4 mx-auto sm:w-1/2" />
+              <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" />
             )}
 
             <br />
 
-            <textarea className="border rounded-lg w-full p-2" rows="10" value={tourContent} readOnly />
+            <textarea className="route-container border rounded-lg w-full p-2" rows="10" value={tourContent} readOnly />
           </div>
         )}
 
