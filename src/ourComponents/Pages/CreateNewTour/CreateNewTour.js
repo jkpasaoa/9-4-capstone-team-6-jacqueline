@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import loadingAnimation from '../../../assets/S-Loop_transnparent.gif'; // Import the loading animation
-import Map from '../../Map/Map';
+// import Map from '../../Map/Map';
 import '../CreateNewTour/CreateNewTour.css'
 
 // Sanitizer function to prevent SQL injection
