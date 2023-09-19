@@ -235,31 +235,31 @@ export default function CreateNewTour() {
             type="text"
             className="form-control text-center rounded-lg"
             style={{ width: '25%', height: '45px' }}
-            placeholder="City"
+            placeholder="Enter a City to Explore"
             name="city"
             value={tour.city}
             onChange={handleTextChange}
           />
         </div>
-<br/ >
+        <br />
         <div className="col-md-4">
           <input
             type="text"
             className="form-control text-center rounded-lg"
             style={{ width: '25%', height: '45px' }}
-            placeholder="Borough/Region"
+            placeholder="Borough/Region if applicable"
             name="region"
             value={tour.region}
             onChange={handleTextChange}
           />
         </div>
-<br />
+        <br />
         <div className="col-md-4">
           <input
             type="text"
             className="form-control text-center rounded-lg"
-            style={{ width: '25%', height: '45px' }}
-            placeholder="State/County/Province"
+            style={{ width: '35%', height: '45px' }}
+            placeholder="State/County/Province if applicable"
             name="state"
             value={tour.state}
             onChange={handleTextChange}
@@ -271,17 +271,19 @@ export default function CreateNewTour() {
             type="text"
             className="form-control text-center rounded-lg"
             style={{ width: '25%', height: '45px' }}
-            placeholder="Country"
+            placeholder="Enter the Country"
             name="country"
             value={tour.country}
             onChange={handleTextChange}
           />
         </div>
       </div>
+      <br />
       <div className="row mb-3">
         <div className="col-md-4">
           <select
-            className="form-control"
+            className="form-control text-center rounded-lg"
+            style={{ width: '15%', height: '40px' }}
             value={tour.duration}
             onChange={handleDropdownChange}
             id="duration"
@@ -291,9 +293,11 @@ export default function CreateNewTour() {
             <option value="2 hours">2 hours</option>
           </select>
         </div>
+        <br />
         <div className="col-md-4">
           <select
-            className="form-control"
+            className="form-control text-center rounded-lg"
+            style={{ width: '15%', height: '40px' }}
             value={tour.difficulty}
             onChange={handleDropdownChange}
             id="difficulty"
@@ -303,9 +307,11 @@ export default function CreateNewTour() {
             <option value="Hard">Hard</option>
           </select>
         </div>
+        <br />
         <div className="col-md-4">
           <select
-            className="form-control"
+            className="form-control text-center rounded-lg"
+            style={{ width: '15%', height: '40px' }}
             value={tour.theme} // Updated: theme instead of tourType
             onChange={handleDropdownChange}
             id="theme" // Updated: theme instead of tourType
@@ -320,7 +326,14 @@ export default function CreateNewTour() {
       </div>
       <div className="row mb-3">
         <div className="col text-center">
-          <button className="btn btn-primary" onClick={handleSubmit} disabled={!tour.city || isLoading}>
+          <button
+            onClick={handleSubmit}
+            disabled={!tour.city || isLoading}
+            type="button"
+            data-te-ripple-init
+            data-te-ripple-color="light"
+            class="mt-6 inline-block rounded bg-[#183759] px-6 pb-2 pt-2.5 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
+          >
             Generate Walking Tour
           </button>
         </div>
