@@ -45,9 +45,9 @@ export default function CreateNewTour() {
     region: '',
     state: '',
     city: '',
-    duration: 'Full-day',
-    difficulty: 'Medium',
-    theme: 'Historic', // Updated: theme instead of tourType
+    duration: '',
+    difficulty: '',
+    theme: '', // Updated: theme instead of tourType
   });
 
   const [tourContent, setTourContent] = useState('');
@@ -285,6 +285,7 @@ export default function CreateNewTour() {
             onChange={handleDropdownChange}
             id="duration"
           >
+            <option value="" disabled selected>Select Day Duration</option>
             <option value="Full-day">Full-day</option>
             <option value="Half-day">Half-day</option>
             <option value="2 hours">2 hours</option>
@@ -299,6 +300,7 @@ export default function CreateNewTour() {
             onChange={handleDropdownChange}
             id="difficulty"
           >
+            <option value="" disabled selected>Select Walking Difficulty</option>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
@@ -313,6 +315,7 @@ export default function CreateNewTour() {
             onChange={handleDropdownChange}
             id="theme"
           >
+            <option value="" disabled selected>Select Tour Theme</option>
             <option value="Historic">Historic</option>
             <option value="Scenic">Scenic</option>
             <option value="Fun">Fun</option>
@@ -366,7 +369,7 @@ export default function CreateNewTour() {
   );
 }
 
-
+//Commented out in case anyone needs to revisit previous code for HTML
 //   return (
 //     <div className="mx-auto p-4" style={{ paddingTop: '160px' }}>
 //       <h1 className="text-3xl text-center mb-4 underline">Walking Tour Generator</h1>
