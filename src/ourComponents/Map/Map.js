@@ -5,6 +5,8 @@ import loadingLogo from '../../assets/S-Loop_transnparent.gif'
 
 // const center = { lat: 40.8448, lng: 40.8448 }
 
+const API = process.env.REACT_APP_API_URL;
+
 export default function Map() {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
