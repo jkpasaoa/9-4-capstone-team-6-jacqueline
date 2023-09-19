@@ -5,7 +5,7 @@ import './App.css';
 import Home from './ourComponents/Pages/Home';
 import About from './ourComponents/Pages/About/About';
 import NotFound from './ourComponents/Pages/NotFound';
-import CreateNewTour from './ourComponents/Pages/CreateNewTour';
+import CreateNewTour from './ourComponents/Pages/CreateNewTour/CreateNewTour';
 import TourIndex from './ourComponents/Pages/TourIndex';
 import TourLive from './ourComponents/Pages/TourLive';
 import EndTour from './ourComponents/Pages/EndTour/EndTour';
