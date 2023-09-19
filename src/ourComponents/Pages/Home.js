@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import video1 from "../../assets/LandingPageVideo.mp4";
 import video2 from "../../assets/Page2_WebPage_Landscape.mp4";
 import image1 from "../../assets/travelPhotos/cristina-gottardi--YzMZYqwoH4-unsplash (1).jpg";
-import image2 from "../../assets/travelPhotos/dominik-dancs-tzt-w1TCTNw-unsplash.jpg";
+// import image2 from "../../assets/travelPhotos/dominik-dancs-tzt-w1TCTNw-unsplash.jpg";
 import image3 from "../../assets/travelPhotos/bjorn-agerbeek-ak8uY9rVDOs-unsplash.jpg";
-import image4 from "../../assets/travelPhotos/dan-novac-1naE8177_bI-unsplash.jpg";
-import image5 from "../../assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg"
+// import image4 from "../../assets/travelPhotos/dan-novac-1naE8177_bI-unsplash.jpg";
+// import image5 from "../../assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg"
 import { Carousel, Ripple, initTE } from "tw-elements";
 
 export default function Home() {
