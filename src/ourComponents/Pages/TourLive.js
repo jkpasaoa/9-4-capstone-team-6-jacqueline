@@ -11,6 +11,7 @@ const API = process.env.REACT_APP_API_URL;
 export default function Tour() {
     const [tour, setTour] = useState({})
     const [pointsOfInterest, setPointsOfInterest] = useState([])
+    const [allPointsOfInterest, setAllPointsOfInterest] = useState([])
 
     const { id } = useParams()
 
@@ -22,6 +23,16 @@ export default function Tour() {
             })
             .catch((e) => console.warn(e))
     }, [id])
+
+    useEffect(() => {
+        axios.get(`${API}/tours/${id}/pointsOfInterest`)
+            .then((res) => {
+                setAllPointsOfInterest(res.data)
+            })
+            .catch((e) => console.warn(e))
+    }, [])
+
+    console.log(allPointsOfInterest)
 
     // const stringToDate = (string) => {
     //     setDate(new Date(string)) 
@@ -47,7 +58,7 @@ export default function Tour() {
                 <br />
                 <figure className="max-w-lg">
                     {/* <img src={tour.image_url} alt={tour.city} className="h-auto max-w-full rounded-lg" /> */}
-                    <Map className="h-auto max-w-full rounded-lg" />
+                    <Map className="h-auto max-w-full rounded-lg" pointsOfInterest={pointsOfInterest} />
                     <figcaption className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">{tour.city}, {tour.state ? `${tour.state},` : null} {tour.country} Google Images©</figcaption>
                 </figure>
                 <div>

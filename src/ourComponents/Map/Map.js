@@ -2,6 +2,7 @@
 import { GoogleMap, MarkerF, useJsApiLoader } from '@react-google-maps/api'
 import { useMemo, useState, useEffect } from 'react'; //useRef, useEffect
 import loadingLogo from '../../assets/S-Loop_transnparent.gif'
+import axios from 'axios';
 
 // const center = { lat: 40.8448, lng: 40.8448 }
 
@@ -18,11 +19,21 @@ export default function Map() {
   const [duration, setDuration] = useState('')
   const [map, setMap] = useState(/** @type google.maps.Map */(null))
 
+
   const center = useMemo(() => ({ lat: 40.8448, lng: -73.8648 }), []);
 
   // // start and end point to be replaced with poi cordinates
   // const originRef = useRef()
   // const destinationRef = useRef()
+
+  // useEffect(() => {
+  //   axios.get(`${API}/pointofinterest`)
+  //     .then((res) => setPointsOfInterest(res.data))
+  // }, [])
+
+  // useEffect(() => {
+  //   console.log(pointsOfInterest)
+  // }, [])
 
   const startPoint = { center }
   const endPoint = { lat: 40.6782, lng: -73.9442 }
