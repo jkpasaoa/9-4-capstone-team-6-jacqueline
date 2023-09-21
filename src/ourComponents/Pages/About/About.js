@@ -96,15 +96,16 @@ function About() {
             </p>
           </div>
         </div>
-        <br />
         <div className="team-container flex flex-col items-center">
           <img src={marker} alt="markerPin" className="markerPin" />&nbsp;
-          <h1 className="font-bold text-xl text-center my-0 dancing-script text-blue-950">Meet the Team</h1>
+          <h1 className="font-bold text-xl text-center my-0 dancing-script text-blue-950">
+            Meet the Team</h1>
+          <br />
           <br />
           <div className="team-members mt-4">
             {teamMembers.map((member, index) => (
               <div key={index} className="team-member-card">
-                <h5 className="text-xl font-medium leading-tight text-neutral-800">
+                <h5 className="text-3xl font-medium leading-tight text-neutral-800">
                   {member.name}
                 </h5>
                 <div className="mt-4 relative overflow-hidden bg-cover bg-no-repeat centered-photo">
@@ -123,7 +124,7 @@ function About() {
                     className="scrollable-content" //custom styling for scrolling content
                   >
                     <motion.p
-                      className="text-base bio-paragraph text-black"
+                      className="text-base bio-paragraph text-black text-lg"
                       initial={{ opacity: 0, y: 100 }}
                       animate={scrollControls}
                       transition={{ duration: 0.5, delay: 0.2 }}
