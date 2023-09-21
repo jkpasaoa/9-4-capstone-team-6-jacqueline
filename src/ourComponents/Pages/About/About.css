@@ -1,9 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+
+.luxury-font {
+  font-family: 'Dancing Script', cursive;
+  font-size: 45px;
+  color: #333;
+}
+
+.dancing-script {
+  font-family: 'Dancing Script', cursive;
+  font-size: 55px;
+}
+
+.about-background {
+  background-image: url('../../../assets/about-background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+.markerPin {
+  width: 2%;
+}
+
+
 .home-content {
-  padding-top: 125px;
+  padding-top: 175px;
+  background-color: rgba(53, 164, 233, 0.9)
 }
 
 .app-summary-container {
   margin: 0px 150px 25px 150px;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.754);
 }
 
 .medium-photo {
@@ -45,7 +74,9 @@
   padding: 16px;
   margin-bottom: 20px;
   width: 100%;
-  max-width: 400px;
+  max-width: 750px; /* Adjust the maximum width for desktop */
+  margin: 0 20px 45px; /* Add marg50in for both sides to increase spacing */
+  background-color: rgba(255, 255, 255, 0.9)
 }
 
 .team-member-card h2 {
