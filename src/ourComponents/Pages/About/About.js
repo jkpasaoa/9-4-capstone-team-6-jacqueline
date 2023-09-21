@@ -96,10 +96,11 @@ function About() {
             </p>
           </div>
         </div>
-        <br />
         <div className="team-container flex flex-col items-center">
           <img src={marker} alt="markerPin" className="markerPin" />&nbsp;
-          <h1 className="font-bold text-xl text-center my-0 dancing-script text-blue-950">Meet the Team</h1>
+          <h1 className="font-bold text-xl text-center my-0 dancing-script text-blue-950">
+            Meet the Team</h1>
+          <br />
           <br />
           <div className="team-members mt-4">
             {teamMembers.map((member, index) => (
