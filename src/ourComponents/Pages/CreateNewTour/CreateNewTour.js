@@ -17,7 +17,7 @@ const config = {
   apiUrl: process.env.REACT_APP_API_URL,
   googleApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
   unsplashApiKey: process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY,
-  // unsplashApiSecretKey: process.env.REACT_APP_UNSPLASH_API_SECRET_KEY,
+  unsplashApiSecretKey: process.env.REACT_APP_UNSPLASH_API_SECRET_KEY,
 };
 
 // const getCoordinatesFromOpenAI = async (poi) => {
@@ -93,7 +93,12 @@ const getImageFromUnsplash = async (poi) => {
 const fetchCityPhoto = async (cityName, setCityPhoto) => {
   try {
     const response = await axios.get(
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(cityName)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(cityName)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`,
+      {
+        headers: {
+          Authorization: `Client-ID ${config.unsplashApiSecretKey}`,
+        },
+      }
     );
 
     // Extract the photo URL from the response
@@ -190,6 +195,9 @@ export default function CreateNewTour() {
           }
 
         ],
+
+        // Add a max_tokens parameter to limit the response length
+      max_tokens: 25, // to limit photos temp.
 
       };
 
