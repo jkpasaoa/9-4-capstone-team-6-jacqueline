@@ -18,9 +18,19 @@ export default function Map() {
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
   const [map, setMap] = useState(/** @type google.maps.Map */(null))
+  const [lat, setLat] = useState('')
+  const [long, setLong] = useState('')
 
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position.coords)
+      setLat(position.coords.latitude)
+      setLong(position.coords.longitude)
+    })
+  }, [])
 
   const center = useMemo(() => ({ lat: 40.8448, lng: -73.8648 }), []);
+
 
   // // start and end point to be replaced with poi cordinates
   // const originRef = useRef()

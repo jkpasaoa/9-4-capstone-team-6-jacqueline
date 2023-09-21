@@ -32,7 +32,7 @@ export default function Tour() {
             .catch((e) => console.warn(e))
     }, [])
 
-    console.log(allPointsOfInterest)
+    // console.log(allPointsOfInterest)
 
     // const stringToDate = (string) => {
     //     setDate(new Date(string)) 
