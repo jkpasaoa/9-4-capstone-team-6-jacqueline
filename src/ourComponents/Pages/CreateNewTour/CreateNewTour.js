@@ -75,7 +75,12 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
 const getImageFromUnsplash = async (poi) => {
   try {
     const response = await axios.get(
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(poi)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(poi)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`,
+      {
+        headers: {
+          Authorization: `Client-ID ${config.unsplashApiSecretKey}`,
+        },
+      }
     );
 
     // Extract the photo URL from the response
