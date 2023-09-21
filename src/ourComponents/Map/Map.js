@@ -26,10 +26,11 @@ export default function Map() {
       console.log(position.coords)
       setLat(position.coords.latitude)
       setLong(position.coords.longitude)
+      console.log(lat, long)
     })
   }, [])
 
-  const center = useMemo(() => ({ lat: 40.8448, lng: -73.8648 }), []);
+  // const center = useMemo(() => ({ lat: 40.8448, lng: -73.8648 }), []);
 
 
   // // start and end point to be replaced with poi cordinates
@@ -45,7 +46,7 @@ export default function Map() {
   //   console.log(pointsOfInterest)
   // }, [])
 
-  const startPoint = { center }
+  const startPoint = { lat: lat, lng: long }
   const endPoint = { lat: 40.6782, lng: -73.9442 }
 
   const calculateRoute = async () => {
@@ -83,7 +84,7 @@ export default function Map() {
   return (
     <div position='center' className='h-[300px] w-[600px]'>
       <GoogleMap
-        center={center}
+        center={{ lat: lat, lng: long }}
         zoom={5}
         mapContainerStyle={{ width: '100%', height: '100%' }}
         options={{
@@ -94,9 +95,9 @@ export default function Map() {
         }}
         onLoad={(map) => setMap(map)}
       >
-        <MarkerF position={center} />
+        <MarkerF position={{ lat: lat, lng: long }} />
       </GoogleMap>
-      <p><button onClick={() => map.panTo(center)}>📍</button></p>
+      <p><button onClick={() => map.panTo({ lat: lat, lng: long })}>📍</button></p>
       <br />
     </div>
   )
