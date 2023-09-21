@@ -20,11 +20,25 @@ const config = {
   // unsplashApiSecretKey: process.env.REACT_APP_UNSPLASH_API_SECRET_KEY,
 };
 
-const getCoordinatesFromOpenAI = async (poi) => {
-  // function to fetch coordinates
-  
-};
+// const getCoordinatesFromOpenAI = async (poi) => {
+//   // function to fetch coordinates
+// };
 
+const getCoordinatesFromNominatim = async (poi) => {
+  try {
+    const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${poi}`);
+    if (response.data && response.data.length > 0) {
+      const result = response.data[0];
+      const latitude = parseFloat(result.lat);
+      const longitude = parseFloat(result.lon);
+      return { latitude, longitude };
+    }
+    return null;
+  } catch (error) {
+    console.error('Error fetching coordinates from Nominatim:', error);
+    return null;
+  }
+};
 
 
 // Define the insertPointOfInterest function
@@ -171,7 +185,8 @@ export default function CreateNewTour() {
           11. Casa Batlló
           12. Casa Milà (La Pedrera)
           13. Passeig de Gràcia
-          14. Plaça de Catalunya (return to start point)`
+          14. Plaça de Catalunya (return to start point)
+          `
           }
 
         ],
@@ -268,7 +283,7 @@ export default function CreateNewTour() {
       // Iterate through the points of interest and insert them
       for (const poi of sanitizedPointsOfInterest) {
         // Fetch coordinates for the current POI
-        const coordinates = await getCoordinatesFromOpenAI(poi);
+        const coordinates = await getCoordinatesFromNominatim(poi);
 
         // Fetch the image URL for the current POI from Unsplash
         const poiImageUrl = await getImageFromUnsplash(poi);
