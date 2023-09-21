@@ -28,7 +28,7 @@ export default function Map() {
       setLong(position.coords.longitude)
       console.log(lat, long)
     })
-  }, [])
+  }, [isLoaded])
 
   // const center = useMemo(() => ({ lat: 40.8448, lng: -73.8648 }), []);
 

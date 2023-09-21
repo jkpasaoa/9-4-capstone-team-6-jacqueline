@@ -25,14 +25,14 @@ export default function Tour() {
     }, [id])
 
     useEffect(() => {
-        axios.get(`${API}/tours/${id}/pointsOfInterest`)
+        axios.get(`${API}/pointsOfInterest`)
             .then((res) => {
                 setAllPointsOfInterest(res.data)
             })
             .catch((e) => console.warn(e))
     }, [])
 
-    // console.log(allPointsOfInterest)
+    console.log(allPointsOfInterest)
 
     // const stringToDate = (string) => {
     //     setDate(new Date(string)) 
