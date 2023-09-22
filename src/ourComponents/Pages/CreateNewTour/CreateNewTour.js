@@ -17,14 +17,28 @@ const config = {
   apiUrl: process.env.REACT_APP_API_URL,
   googleApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
   unsplashApiKey: process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY,
-  // unsplashApiSecretKey: process.env.REACT_APP_UNSPLASH_API_SECRET_KEY,
+  unsplashApiSecretKey: process.env.REACT_APP_UNSPLASH_API_SECRET_KEY,
 };
 
-const getCoordinatesFromOpenAI = async (poi) => {
-  // function to fetch coordinates
-  
-};
+// const getCoordinatesFromOpenAI = async (poi) => {
+//   // function to fetch coordinates
+// };
 
+const getCoordinatesFromNominatim = async (poi) => {
+  try {
+    const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${poi}`);
+    if (response.data && response.data.length > 0) {
+      const result = response.data[0];
+      const latitude = parseFloat(result.lat);
+      const longitude = parseFloat(result.lon);
+      return { latitude, longitude };
+    }
+    return null;
+  } catch (error) {
+    console.error('Error fetching coordinates from Nominatim:', error);
+    return null;
+  }
+};
 
 
 // Define the insertPointOfInterest function
@@ -61,7 +75,12 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
 const getImageFromUnsplash = async (poi) => {
   try {
     const response = await axios.get(
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(poi)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(poi)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`,
+      {
+        headers: {
+          Authorization: `Client-ID ${config.unsplashApiSecretKey}`,
+        },
+      }
     );
 
     // Extract the photo URL from the response
@@ -79,7 +98,12 @@ const getImageFromUnsplash = async (poi) => {
 const fetchCityPhoto = async (cityName, setCityPhoto) => {
   try {
     const response = await axios.get(
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(cityName)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(cityName)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`,
+      {
+        headers: {
+          Authorization: `Client-ID ${config.unsplashApiSecretKey}`,
+        },
+      }
     );
 
     // Extract the photo URL from the response
@@ -171,10 +195,14 @@ export default function CreateNewTour() {
           11. Casa Batlló
           12. Casa Milà (La Pedrera)
           13. Passeig de Gràcia
-          14. Plaça de Catalunya (return to start point)`
+          14. Plaça de Catalunya (return to start point)
+          `
           }
 
         ],
+
+        // Add a max_tokens parameter to limit the response length
+      max_tokens: 25, // to limit photos temp.
 
       };
 
@@ -268,7 +296,7 @@ export default function CreateNewTour() {
       // Iterate through the points of interest and insert them
       for (const poi of sanitizedPointsOfInterest) {
         // Fetch coordinates for the current POI
-        const coordinates = await getCoordinatesFromOpenAI(poi);
+        const coordinates = await getCoordinatesFromNominatim(poi);
 
         // Fetch the image URL for the current POI from Unsplash
         const poiImageUrl = await getImageFromUnsplash(poi);
