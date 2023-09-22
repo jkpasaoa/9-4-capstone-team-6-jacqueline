@@ -1,7 +1,8 @@
 // /*global google*/
-import { GoogleMap, MarkerF, useJsApiLoader } from '@react-google-maps/api'
+import { GoogleMap, MarkerF, useJsApiLoader, DirectionsRenderer } from '@react-google-maps/api'
 import { useMemo, useState, useEffect } from 'react'; //useRef, useEffect
 import loadingLogo from '../../assets/S-Loop_transnparent.gif'
+import axios from 'axios';
 
 // const center = { lat: 40.8448, lng: 40.8448 }
 
@@ -17,14 +18,35 @@ export default function Map() {
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
   const [map, setMap] = useState(/** @type google.maps.Map */(null))
+  const [lat, setLat] = useState('')
+  const [long, setLong] = useState('')
 
-  const center = useMemo(() => ({ lat: 40.8448, lng: -73.8648 }), []);
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position.coords)
+      setLat(position.coords.latitude)
+      setLong(position.coords.longitude)
+      console.log(lat, long)
+    })
+  }, [isLoaded])
+
+  // const center = useMemo(() => ({ lat: 40.8448, lng: -73.8648 }), []);
+
 
   // // start and end point to be replaced with poi cordinates
   // const originRef = useRef()
   // const destinationRef = useRef()
 
-  const startPoint = { center }
+  // useEffect(() => {
+  //   axios.get(`${API}/pointofinterest`)
+  //     .then((res) => setPointsOfInterest(res.data))
+  // }, [])
+
+  // useEffect(() => {
+  //   console.log(pointsOfInterest)
+  // }, [])
+
+  const startPoint = { lat: lat, lng: long }
   const endPoint = { lat: 40.6782, lng: -73.9442 }
 
   const calculateRoute = async () => {
@@ -47,10 +69,6 @@ export default function Map() {
     setDuration(results.routes[0].legs[0].duration.text)
   }
 
-  useEffect(() => {
-    calculateRoute()
-  }, [])
-
   if (!isLoaded) {
     return (
       <div>
@@ -62,9 +80,9 @@ export default function Map() {
   return (
     <div position='center' className='h-[300px] w-[600px]'>
       <GoogleMap
-        center={center}
-        zoom={5}
-        mapContainerStyle={{ width: '100%', height: '100%' }}
+        center={{ lat: lat, lng: long }}
+        zoom={10}
+        mapContainerStyle={{ width: '105%', height: '150%' }}
         options={{
           // zoomControl: false,
           // streetViewControl: false,
@@ -73,9 +91,11 @@ export default function Map() {
         }}
         onLoad={(map) => setMap(map)}
       >
-        <MarkerF position={center} />
+        <MarkerF position={{ lat: lat, lng: long }} />
+        {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
       </GoogleMap>
-      <p><button onClick={() => map.panTo(center)}>📍</button></p>
+      <p><button onClick={() => map.panTo({ lat: lat, lng: long })}>📍</button><button onClick={calculateRoute}>START TOUR</button></p>
+      <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p>
       <br />
     </div>
   )
