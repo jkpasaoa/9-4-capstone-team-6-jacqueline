@@ -95,6 +95,7 @@ export default function Map() {
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
       </GoogleMap>
       <p><button onClick={() => map.panTo({ lat: lat, lng: long })}>📍</button><button onClick={calculateRoute}>START TOUR</button></p>
+      <p><strong>Distance:</strong> {distance} <strong>Duration:</strong>{duration}</p>
       <br />
     </div>
   )
