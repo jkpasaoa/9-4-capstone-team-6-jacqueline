@@ -7,6 +7,8 @@ import image3 from "../../assets/travelPhotos/bjorn-agerbeek-ak8uY9rVDOs-unsplas
 // import image4 from "../../assets/travelPhotos/dan-novac-1naE8177_bI-unsplash.jpg";
 // import image5 from "../../assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg"
 import { Carousel, Ripple, initTE } from "tw-elements";
+// import { useLocation } from "react-router-dom";
+import { useState } from "react"
 
 export default function Home() {
   // const [isMuted, setIsMuted] = useState(false);
@@ -14,6 +16,9 @@ export default function Home() {
   // const toggleMute = () => {
   //   setIsMuted(!isMuted);
   // };
+
+  // const location = useLocation();
+  const [ loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     initTE({ Carousel, Ripple });
