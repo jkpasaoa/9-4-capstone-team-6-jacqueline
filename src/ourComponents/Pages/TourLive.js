@@ -56,7 +56,7 @@ export default function Tour() {
                 <h4 className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Welcome to your {tour.tour_name}</h4>
                 {/* <p>Created on { }</p> */}
                 <br />
-                <div className="grid grid-cols-2 gap-20">
+                <div className="grid grid-cols-2 gap-7">
                     <div>
                         <h2 className="text-4xl font-bold dark:text-white text-sky-950">Points of Interest:</h2>
                         <ul>

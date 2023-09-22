@@ -85,8 +85,8 @@ export default function Map() {
     <div position='center' className='h-[300px] w-[600px]'>
       <GoogleMap
         center={{ lat: lat, lng: long }}
-        zoom={5}
-        mapContainerStyle={{ width: '100%', height: '100%' }}
+        zoom={10}
+        mapContainerStyle={{ width: '105%', height: '150%' }}
         options={{
           // zoomControl: false,
           // streetViewControl: false,
