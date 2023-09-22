@@ -92,6 +92,7 @@ export default function Map() {
         onLoad={(map) => setMap(map)}
       >
         <MarkerF position={{ lat: lat, lng: long }} />
+        {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
       </GoogleMap>
       <p><button onClick={() => map.panTo({ lat: lat, lng: long })}>📍</button><button onClick={calculateRoute}>START TOUR</button></p>
       <br />
