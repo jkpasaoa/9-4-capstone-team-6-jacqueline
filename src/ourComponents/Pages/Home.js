@@ -8,7 +8,7 @@ import image3 from "../../assets/travelPhotos/bjorn-agerbeek-ak8uY9rVDOs-unsplas
 // import image5 from "../../assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg"
 import { Carousel, Ripple, initTE } from "tw-elements";
 // import { useLocation } from "react-router-dom";
-import { useState } from "react"
+// import { useState } from "react"
 
 export default function Home() {
   // const [isMuted, setIsMuted] = useState(false);
@@ -18,7 +18,7 @@ export default function Home() {
   // };
 
   // const location = useLocation();
-  const [ loaded, setLoaded] = useState(false)
+  // const [ loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     initTE({ Carousel, Ripple });

@@ -15,7 +15,7 @@ function NavBar() {
       <nav className="bg-white-200 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <span className="logo">
-            <a to="/home" className="flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
+            <a href="/home" className="flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
               <img
                 src={logo}
                 className="h-24 mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
