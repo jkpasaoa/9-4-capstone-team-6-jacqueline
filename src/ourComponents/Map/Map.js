@@ -1,12 +1,12 @@
 // /*global google*/
 import { GoogleMap, MarkerF, useJsApiLoader, DirectionsRenderer } from '@react-google-maps/api'
-import { useMemo, useState, useEffect } from 'react'; //useRef, useEffect
+import { useState, useEffect } from 'react'; //useRef, useEffect, useMemo
 import loadingLogo from '../../assets/S-Loop_transnparent.gif'
-import axios from 'axios';
+// import axios from 'axios';
 
 // const center = { lat: 40.8448, lng: 40.8448 }
 
-const API = process.env.REACT_APP_API_URL;
+// const API = process.env.REACT_APP_API_URL;
 
 export default function Map() {
   const { isLoaded } = useJsApiLoader({
@@ -28,7 +28,7 @@ export default function Map() {
       setLong(position.coords.longitude)
       console.log(lat, long)
     })
-  }, [isLoaded])
+  }, [isLoaded, lat, long])
 
   // const center = useMemo(() => ({ lat: 40.8448, lng: -73.8648 }), []);
 
