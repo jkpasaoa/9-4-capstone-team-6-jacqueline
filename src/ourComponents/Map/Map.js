@@ -81,8 +81,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
     const lastPoi = allPointsOfInterest.find((el) => el.poi_name === pointsOfInterest[pointsOfInterest.length - 1])
     const results = await directionsService.route({
       origin: { lat: Number(firstPoi.latitude), lng: Number(firstPoi.longitude) },
-      destination: { lat: Number(lastPoi.latitude), lng: Number(lastPoi.longitude) },
       waypoints,
+      destination: { lat: Number(lastPoi.latitude), lng: Number(lastPoi.longitude) },
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.WALKING
     })
@@ -138,6 +138,15 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
       /> <button onClick={calculateRoute}> <span>  </span>SHOW ROUTE</button></p>
       <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p>
       <br />
+      <div>
+        <ul>
+          {
+            steps.map((step, index) => {
+              return <li key={index}>{step.instructions}</li>
+            })
+          }
+        </ul>
+      </div>
     </div>
   )
 }
