@@ -135,7 +135,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
   // }
 
   const parseDirections = (html) => {
-
+    let cleanedHtml = html.replace(/<\/?b>/g, '');
   }
 
   return (
