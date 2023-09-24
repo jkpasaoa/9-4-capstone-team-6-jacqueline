@@ -26,10 +26,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position.coords)
       setLat(position.coords.latitude)
       setLong(position.coords.longitude)
-      console.log(lat, long)
     })
   }, [isLoaded, lat, long])
 
@@ -58,10 +56,10 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
   // const startPoint = { lat: lat, lng: long }
   // const endPoint = { lat: 40.6782, lng: -73.9442 }
 
-  const extractSteps = (directions) => {
-    const steps1 = directions.routes[0].legs[0].steps;
-    setSteps(steps1);
-  };
+  // const extractSteps = (directions) => {
+  //   const steps1 = directions.routes[0].legs[0].steps;
+  //   setSteps(steps1);
+  // };
 
   const calculateRoute = async () => {
     // if (!startPoint || !endPoint) {
@@ -74,8 +72,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
     const directionsService = new google.maps.DirectionsService()
     const waypoints = pointsOfInterest.slice(1, -1).map((poi) => {
       const newPointsOfInterest = allPointsOfInterest.find((el) => el.poi_name === poi)
-      console.log(newPointsOfInterest)
-      console.log(poi)
+      // console.log(newPointsOfInterest)
+      // console.log(poi)
       const locationObj = { location: { lat: Number(newPointsOfInterest.latitude), lng: Number(newPointsOfInterest.longitude) } }
       return locationObj
     })
@@ -104,7 +102,6 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
       </div>
     )
   }
-  console.log(allPointsOfInterest, "all poi")
 
   return (
     <div position='center' className='h-[300px] w-[600px]'>
@@ -124,8 +121,6 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
           pointsOfInterest.length && allPointsOfInterest.length &&
           pointsOfInterest.map((poi) => {
             const newPointsOfInterest = allPointsOfInterest.find((el) => el.poi_name === poi)
-            console.log(newPointsOfInterest)
-            console.log(poi)
             return newPointsOfInterest
           }).map(({ latitude, longitude }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} />)
         }
