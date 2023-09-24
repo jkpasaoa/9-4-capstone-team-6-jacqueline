@@ -103,6 +103,12 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
     )
   }
 
+  const beautifyText = (htmlString) => {
+    const parser = new DOMParser()
+
+    const doc = parser.parseFromString(htmlString, 'text/html')
+  }
+
   return (
     <div position='center' className='h-[300px] w-[600px]'>
       <GoogleMap
