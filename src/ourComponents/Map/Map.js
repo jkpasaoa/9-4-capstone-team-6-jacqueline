@@ -107,6 +107,16 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
     const parser = new DOMParser()
 
     const doc = parser.parseFromString(htmlString, 'text/html')
+    const convertToText = (node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        return node.textContent;
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        const tagName = node.tagName.toLowerCase();
+        let content = '';
+
+
+      }
+    }
   }
 
   return (
