@@ -1,3 +1,11 @@
+
+.centered-video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust this to control the height of the centered video */
+}
+
 .form-control {
   font-family: 'Roboto', sans-serif;
   font-size: 120%;
