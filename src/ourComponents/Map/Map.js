@@ -104,7 +104,11 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
   }
 
   const settingCustomMarker = (img) => {
-    
+    const customMarkerIcon = {
+      url: img,
+      // eslint-disable-next-line no-undef
+      scaledSize: new google.maps.Size(40, 40)
+    }
   }
 
   const parseDirections = (html) => {
