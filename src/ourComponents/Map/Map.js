@@ -141,6 +141,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
 
     cleanedHtml = cleanedHtml.replace(/<wbr\/?>/g, ' ');
 
+    cleanedHtml = cleanedHtml.replace(/<b>(.*?)<\/b>/g, '$1');
+
     return cleanedHtml;
   }
 
