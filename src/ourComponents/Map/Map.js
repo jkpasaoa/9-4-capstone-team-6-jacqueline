@@ -135,19 +135,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
   // }
 
   const parseDirections = (html) => {
-    let cleanedHtml = html.replace(/<\/?b>/g, '');
-
-    cleanedHtml = cleanedHtml.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
-
-    cleanedHtml = cleanedHtml.replace(/<wbr\/?>/g, ' ');
-
-    cleanedHtml = cleanedHtml.replace(/style=".*?"/g, '');
-
-    cleanedHtml = cleanedHtml.replace(/<\/?.*?>/g, '');
-
-    cleanedHtml = cleanedHtml.replace(/&nbsp;/g, ' ');
-
-    cleanedHtml = cleanedHtml.trim();
+    let cleanedHtml = html.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
 
     return cleanedHtml;
   }
@@ -191,7 +179,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
         <ul>
           {
             steps.map((step, index) => {
-              return <li key={index}>{step.instructions}</li>
+              return <li key={index}>{parseDirections(step.instructions)}</li>
             })
           }
         </ul>
