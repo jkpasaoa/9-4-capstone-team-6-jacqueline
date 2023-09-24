@@ -1,13 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useAnimation, useViewportScroll } from 'framer-motion';
-import JosephPhoto from '../../../assets/Joseph.jpg';
-import RaydelysPhoto from '../../../assets/Raydelys.jpg';
-import JacquelinePhoto from '../../../assets/Jacqueline.jpg';
-import MarkPhoto from '../../../assets/Mark.jpg';
-import githubJPEG from '../../../assets/github.jpeg';
-import linkedinPNG from '../../../assets/linkedin.png';
-import marker from '../../../assets/markerSite.png'
+import JosephPhoto from '../../../assets/aboutPhotos/Joseph.jpg';
+import RaydelysPhoto from '../../../assets/aboutPhotos/Raydelys.jpg';
+import JacquelinePhoto from '../../../assets/aboutPhotos/Jacqueline.jpg';
+import MarkPhoto from '../../../assets/aboutPhotos/Mark.jpg';
+import githubJPEG from '../../../assets/aboutPhotos/github.jpeg';
+import linkedinPNG from '../../../assets/aboutPhotos/linkedin.png';
+import marker from '../../../assets/aboutPhotos/markerSite.png'
 import '../About/About.css';
 
 function About() {

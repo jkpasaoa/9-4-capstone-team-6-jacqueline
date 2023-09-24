@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 // import { AiFillAndroid }
 // import { AiFillWindows, AiFillApple } from 'react-icons/ai';
-import appStore from '../../assets/download-app-store.png'
-import playStore from '../../assets/download-google-playstore.png'
+import appStore from '../../assets/footerPhotos/download-app-store.png'
+import playStore from '../../assets/footerPhotos/download-google-playstore.png'
 
 function Footer() {
   return (
