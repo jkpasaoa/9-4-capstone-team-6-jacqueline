@@ -12,7 +12,7 @@
 }
 
 .about-background {
-  background-image: url('../../../assets/about-background.jpg');
+  background-image: url('../../../assets/aboutPhotos/about-background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -21,6 +21,10 @@
 
 .markerPin {
   width: 2%;
+}
+.p {
+  padding-top: 0px;
+  padding-left: 10px;
 }
 
 

@@ -8,6 +8,14 @@
   height: 35%;
 }
 
-/* .route-container {
-  margin: 0 0 300px;
-} */
+.create-background {
+  background-image: url('../../../assets/createNewTourPhotos/create-new-tour-bkground.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+.route-container {
+  /* margin: 0 0 300px; */
+}
