@@ -116,6 +116,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
 
         if (tagName === 'b') {
           content += node.innerText
+        } else if (tagName === 'div' && node.style.fontSize === '0.9em') {
+          content += node.innerText
         }
       }
     }
