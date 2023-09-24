@@ -136,6 +136,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
 
   const parseDirections = (html) => {
     let cleanedHtml = html.replace(/<\/?b>/g, '');
+
+    cleanedHtml = cleanedHtml.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
   }
 
   return (
