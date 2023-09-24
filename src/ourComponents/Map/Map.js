@@ -114,7 +114,9 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
         const tagName = node.tagName.toLowerCase();
         let content = '';
 
-
+        if (tagName === 'b') {
+          content += node.innerText
+        }
       }
     }
   }
