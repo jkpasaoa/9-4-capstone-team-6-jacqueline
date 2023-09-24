@@ -4,13 +4,14 @@ import { useState, useEffect } from 'react'; //useRef, useEffect, useMemo
 import loadingLogo from '../../assets/S-Loop_transnparent.gif'
 import { FaLocationArrow } from 'react-icons/fa'
 import { IconButton } from '@chakra-ui/react';
+import { all } from 'axios';
 // import axios from 'axios';
 
 // const center = { lat: 40.8448, lng: 40.8448 }
 
 // const API = process.env.REACT_APP_API_URL;
 
-export default function Map() {
+export default function Map({ pointsOfInterest, allPointsOfInterest }) {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ['places']
@@ -31,6 +32,12 @@ export default function Map() {
       console.log(lat, long)
     })
   }, [isLoaded, lat, long])
+
+  // const matchingPointsOfInterest = () => {
+  //   for (let i = 0; i < pointsOfInterest.length; i++) {
+
+  //   }
+  // }
 
   // const center = useMemo(() => ({ lat: 40.8448, lng: -73.8648 }), []);
 
@@ -60,9 +67,19 @@ export default function Map() {
 
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService()
+    const waypoints = pointsOfInterest.slice(1, -1).map((poi) => {
+      const newPointsOfInterest = allPointsOfInterest.find((el) => el.poi_name === poi)
+      console.log(newPointsOfInterest)
+      console.log(poi)
+      const locationObj = { location: { lat: Number(newPointsOfInterest.latitude), lng: Number(newPointsOfInterest.longitude) } }
+      return locationObj
+    })
+    const firstPoi = allPointsOfInterest.find((el) => el.poi_name === pointsOfInterest[0])
+    const lastPoi = allPointsOfInterest.find((el) => el.poi_name === pointsOfInterest[pointsOfInterest.length - 1])
     const results = await directionsService.route({
-      origin: startPoint,
-      destination: endPoint,
+      origin: { lat: Number(firstPoi.latitude), lng: Number(firstPoi.longitude) },
+      destination: { lat: Number(lastPoi.latitude), lng: Number(lastPoi.longitude) },
+      waypoints,
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.WALKING
     })
@@ -78,6 +95,7 @@ export default function Map() {
       </div>
     )
   }
+  console.log(allPointsOfInterest, "all poi")
 
   return (
     <div position='center' className='h-[300px] w-[600px]'>
@@ -93,7 +111,16 @@ export default function Map() {
         }}
         onLoad={(map) => setMap(map)}
       >
-        <MarkerF position={{ lat: lat, lng: long }} />
+        {
+          pointsOfInterest.length && allPointsOfInterest.length &&
+          pointsOfInterest.map((poi) => {
+            const newPointsOfInterest = allPointsOfInterest.find((el) => el.poi_name === poi)
+            console.log(newPointsOfInterest)
+            console.log(poi)
+            return newPointsOfInterest
+          }).map(({ latitude, longitude }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} />)
+        }
+        {/* <MarkerF position={{ lat: lat, lng: long }} /> */}
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
       </GoogleMap>
       <p><IconButton
