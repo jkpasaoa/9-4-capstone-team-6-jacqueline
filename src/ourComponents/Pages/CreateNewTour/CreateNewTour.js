@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -335,6 +334,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     }
   };
 
+  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen" style={{ paddingTop: '160px' }}>
