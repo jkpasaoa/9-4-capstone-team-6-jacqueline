@@ -20,27 +20,6 @@ const config = {
   unsplashApiSecretKey: process.env.REACT_APP_UNSPLASH_API_SECRET_KEY,
 };
 
-// const getCoordinatesFromOpenAI = async (poi) => {
-//   // function to fetch coordinates
-// };
-
-const getCoordinatesFromNominatim = async (poi) => {
-  try {
-    const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${poi}`);
-    if (response.data && response.data.length > 0) {
-      const result = response.data[0];
-      const latitude = parseFloat(result.lat);
-      const longitude = parseFloat(result.lon);
-      return { latitude, longitude };
-    }
-    return null;
-  } catch (error) {
-    console.error('Error fetching coordinates from Nominatim:', error);
-    return null;
-  }
-};
-
-
 // Define the insertPointOfInterest function
 const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => {
 
@@ -54,8 +33,8 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
     const response = await axios.post(`${config.apiUrl}/pointofinterest`, {
       poi_name: poi,
       tour_id: newTourId,
-      latitude: coordinates?.lat || null,
-      longitude: coordinates?.lng || null,
+      latitude: coordinates.latitude || null,
+      longitude: coordinates.longitude || null,
       image_url: image_url,
       created_at: new Date().toISOString(), // Set the created_at timestamp
     }, {
@@ -137,15 +116,47 @@ export default function CreateNewTour() {
   // const [selectedOption, setSelectedOption] = useState('');
 
 
-  const parsePointsOfInterest = (generatedTour) => {
-    const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
-    const matches = [];
-    let match;
-    while ((match = bulletPattern.exec(generatedTour)) !== null) {
-      matches.push(match[1]);
+  // const parsePointsOfInterest = (generatedTour) => {
+  //   const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
+  //   const matches = [];
+  //   let match;
+  //   while ((match = bulletPattern.exec(generatedTour)) !== null) {
+  //     matches.push(match[1]);
+  //   }
+  //   return matches;
+  // };
+  
+// Function to extract POI and coordinates
+const parsePointsOfInterestAndCoordinates = (generatedTour) => {
+  const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
+  const coordinatePattern = /\((-?\d+\.\d+)° ([NS]), (-?\d+\.\d+)° ([EW])\)/g;
+  const matches = [];
+  let match;
+
+  while ((match = bulletPattern.exec(generatedTour)) !== null) {
+    const poi = match[1];
+    const coordinateMatches = coordinatePattern.exec(generatedTour);
+    if (coordinateMatches) {
+      const latitude = parseFloat(coordinateMatches[1]);
+      const latitudeDirection = coordinateMatches[2];
+      const longitude = parseFloat(coordinateMatches[3]);
+      const longitudeDirection = coordinateMatches[4];
+
+      const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
+      const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
+
+      const adjustedLatitude = latitude * latitudeSign;
+      const adjustedLongitude = longitude * longitudeSign;
+
+      const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
+
+      matches.push({ poi, coordinates });
     }
-    return matches;
-  };
+  }
+
+  return matches;
+};
+
 
   const generateWalkingTour = async () => {
     try {
@@ -169,11 +180,15 @@ export default function CreateNewTour() {
         messages: [
           {
             role: 'system',
-            content: 'Create a self guided walking tour where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only want the tour route and what points of interest are on that route. I will ask later for an in depth tour or each point of interest.',
+            content: 'Create a self guided walking tour where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only want the tour route and what points of interest are on that route with the coordinates for each point of interest. I will ask later for an in depth tour or each point of interest.',
           },
           {
             role: 'user',
             content: prompt,
+          },
+          {
+            role: 'user',
+            content: 'Include coordinates for each point of interest.',
           },
           {
             role: 'user',
@@ -202,7 +217,7 @@ export default function CreateNewTour() {
         ],
 
         // Add a max_tokens parameter to limit the response length
-      max_tokens: 25, // to limit photos temp.
+      max_tokens: 150, // to limit photos temp.
 
       };
 
@@ -214,21 +229,25 @@ export default function CreateNewTour() {
       });
 
       const generatedTour = response.data.choices[0]?.message.content;
-      setTourContent(generatedTour);
+    setTourContent(generatedTour);
 
-      const pointsOfInterest = parsePointsOfInterest(generatedTour);
+    // Parse points of interest and extract coordinates from the generated tour content
+    const pointsOfInterestWithCoordinates = parsePointsOfInterestAndCoordinates(generatedTour);
 
-      // Sanitize each point of interest
-      const sanitizedPointsOfInterest = pointsOfInterest.map(sanitizeInput);
+    // Separate the points of interest and coordinates into two arrays
+    const pointsOfInterest = pointsOfInterestWithCoordinates.map((poi) => poi.poi);
+    const coordinates = pointsOfInterestWithCoordinates.map((poi) => poi.coordinates);
 
+    // Sanitize each point of interest
+    const sanitizedPointsOfInterest = pointsOfInterest.map(sanitizeInput);
 
-      console.log('Points of Interest: ', sanitizedPointsOfInterest);
+    console.log('Points of Interest: ', sanitizedPointsOfInterest);
+    console.log('Coordinates: ', coordinates);
 
-      setIsLoading(false); // Set loading to false when loading is complete
+    setIsLoading(false);
 
-      return generatedTour
-
-    } catch (error) {
+    return { generatedTour, sanitizedPointsOfInterest, coordinates };
+  } catch (error) {
       console.error('Error:', error);
       setTourContent('Error generating the walking tour. Please try again.');
       setIsLoading(false); // Set loading to false in case of an error
@@ -262,9 +281,12 @@ export default function CreateNewTour() {
 
     let generatedWalkingTour = await generateWalkingTour();
 
-    // Parse and sanitize points of interest
-    const pointsOfInterest = parsePointsOfInterest(generatedWalkingTour);
-    const sanitizedPointsOfInterest = pointsOfInterest.map(sanitizeInput);
+    // // Parse and sanitize points of interest
+    // const pointsOfInterest = parsePointsOfInterest(generatedWalkingTour);
+    // const sanitizedPointsOfInterest = pointsOfInterest.map(sanitizeInput);
+
+    // Parse and sanitize points of interest with coordinates
+  const { sanitizedPointsOfInterest, coordinates } = generatedWalkingTour;
 
     // Fetch the city photo
     const cityPhoto = await fetchCityPhoto(tour.city, setCityPhoto);
@@ -293,17 +315,21 @@ export default function CreateNewTour() {
       // Get the ID of the newly inserted tour
       const newTourId = response.data.id;
 
-      // Iterate through the points of interest and insert them
-      for (const poi of sanitizedPointsOfInterest) {
-        // Fetch coordinates for the current POI
-        const coordinates = await getCoordinatesFromNominatim(poi);
+     // Iterate through the points of interest and insert them
+    for (let i = 0; i < sanitizedPointsOfInterest.length; i++) {
+      const poi = sanitizedPointsOfInterest[i];
+      const poiCoordinates = coordinates[i]; // Get the corresponding coordinates
+        
+        // // Fetch coordinates for the current POI
+        // const coordinates = await getCoordinatesFromNominatim(poi);
 
         // Fetch the image URL for the current POI from Unsplash
         const poiImageUrl = await getImageFromUnsplash(poi);
 
         // Insert the POI data into the database
-        await insertPointOfInterest(poi, newTourId, coordinates, poiImageUrl);
+        await insertPointOfInterest(poi, newTourId, poiCoordinates, poiImageUrl);
       }
+      console.log('POI added successfully:', coordinates);
     } catch (error) {
       console.error('Error adding tour:', error);
     }
