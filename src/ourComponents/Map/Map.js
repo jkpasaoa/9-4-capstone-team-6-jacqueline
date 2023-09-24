@@ -145,6 +145,10 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
 
     cleanedHtml = cleanedHtml.replace(/<\/?.*?>/g, '');
 
+    cleanedHtml = cleanedHtml.replace(/&nbsp;/g, ' ');
+
+    cleanedHtml = cleanedHtml.trim();
+
     return cleanedHtml;
   }
 
