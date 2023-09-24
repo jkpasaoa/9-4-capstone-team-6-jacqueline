@@ -149,7 +149,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
           pointsOfInterest.map((poi) => {
             const newPointsOfInterest = allPointsOfInterest.find((el) => el.poi_name === poi)
             return newPointsOfInterest
-          }).map(({ latitude, longitude, image_url }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} icon={settingCustomMarker(image_url)} />)
+          }).map(({ latitude, longitude, image_url }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} icon={settingCustomMarker(image_url)} animation={null} />)
         }
         {/* <MarkerF position={{ lat: lat, lng: long }} /> */}
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
