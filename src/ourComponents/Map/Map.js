@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'; //useRef, useEffect, useMemo
 import loadingLogo from '../../assets/S-Loop_transnparent.gif'
 import { FaLocationArrow } from 'react-icons/fa'
 import { IconButton } from '@chakra-ui/react';
-import { all } from 'axios';
 // import axios from 'axios';
 
 // const center = { lat: 40.8448, lng: 40.8448 }
@@ -21,8 +20,9 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
   const [map, setMap] = useState(/** @type google.maps.Map */(null))
-  const [lat, setLat] = useState('')
-  const [long, setLong] = useState('')
+  const [lat, setLat] = useState(0)
+  const [long, setLong] = useState(0)
+  const [steps, setSteps] = useState([])
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -55,13 +55,13 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
   //   console.log(pointsOfInterest)
   // }, [])
 
-  const startPoint = { lat: lat, lng: long }
-  const endPoint = { lat: 40.6782, lng: -73.9442 }
+  // const startPoint = { lat: lat, lng: long }
+  // const endPoint = { lat: 40.6782, lng: -73.9442 }
 
   const calculateRoute = async () => {
-    if (!startPoint || !endPoint) {
-      return
-    }
+    // if (!startPoint || !endPoint) {
+    //   return
+    // }
 
     // const google = window.google;
 
@@ -84,6 +84,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
       travelMode: google.maps.TravelMode.WALKING
     })
     setDirectionsResponse(results)
+    this.extractSteps(results)
     setDistance(results.routes[0].legs[0].distance.text)
     setDuration(results.routes[0].legs[0].duration.text)
   }
@@ -131,7 +132,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
           map.panTo({ lat: lat, lng: long })
           map.setZoom(10)
         }}
-      /> <button onClick={calculateRoute}> <span>  </span>START TOUR</button></p>
+      /> <button onClick={calculateRoute}> <span>  </span>SHOW ROUTE</button></p>
       <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p>
       <br />
     </div>
