@@ -109,6 +109,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
       // eslint-disable-next-line no-undef
       scaledSize: new google.maps.Size(40, 40)
     }
+    return customMarkerIcon
   }
 
   const parseDirections = (html) => {
@@ -148,7 +149,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
           pointsOfInterest.map((poi) => {
             const newPointsOfInterest = allPointsOfInterest.find((el) => el.poi_name === poi)
             return newPointsOfInterest
-          }).map(({ latitude, longitude }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} />)
+          }).map(({ latitude, longitude, image_url }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} icon={settingCustomMarker(image_url)} />)
         }
         {/* <MarkerF position={{ lat: lat, lng: long }} /> */}
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
