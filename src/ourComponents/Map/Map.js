@@ -138,6 +138,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
     let cleanedHtml = html.replace(/<\/?b>/g, '');
 
     cleanedHtml = cleanedHtml.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
+
+    cleanedHtml = cleanedHtml.replace(/<wbr\/?>/g, ' ');
   }
 
   return (
