@@ -121,6 +121,10 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
         } else if (tagName === 'wbr') {
           content += '-'
         }
+
+        for (const childNode of node.childNode) {
+          content += convertToText(childNode)
+        }
       }
     }
   }
