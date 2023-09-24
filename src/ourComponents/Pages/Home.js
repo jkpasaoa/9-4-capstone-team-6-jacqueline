@@ -2,8 +2,10 @@ import React, { useEffect } from "react";
 import video1 from "../../assets/LandingPageVideo.mp4";
 import video2 from "../../assets/Page2_WebPage_Landscape.mp4";
 import image1 from "../../assets/travelPhotos/cristina-gottardi--YzMZYqwoH4-unsplash (1).jpg";
-// import image2 from "../../assets/travelPhotos/dominik-dancs-tzt-w1TCTNw-unsplash.jpg";
+import image2 from "../../assets/travelPhotos/dan-novac-1naE8177_bI-unsplash.jpg";
 import image3 from "../../assets/travelPhotos/bjorn-agerbeek-ak8uY9rVDOs-unsplash.jpg";
+import image4 from"../../assets/travelPhotos/timo-stern-iUBgeNeyVy8-unsplash.jpg"
+
 // import image4 from "../../assets/travelPhotos/dan-novac-1naE8177_bI-unsplash.jpg";
 // import image5 from "../../assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg"
 import { Carousel, Ripple, initTE } from "tw-elements";
@@ -33,7 +35,7 @@ export default function Home() {
         data-te-ride="carousel"
       >
         <div
-          className="absolute bottom-0 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-center p-0"
+          className="absolute bottom-5 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-center p-0"
           data-te-carousel-indicators
         >
           <button
@@ -166,29 +168,48 @@ export default function Home() {
         </div>
       </div>
 
-
-
       {/* partition 2 */}
-      <div className=" w-screen h-screen bg-[#cdc6cd] relative">
-        <div>
-          <div className="absolute max-[760px]:w-screen max-[760px]:text-4xl max-[760px]:top-[21.7%]  top-[43.4%] w-1/2 text-[#cdc6cd] font-semibold text-7xl  drop-shadow-[4px_4px_rgba(24,55,89,.9)] z-10">Freedom of Choice</div>
-          <img className="w-1/2 max-[760px]:w-screen max-[760px]:h-[50%] h-screen object-center inline-block shadow-md" src={image3} alt="Ibiza" />
-          <div className="w-1/2 max-[760px]:w-screen max-[760px]:text-4xl  max-[760px]:mt-28 inline-block text-[#183759] font-serif text-7xl shadow-2xl bg-clouds">
-            Peace of Mind
-          </div>
+      <div className="w-screen h-screen relative bg-[#D5D0D7] shadow-inner">
+        <div className="h-[70%] max-[760px]:h-auto  overflow-hidden">
+          <img
+            src={image2}
+            alt="WanderLust"
+            className="object-fill shadow-2xl translate-y-[-8vh]"
+          />
         </div>
+
+        <div className=""> 
+          <div className="text-2xl mx-40 px-5 py-10 max-[760px]:mx-5 max-[760px]:py-5 text-[#183759] rounded-lg bg-[#ded9e0] font-bold max-[760px]:mt-20 font-serif">
+        Discover hidden gems and explore iconic landmarks like a local. Our ChatGPT-powered virtual tour guide will chat with you, offering recommendations, historical tidbits, and insider tips along the way
+            </div>
+             </div>
+        
       </div>
 
       {/* partition 3 */}
-      <div className="h-screen flex flex-row items-center justify-center">
-        <div className="w-screen flex justify-evenly">
-          <div className="">
-            <div className="md:inline-block">Peace of Mind</div>
-            <div className="md:inline-block">Freedom of Choice</div>
-          </div>
+      <div className=" w-screen h-screen relative">
+        <div className="absolute max-[760px]:w-screen max-[760px]:text-4xl max-[760px]:top-[21.7%]  top-[43.4%] w-1/2 text-[#cdc6cd] font-semibold text-7xl  drop-shadow-[4px_4px_rgba(24,55,89,.9)] z-10">
+          Freedom of Choice
+        </div>
+        <img
+          className="w-1/2 max-[760px]:w-screen max-[760px]:h-[50%] h-screen object-center inline-block shadow-md"
+          src={image3}
+          alt="Ibiza"
+        />
+        <div className="w-1/2 max-[760px]:w-screen max-[760px]:text-4xl  max-[760px]:mt-28 inline-block text-[#183759] font-serif text-7xl shadow-2xl bg-clouds">
+          Peace of Mind
         </div>
       </div>
 
+      {/* partition 4 */}
+      <div className="h-screen ">
+        <div className="">
+          <img src={image4} alt="FindYourWay" className="w-1/4 object-center inline-block rounded-lg mt-5" />
+        </div>
+        <div className="mx-60 my-5">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere sint quidem asperiores quia neque dicta autem distinctio? Ut facilis id sint obcaecati corporis reiciendis illum? Totam minus nihil minima a.
+        </div>
+      </div>
 
     </div>
   );
