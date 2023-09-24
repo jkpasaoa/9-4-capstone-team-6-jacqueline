@@ -2,6 +2,8 @@
 import { GoogleMap, MarkerF, useJsApiLoader, DirectionsRenderer } from '@react-google-maps/api'
 import { useState, useEffect } from 'react'; //useRef, useEffect, useMemo
 import loadingLogo from '../../assets/S-Loop_transnparent.gif'
+import { FaLocationArrow } from 'react-icons/fa'
+import { IconButton } from '@chakra-ui/react';
 // import axios from 'axios';
 
 // const center = { lat: 40.8448, lng: 40.8448 }
@@ -94,7 +96,15 @@ export default function Map() {
         <MarkerF position={{ lat: lat, lng: long }} />
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
       </GoogleMap>
-      <p><button onClick={() => map.panTo({ lat: lat, lng: long })}>📍</button><button onClick={calculateRoute}>START TOUR</button></p>
+      <p><IconButton
+        aria-label='center back'
+        icon={<FaLocationArrow />}
+        isRound
+        onClick={() => {
+          map.panTo({ lat: lat, lng: long })
+          map.setZoom(10)
+        }}
+      /> <button onClick={calculateRoute}> <span>  </span>START TOUR</button></p>
       <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p>
       <br />
     </div>
