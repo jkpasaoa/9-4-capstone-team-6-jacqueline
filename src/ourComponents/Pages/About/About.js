@@ -80,19 +80,27 @@ function About() {
           <div className="app-summary-container bg-cyan-200 rounded-lg">
             <p className='text-lg'>
               <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
-              <strong className="luxury-font font-size">City Whisperer</strong>&nbsp; introduced in August and September 2023 as a capstone project, redefines the way travelers experience cities. This app empowers tourists with pre-planned walking routes and points of interest, complemented by audio commentary, facilitating efficient and immersive city exploration. By providing valuable insights and a user-friendly interface, City Whisperer enhances the overall travel experience, enabling users to make the most of their visits while enjoying the freedom of self-guided tours. It's the perfect companion for travelers seeking both convenience and adventure on their journeys.</p>
+              <strong className="luxury-font font-size">City Whisperer</strong>
+              <br />
+              introduced in August and September 2023 as a capstone project, redefines the way travelers experience cities. This app empowers tourists with pre-planned walking routes and points of interest, complemented by audio commentary, facilitating efficient and immersive city exploration. By providing valuable insights and a user-friendly interface, City Whisperer enhances the overall travel experience, enabling users to make the most of their visits while enjoying the freedom of self-guided tours. It's the perfect companion for travelers seeking both convenience and adventure on their journeys.</p>
             <br />
             <p className='text-lg'>
               <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
-              <strong className="luxury-font font-size">The Features</strong>&nbsp;of City Whisperer include AI-generated walking tours, customizable filters, and seamless Google Maps integration, you can explore cities like never before. Enjoy audio commentary in multiple languages through Text-to-Speech (TTS) and experience secure and convenient login options.</p>
+              <strong className="luxury-font font-size">The Features</strong>
+              <br />
+              of City Whisperer include AI-generated walking tours, customizable filters, and seamless Google Maps integration, you can explore cities like never before. Enjoy audio commentary in multiple languages through Text-to-Speech (TTS) and experience secure and convenient login options.</p>
             <br />
             <p className='text-lg'>
               <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
-              <strong className="luxury-font font-size">Our Mission</strong>&nbsp; is to empower travelers to experience cities like never before. We believe in enhancing the journey by offering self-guided walking tours that are not only informative but also deeply personalized. Our goal is to provide users with the freedom to explore at their own pace, uncover hidden gems, and connect with the culture and history of the places they visit. We're dedicated to curating an ever-growing library of AI-generated tours, fostering a sense of discovery, and making travel more accessible and enriching for everyone. City Whisperer is on a mission to redefine city exploration, one step at a time.</p>
+              <strong className="luxury-font font-size">Our Mission</strong>
+              <br />
+              is to empower travelers to experience cities like never before. We believe in enhancing the journey by offering self-guided walking tours that are not only informative but also deeply personalized. Our goal is to provide users with the freedom to explore at their own pace, uncover hidden gems, and connect with the culture and history of the places they visit. We're dedicated to curating an ever-growing library of AI-generated tours, fostering a sense of discovery, and making travel more accessible and enriching for everyone. City Whisperer is on a mission to redefine city exploration, one step at a time.</p>
             <br />
             <p className='text-lg'>
               <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
-              <strong className="luxury-font font-size">Our Development Team</strong>&nbsp; is a dynamic and passionate group of full-stack developers, each bringing their unique skills and backgrounds to the project. Together, this dedicated team is committed to redefining city exploration through AI-generated walking tours, making travel more enriching and accessible for all.
+              <strong className="luxury-font font-size">Our Development Team</strong>
+              <br />
+               is a dynamic and passionate group of full-stack developers, each bringing their unique skills and backgrounds to the project. Together, this dedicated team is committed to redefining city exploration through AI-generated walking tours, making travel more enriching and accessible for all.
             </p>
           </div>
         </div>
@@ -110,7 +118,7 @@ function About() {
                 </h5>
                 <div className="mt-4 relative overflow-hidden bg-cover bg-no-repeat centered-photo">
                   <motion.img
-                    className="rounded-t-lg medium-photo"
+                    className="rounded-lg medium-photo"
                     src={member.photo}
                     alt={member.name}
                     initial={{ opacity: 0, y: 100 }} // Initial animation state
