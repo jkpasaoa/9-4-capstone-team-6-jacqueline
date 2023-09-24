@@ -103,36 +103,39 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
     )
   }
 
-  const beautifyText = (htmlString) => {
-    const parser = new DOMParser()
+  // const beautifyText = (htmlString) => {
+  //   const parser = new DOMParser()
 
-    const doc = parser.parseFromString(htmlString, 'text/html')
-    const convertToText = (node) => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        return node.textContent;
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        const tagName = node.tagName.toLowerCase();
-        let content = '';
+  //   const doc = parser.parseFromString(htmlString, 'text/html')
+  //   const convertToText = (node) => {
+  //     if (node.nodeType === Node.TEXT_NODE) {
+  //       return node.textContent;
+  //     } else if (node.nodeType === Node.ELEMENT_NODE) {
+  //       const tagName = node.tagName.toLowerCase();
+  //       let content = '';
 
-        if (tagName === 'b') {
-          content += node.innerText
-        } else if (tagName === 'div' && node.style.fontSize === '0.9em') {
-          content += node.innerText
-        } else if (tagName === 'wbr') {
-          content += '-'
-        }
+  //       if (tagName === 'b') {
+  //         content = node.innerText
+  //       } else if (tagName === 'div' && node.style.fontSize === '0.9em') {
+  //         content += node.innerText
+  //       } else if (tagName === 'wbr') {
+  //         content += '-'
+  //       }
 
-        for (const childNode of node.childNode) {
-          content += convertToText(childNode)
-        }
+  //       for (const childNode of node.childNodes) {
+  //         content += convertToText(childNode)
+  //       }
+  //       return content;
+  //     }
+  //     return ''
+  //   }
+  //   const directionsText = convertToText(doc.body);
 
-        return content;
-      }
-      return ''
-    }
-    const directionsText = convertToText(doc.body);
+  //   return directionsText
+  // }
 
-    return directionsText
+  const parseDirections = (html) => {
+
   }
 
   return (
