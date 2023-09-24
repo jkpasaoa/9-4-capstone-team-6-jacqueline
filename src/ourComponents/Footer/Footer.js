@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+// import { AiFillAndroid }
+// import { AiFillWindows, AiFillApple } from 'react-icons/ai';
+import appStore from '../../assets/download-app-store.png'
+import playStore from '../../assets/download-google-playstore.png'
 
 function Footer() {
   return (
@@ -10,7 +14,7 @@ function Footer() {
             <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Company</h2>
             <ul className="text-gray-500 dark:text-gray-400 font-medium">
               <li className="mb-4">
-              <Link to="/about" className="hover:underline">About</Link>
+                <Link to="/about" className="hover:underline">About</Link>
               </li>
               <li className="mb-4">
                 <Link to="#" className="hover:underline">Blog</Link>
@@ -43,20 +47,39 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Download</h2>
+            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white"
+            // style={{ marginRight: '175px' }}
+            >
+              Download</h2>
             <ul className="text-gray-500 dark:text-gray-400 font-medium">
               <li className="mb-4">
-                <Link to="#" className="hover:underline">iOS</Link>
+                <Link to="#" className="hover:underline" style={{ display: 'inline-block' }}>
+                  <img src={appStore} alt="appstore"
+                    style={{ width: '100px', height: '30px' }}>
+                  </img>
+                </Link>
               </li>
               <li className="mb-4">
-                <Link to="#" className="hover:underline">Android</Link>
+                <Link to="#" className="hover:underline" style={{ display: 'inline-block' }}>
+                  <img src={playStore} alt="playStore"
+                    style={{ width: '100px', height: '30px' }}>
+                  </img>
+                </Link>
               </li>
-              <li className="mb-4">
-                <Link to="#" className="hover:underline">Windows</Link>
+              {/* <li className="mb-4 items-center">
+                <AiFillWindows size={32} color="blue"
+                style={{ marginLeft: '75px' }}
+                />
+                <Link to="#" className="hover:underline" style={{ display: 'inline-block' }}>Windows</Link>
               </li>
-              <li className="mb-4">
+              <li className="mb-4" */}
+              {/* // style={{ display: 'flex', alignItems: 'center' }}
+              >
+                <AiFillApple size={32} color="black"
+                style={{ marginLeft: '75px' }}
+                />
                 <Link to="#" className="hover:underline">MacOS</Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
