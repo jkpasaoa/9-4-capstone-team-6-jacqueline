@@ -143,6 +143,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
 
     cleanedHtml = cleanedHtml.replace(/<b>(.*?)<\/b>/g, '$1');
 
+    cleanedHtml = cleanedHtml.replace(/<\/?.*?>/g, '');
+
     return cleanedHtml;
   }
 
