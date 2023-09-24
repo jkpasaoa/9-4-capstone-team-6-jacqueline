@@ -125,8 +125,14 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
         for (const childNode of node.childNode) {
           content += convertToText(childNode)
         }
+
+        return content;
       }
+      return ''
     }
+    const directionsText = convertToText(doc.body);
+
+    return directionsText
   }
 
   return (
