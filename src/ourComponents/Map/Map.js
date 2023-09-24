@@ -58,6 +58,11 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
   // const startPoint = { lat: lat, lng: long }
   // const endPoint = { lat: 40.6782, lng: -73.9442 }
 
+  const extractSteps = (directions) => {
+    const steps1 = directions.routes[0].legs[0].steps;
+    setSteps(steps1);
+  };
+
   const calculateRoute = async () => {
     // if (!startPoint || !endPoint) {
     //   return
@@ -84,10 +89,13 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
       travelMode: google.maps.TravelMode.WALKING
     })
     setDirectionsResponse(results)
-    this.extractSteps(results)
+    setSteps(results.routes[0].legs[0].steps)
     setDistance(results.routes[0].legs[0].distance.text)
     setDuration(results.routes[0].legs[0].duration.text)
   }
+
+  console.log(steps)
+
 
   if (!isLoaded) {
     return (
