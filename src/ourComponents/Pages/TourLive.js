@@ -19,6 +19,7 @@ export default function Tour() {
         axios.get(`${API}/tours/${id}`)
             .then((res) => {
                 setTour(res.data)
+                console.log(res.data)
                 setPointsOfInterest(res.data.ordered_points_of_interest)
             })
             .catch((e) => console.warn(e))
@@ -69,7 +70,7 @@ export default function Tour() {
                     </div>
                     <figure className="max-w-lg">
                         {/* <img src={tour.image_url} alt={tour.city} className="h-auto max-w-full rounded-lg" /> */}
-                        <Map className="h-auto max-w-full rounded-lg" pointsOfInterest={pointsOfInterest} />
+                        <Map className="h-auto max-w-full rounded-lg" pointsOfInterest={pointsOfInterest} allPointsOfInterest={allPointsOfInterest} />
                         <figcaption className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">{tour.city}, {tour.state ? `${tour.state},` : null} {tour.country} Google Images©</figcaption>
                     </figure>
                 </div>

@@ -21,7 +21,7 @@ function NavBar() {
                 className="h-24 mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
                 alt="CityWhisperer Logo"
               />
-              <span className="text-center">Powered by chatGPT</span> {/* Add the text here */}
+              <span className="text-center text-sm">Powered by chatGPT</span> {/* Add the text here */}
             </a>
           </span>
 
@@ -46,10 +46,29 @@ function NavBar() {
               <li>
                 <Link
                   to="/createnewtour"
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+                  type="button"
+                  data-te-ripple-init
+                  data-te-ripple-color="light"
+                  className="rounded bg-[#25588d]
+                  px-6 pb-2 pt-2.5 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out
+                  hover:bg-primary-600 hover:shadow-[0px 0px 0px #fff]
+                  focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+                  focus:outline-none focus:ring-0
+                  active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
+                  dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)]
+                  dark:hover:shadow-[0px 0px 0px #fff]
+                  dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]
+                  dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]
+                  hover:scale-110"
                 >
                   <strong>Create New Tour</strong>
                 </Link>
+                {/* <Link
+                  to="/createnewtour"
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+                >
+                  <strong>Create New Tour</strong>
+                </Link> */}
               </li>
             </ul>
             <button
