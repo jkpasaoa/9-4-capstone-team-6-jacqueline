@@ -169,7 +169,7 @@ export default function Home() {
       </div>
 
       {/* partition 2 */}
-      <div className="w-screen h-screen relative bg-[#D5D0D7] shadow-inner">
+      <div className="w-screen h-screen relative bg-[#bebac0] shadow-inner">
         <div className="h-[70%] max-[760px]:h-auto  overflow-hidden">
           <img
             src={image2}
@@ -179,7 +179,7 @@ export default function Home() {
         </div>
 
         <div className=""> 
-          <div className="text-2xl mx-40 px-5 py-10 max-[760px]:mx-5 max-[760px]:py-5 text-[#183759] rounded-lg bg-[#ded9e0] font-bold max-[760px]:mt-20 font-serif">
+          <div className="text-2xl max-[760px]:text-xl mx-40 px-5 py-10 max-[760px]:mx-5 max-[760px]:py-5 text-[#183759] rounded-lg bg-[#ddd8df] font-normal max-[760px]:mt-0 shadow-md">
         Discover hidden gems and explore iconic landmarks like a local. Our ChatGPT-powered virtual tour guide will chat with you, offering recommendations, historical tidbits, and insider tips along the way
             </div>
              </div>
