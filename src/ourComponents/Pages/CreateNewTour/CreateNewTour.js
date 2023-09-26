@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -18,7 +17,71 @@ const config = {
   googleApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
   unsplashApiKey: process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY,
   unsplashApiSecretKey: process.env.REACT_APP_UNSPLASH_API_SECRET_KEY,
+  pixabayApiKey: process.env.REACT_APP_PIXABAY_API_KEY,
 };
+
+
+// GeneratePOICommentary function to accept poiName, cityName and countryName
+const generatePOICommentary = async (poiName, cityName, countryName) => {
+  try {
+    // Create a prompt that includes the POI name, city name, and country name
+    const prompt = `Provide a 500-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
+
+    console.log(`Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
+
+
+    const requestBody = {
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'user',
+          content: prompt,
+        },
+        {
+          role: 'user',
+          content: 'Provide 500-word descriptions for each point of interest, as if you are a tour guide addressing your tour group. Use this as an example of the tone of voice for the response I want to get.',
+        },
+        {
+          role: 'assistant',
+          content: `As we stand here, gazing up at the towering steel arches of the Sydney Harbour Bridge, let's journey back in time to the early 20th century. Construction of this engineering marvel began in 1924 during the Great Depression, providing much-needed jobs to thousands of workers. It was a time when the idea of spanning the magnificent Sydney Harbour with a bridge seemed audacious, but determination prevailed.
+    
+    The Sydney Harbour Bridge, often affectionately known as the "Coathanger" due to its distinctive shape, officially opened in 1932. It was an event of immense pride and celebration for the people of Sydney, marking the culmination of years of hard work and ingenuity. Today, it stands as a symbol of resilience and achievement.
+    
+    This bridge is more than just a feat of engineering; it's a vital artery of Sydney, connecting the city's central business district with the northern suburbs. As we traverse the bridge's pedestrian walkway, you'll be treated to panoramic views of Sydney Harbour, the Sydney Opera House, and the city skyline. It's a vista that takes your breath away and offers countless photo opportunities.
+    
+    If you're feeling adventurous, you can even climb the Sydney Harbour Bridge with a guided tour. Scaling this iconic structure provides a thrilling and unique perspective of the city and its surroundings. Whether you're a daredevil or simply seeking an unforgettable experience, the bridge climb is an option you won't want to miss.
+    
+    The Sydney Harbour Bridge is more than just a physical connector; it's a symbol of unity and celebration. Every year, on New Year's Eve, the bridge becomes the centerpiece of one of the world's most spectacular fireworks displays, lighting up the night sky and drawing crowds from near and far.
+    
+    As we stand here, taking in the breathtaking views and the history that surrounds us, remember that the Sydney Harbour Bridge is more than just steel and concrete. It's a testament to human vision, determination, and the enduring spirit of Sydney.
+    
+    I want to thank each of you for joining me on this journey across the Sydney Harbour Bridge today. Whether you're a first-time visitor or a seasoned traveler, this bridge offers an experience that leaves an indelible mark on your memories.
+    
+    So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.
+    `
+        }
+      ],
+      max_tokens: 500,
+    };
+
+    const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.openaiApiKey}`,
+      },
+    });
+
+    const commentary = response.data.choices[0]?.message.content;
+
+    console.log('Generated Commentary:', commentary); // Add this line
+
+    return commentary;
+  } catch (error) {
+    console.error(`Error generating commentary for ${poiName}:`, error);
+    return ''; // Return an empty string in case of an error
+  }
+};
+
 
 // Define the insertPointOfInterest function
 const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => {
@@ -45,16 +108,26 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
 
     console.log(`Point of Interest "${poi}" added successfully:`, response.data);
 
+    // Return the poiId obtained from the response
+    return response.data.poiId;
+
   } catch (error) {
     console.error(`Error adding Point of Interest "${poi}":`, error);
   }
 };
 
+
 // Define the getImageFromUnsplash function
-const getImageFromUnsplash = async (poi) => {
+const getImageFromUnsplash = async (poi, cityName, latitude, longitude) => {
   try {
+    // Create a query string that includes POI, cityName, and country
+    const query = `${encodeURIComponent(poi)} ${encodeURIComponent(cityName)} ${latitude},${longitude}`;
+
+    console.log('POI:', poi);
+    console.log('Coordinates:', latitude, longitude);
+
     const response = await axios.get(
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(poi)}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`,
+      `https://api.unsplash.com/search/photos?query=${query}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`,
       {
         headers: {
           Authorization: `Client-ID ${config.unsplashApiSecretKey}`,
@@ -97,7 +170,37 @@ const fetchCityPhoto = async (cityName, setCityPhoto) => {
   }
 };
 
+
+// Define the insertCommentary function
+const insertCommentary = async (poiId, commName, description) => {
+
+  console.log(`Adding commentary for "${commName}"...`);
+
+  try {
+    // Insert the commentary data into the database
+    const response = await axios.post(`${config.apiUrl}/commentary`, {
+      poi_id: poiId,
+      comm_name: commName,
+      description: description, // Use the provided description
+      created_at: new Date().toISOString(),
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    console.log(`Commentary "${commName}" added successfully:`, response.data);
+
+  } catch (error) {
+    console.error(`Error adding Commentary "${commName}":`, error);
+  }
+};
+
+
+
+
 export default function CreateNewTour() {
+  // Initialize state variables using the useState hook
   const [tour, setTour] = useState({
     country: '',
     region: '',
@@ -112,6 +215,7 @@ export default function CreateNewTour() {
   const [isLoading, setIsLoading] = useState(false); // Added isLoading state
   const [cityPhoto, setCityPhoto] = useState('');
 
+
   //for dropdown select
   // const [selectedOption, setSelectedOption] = useState('');
 
@@ -125,42 +229,44 @@ export default function CreateNewTour() {
   //   }
   //   return matches;
   // };
-  
-// Function to extract POI and coordinates
+
+// Function to extract POI (name) and coordinates (latitude, longitude)
 const parsePointsOfInterestAndCoordinates = (generatedTour) => {
-  const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
-  const coordinatePattern = /\((-?\d+\.\d+)° ([NS]), (-?\d+\.\d+)° ([EW])\)/g;
+  const coordinatePattern = /(\d+)\.\s([^()]+) \(([-\d.]+)° ([NS]), ([-\d.]+)° ([EW])\)/g;
   const matches = [];
   let match;
 
-  while ((match = bulletPattern.exec(generatedTour)) !== null) {
-    const poi = match[1];
-    const coordinateMatches = coordinatePattern.exec(generatedTour);
-    if (coordinateMatches) {
-      const latitude = parseFloat(coordinateMatches[1]);
-      const latitudeDirection = coordinateMatches[2];
-      const longitude = parseFloat(coordinateMatches[3]);
-      const longitudeDirection = coordinateMatches[4];
+  while ((match = coordinatePattern.exec(generatedTour)) !== null) {
+    console.log(match)
+    const [poiName, latitude, latitudeDirection, longitude, longitudeDirection] = match;
 
-      const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
-      const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
+    const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
+    const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
 
-      const adjustedLatitude = latitude * latitudeSign;
-      const adjustedLongitude = longitude * longitudeSign;
+    const adjustedLatitude = parseFloat(latitude) * latitudeSign;
+    const adjustedLongitude = parseFloat(longitude) * longitudeSign;
 
-      const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
+    const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
 
-      matches.push({ poi, coordinates });
-    }
+    matches.push({ poi: poiName, coordinates });
+
+    // Log the extracted POI and coordinates
+    console.log(`Extracted POI: ${poiName}`);
+    console.log(`Coordinates: Latitude ${adjustedLatitude}, Longitude ${adjustedLongitude}`);
   }
-
+  console.log(matches, generatedTour)
   return matches;
 };
 
 
+
+  // Function to generate a walking tour
   const generateWalkingTour = async () => {
     try {
       setIsLoading(true); // Set loading to true
+
+      // Log that the function is being called
+      console.log('generateWalkingTour function called');
 
 
       // Sanitize the input values
@@ -188,7 +294,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
           },
           {
             role: 'user',
-            content: 'Include coordinates for each point of interest.',
+            content: 'Include coordinates for each point of interest, if there are none use (0.4144° N, 0.7019° W) as a placeholder.',
           },
           {
             role: 'user',
@@ -212,12 +318,11 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
           13. Passeig de Gràcia
           14. Plaça de Catalunya (return to start point)
           `
-          }
-
+          },
         ],
 
         // Add a max_tokens parameter to limit the response length
-      max_tokens: 150, // to limit photos temp.
+        max_tokens: 500, // to limit photos temp.
 
       };
 
@@ -229,36 +334,42 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       });
 
       const generatedTour = response.data.choices[0]?.message.content;
-    setTourContent(generatedTour);
+      setTourContent(generatedTour);
 
-    // Parse points of interest and extract coordinates from the generated tour content
-    const pointsOfInterestWithCoordinates = parsePointsOfInterestAndCoordinates(generatedTour);
+      console.log('Generated Tour: ', generatedTour)
+      console.log('Response.data: ', response.data)
+      console.log('response.data.choices[0]?.message.content:', response.data.choices[0]?.message.content)
 
-    // Separate the points of interest and coordinates into two arrays
-    const pointsOfInterest = pointsOfInterestWithCoordinates.map((poi) => poi.poi);
-    const coordinates = pointsOfInterestWithCoordinates.map((poi) => poi.coordinates);
+      // Parse points of interest and extract coordinates from the generated tour content
+      const pointsOfInterestWithCoordinates = parsePointsOfInterestAndCoordinates(generatedTour);
 
-    // Sanitize each point of interest
-    const sanitizedPointsOfInterest = pointsOfInterest.map(sanitizeInput);
+      // Separate the points of interest and coordinates into two arrays
+      const pointsOfInterest = pointsOfInterestWithCoordinates.map((poi) => poi.poi);
+      const coordinates = pointsOfInterestWithCoordinates.map((poi) => poi.coordinates);
 
-    console.log('Points of Interest: ', sanitizedPointsOfInterest);
-    console.log('Coordinates: ', coordinates);
+      // Sanitize each point of interest
+      const sanitizedPointsOfInterest = pointsOfInterest.map(sanitizeInput);
 
-    setIsLoading(false);
+      console.log('Points of Interest: ', sanitizedPointsOfInterest);
+      console.log('Coordinates: ', coordinates);
 
-    return { generatedTour, sanitizedPointsOfInterest, coordinates };
-  } catch (error) {
+      setIsLoading(false);
+
+      return { generatedTour, sanitizedPointsOfInterest, coordinates };
+    } catch (error) {
       console.error('Error:', error);
       setTourContent('Error generating the walking tour. Please try again.');
       setIsLoading(false); // Set loading to false in case of an error
     }
   };
 
+  // Event handler for dropdown select
   const handleDropdownChange = (event) => {
     const { id, value } = event.target;
     setTour({ ...tour, [id]: value });
   };
 
+  // Event handler for text input
   const handleTextChange = (event) => {
     const { name, value } = event.target;
     setTour({ ...tour, [name]: value });
@@ -269,6 +380,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
   //   setSelectedOption(event.target.value);
   // };
 
+  // Function to generate a tour name
   const generateTourName = () => {
     const { city, country, theme, duration, difficulty } = tour;
     const name = `${city}, ${country} ${theme} tour - lasting ${duration} with ${difficulty} difficulty.`;
@@ -276,21 +388,25 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     return name;
   };
 
+
+  // Event handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     let generatedWalkingTour = await generateWalkingTour();
 
-    // // Parse and sanitize points of interest
-    // const pointsOfInterest = parsePointsOfInterest(generatedWalkingTour);
-    // const sanitizedPointsOfInterest = pointsOfInterest.map(sanitizeInput);
+    if (!generatedWalkingTour) {
+      console.error('Walking tour generation failed.');
+      return;
+    }
 
     // Parse and sanitize points of interest with coordinates
-  const { sanitizedPointsOfInterest, coordinates } = generatedWalkingTour;
+    const { sanitizedPointsOfInterest, coordinates } = generatedWalkingTour;
 
     // Fetch the city photo
     const cityPhoto = await fetchCityPhoto(tour.city, setCityPhoto);
 
+    // ... (creating a new tour object)
     const newTour = {
       country: sanitizeInput(tour.country),
       region: sanitizeInput(tour.region),
@@ -315,25 +431,41 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       // Get the ID of the newly inserted tour
       const newTourId = response.data.id;
 
-     // Iterate through the points of interest and insert them
-    for (let i = 0; i < sanitizedPointsOfInterest.length; i++) {
-      const poi = sanitizedPointsOfInterest[i];
-      const poiCoordinates = coordinates[i]; // Get the corresponding coordinates
-        
-        // // Fetch coordinates for the current POI
-        // const coordinates = await getCoordinatesFromNominatim(poi);
+      // Iterate through the points of interest and insert them
+      for (let i = 0; i < sanitizedPointsOfInterest.length; i++) {
+        const poi = sanitizedPointsOfInterest[i];
+        const poiCoordinates = coordinates[i]; // Get the corresponding coordinates
 
-        // Fetch the image URL for the current POI from Unsplash
-        const poiImageUrl = await getImageFromUnsplash(poi);
+        let poiImageUrl = ''; // Initialize with an empty string
+
+        try {
+          // Attempt to fetch the image URL for the current POI from Unsplash
+          const poiCoordinates = coordinates[i]; // Get the corresponding coordinates
+          poiImageUrl = await getImageFromUnsplash(poi, tour.city, poiCoordinates.latitude, poiCoordinates.longitude);
+        } catch (imageError) {
+          console.error(`Error fetching image for ${poi} from Unsplash:`, imageError);
+          // You can choose to log the error and continue without setting the image URL
+        }
 
         // Insert the POI data into the database
-        await insertPointOfInterest(poi, newTourId, poiCoordinates, poiImageUrl);
+        const poiId = await insertPointOfInterest(poi, newTourId, poiCoordinates, poiImageUrl);
+
+        // Generate commentary for the POI
+        const commentary = await generatePOICommentary(poi, tour.city, tour.country);
+
+
+        // Now, insert commentary associated with this POI using the POI name as commentary name
+        const commName = poi; // Use the POI name as the commentary name
+        const description = commentary; // Use the generated commentary as the description
+        await insertCommentary(poiId, commName, description);
+
       }
       console.log('POI added successfully:', coordinates);
     } catch (error) {
       console.error('Error adding tour:', error);
     }
   };
+
 
 
   return (
