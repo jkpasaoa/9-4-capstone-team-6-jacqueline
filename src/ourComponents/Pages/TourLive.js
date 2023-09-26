@@ -77,13 +77,13 @@ export default function Tour() {
                 <div className="grid grid-cols-2 gap-7">
                     <div>
                         <h2 className="text-4xl font-bold dark:text-white text-sky-950">Points of Interest:</h2>
-                        {/* <ul>
+                        <ul>
                             {
                                 pointsOfInterest.map((poi, index) => {
                                     return <PointOfInterestCard poi={poi} key={index} />
                                 })
                             }
-                        </ul> */}
+                        </ul>
                     </div>
                     <figure className="max-w-lg">
                         {/* <img src={tour.image_url} alt={tour.city} className="h-auto max-w-full rounded-lg" /> */}
