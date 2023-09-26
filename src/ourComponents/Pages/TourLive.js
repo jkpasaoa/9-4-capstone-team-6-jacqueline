@@ -15,6 +15,9 @@ export default function Tour() {
 
     const { id } = useParams()
 
+    let speech = new SpeechSynthesisUtterance();
+    let synth = window.speechSyntehsis
+
     useEffect(() => {
         axios.get(`${API}/tours/${id}`)
             .then((res) => {
@@ -47,6 +50,20 @@ export default function Tour() {
 
     console.log(tour, pointsOfInterest)
 
+    let textToSpeech1 = () => {
+        if(!synth.speaking && !synth.paused){
+            speech.text="TESTING. DUMMY DATA"
+            speech.rate = 0.75
+            synth.speak(speech)
+        } else {
+            synth.paused ? synth.resume() : synth.pause();
+        }
+    }
+
+    let speechStop = () => {
+        synth.cancel()
+    }
+
     return (
         <div className='tourLive'>
             <div className="relative h-10 w-[200px] ...">
@@ -60,13 +77,13 @@ export default function Tour() {
                 <div className="grid grid-cols-2 gap-7">
                     <div>
                         <h2 className="text-4xl font-bold dark:text-white text-sky-950">Points of Interest:</h2>
-                        <ul>
+                        {/* <ul>
                             {
                                 pointsOfInterest.map((poi, index) => {
                                     return <PointOfInterestCard poi={poi} key={index} />
                                 })
                             }
-                        </ul>
+                        </ul> */}
                     </div>
                     <figure className="max-w-lg">
                         {/* <img src={tour.image_url} alt={tour.city} className="h-auto max-w-full rounded-lg" /> */}
