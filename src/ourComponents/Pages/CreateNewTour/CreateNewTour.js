@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -105,11 +106,14 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
         'Content-Type': 'application/json',
       },
     });
+    // Get the ID of the newly inserted POI
+    const poiId = response.data.id;
 
     console.log(`Point of Interest "${poi}" added successfully:`, response.data);
 
     // Return the poiId obtained from the response
-    return response.data.poiId;
+    // return response.data.poiId;
+    return poiId;
 
   } catch (error) {
     console.error(`Error adding Point of Interest "${poi}":`, error);
@@ -197,8 +201,6 @@ const insertCommentary = async (poiId, commName, description) => {
 };
 
 
-
-
 export default function CreateNewTour() {
   // Initialize state variables using the useState hook
   const [tour, setTour] = useState({
@@ -216,49 +218,36 @@ export default function CreateNewTour() {
   const [cityPhoto, setCityPhoto] = useState('');
 
 
-  //for dropdown select
-  // const [selectedOption, setSelectedOption] = useState('');
 
-
-  // const parsePointsOfInterest = (generatedTour) => {
-  //   const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
-  //   const matches = [];
-  //   let match;
-  //   while ((match = bulletPattern.exec(generatedTour)) !== null) {
-  //     matches.push(match[1]);
-  //   }
-  //   return matches;
-  // };
-
-// Function to extract POI (name) and coordinates (latitude, longitude)
 const parsePointsOfInterestAndCoordinates = (generatedTour) => {
-  const coordinatePattern = /(\d+)\.\s([^()]+) \(([-\d.]+)° ([NS]), ([-\d.]+)° ([EW])\)/g;
-  const matches = [];
-  let match;
+  try {
 
-  while ((match = coordinatePattern.exec(generatedTour)) !== null) {
-    console.log(match)
-    const [poiName, latitude, latitudeDirection, longitude, longitudeDirection] = match;
+    console.log('Input Data:', generatedTour);
 
-    const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
-    const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
+    // Parse the JSON format of the generated tour
+    const tourData = JSON.parse(generatedTour);
 
-    const adjustedLatitude = parseFloat(latitude) * latitudeSign;
-    const adjustedLongitude = parseFloat(longitude) * longitudeSign;
+    // Check if the parsed data is an array
+    if (!Array.isArray(tourData)) {
+      throw new Error('Invalid data format in the generated tour');
+    }
 
-    const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
+    // Extract the points of interest and coordinates
+    const matches = tourData.map((entry) => {
+      const { poi, coordinates } = entry;
+      return { poi, coordinates };
+    });
 
-    matches.push({ poi: poiName, coordinates });
+    // Log the extracted data
+    console.log('Extracted Data:', matches);
+    console.log(matches);
 
-    // Log the extracted POI and coordinates
-    console.log(`Extracted POI: ${poiName}`);
-    console.log(`Coordinates: Latitude ${adjustedLatitude}, Longitude ${adjustedLongitude}`);
+    return matches;
+  } catch (error) {
+    console.error('Error parsing the generated tour data:', error);
+    return [];
   }
-  console.log(matches, generatedTour)
-  return matches;
 };
-
-
 
   // Function to generate a walking tour
   const generateWalkingTour = async () => {
@@ -296,33 +285,42 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
             role: 'user',
             content: 'Include coordinates for each point of interest, if there are none use (0.4144° N, 0.7019° W) as a placeholder.',
           },
+
           {
             role: 'user',
-            content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same: 
+            content: 'Return valid JSON format.',
+          },
+
+          {
+            role: 'user',
+            content: 'Only return points of interest and coordinates.',
+          },
+
+          {
+            role: 'user',
+            content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same.  The following is just an example of the format I want you to use.: 
           
-          Start Point: Plaça de Catalunya
-          
-          Route:
-          1. Plaça de Catalunya
-          2. La Rambla
-          3. Palau Güell
-          4. Plaça Reial
-          5. Barcelona Cathedral
-          6. Santa Maria del Mar
-          7. Picasso Museum
-          8. Parc de la Ciutadella
-          9. Arc de Triomf
-          10. Sagrada Família
-          11. Casa Batlló
-          12. Casa Milà (La Pedrera)
-          13. Passeig de Gràcia
-          14. Plaça de Catalunya (return to start point)
-          `
+            [
+              {
+                poi: "Santa Maria del Mar",
+                coordinates: {
+                  latitude: 41.3836,
+                  longitude: 2.1810,
+                },
+              },
+              {
+                poi: "Parc de la Ciutadella",
+                coordinates: {
+                  latitude: 41.3883,
+                  longitude: 2.1874,
+                },
+              },
+            ]`
           },
         ],
 
         // Add a max_tokens parameter to limit the response length
-        max_tokens: 500, // to limit photos temp.
+        // max_tokens: 500, // to limit photos temp.
 
       };
 
@@ -375,10 +373,6 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     setTour({ ...tour, [name]: value });
   };
 
-  //for drop down select
-  // const handleOptionChange = (event) => {
-  //   setSelectedOption(event.target.value);
-  // };
 
   // Function to generate a tour name
   const generateTourName = () => {
@@ -614,159 +608,4 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     </div>
   );
 }
-
-//Commented out in case anyone needs to revisit previous code for HTML
-//   return (
-//     <div className="mx-auto p-4" style={{ paddingTop: '160px' }}>
-//       <h1 className="text-3xl text-center mb-4 underline">Walking Tour Generator</h1>
-//       {/* City Input */}
-//       <div className="mb-3">
-//           <input
-//             type="text"
-//             className="text-center rounded-lg border w-full p-2"
-//             style={{ width: '25%', height: '45px' }}
-//             placeholder="Enter a City to Explore"
-//             name="city"
-//             value={tour.city}
-//             onChange={handleTextChange}
-//           />
-//         <br />
-//         {/* Region Input */}
-//         <div className="mb-3">
-//           <input
-//             type="text"
-//             className="text-center rounded-lg border w-full p-2"
-//             style={{ width: '25%', height: '45px' }}
-//             placeholder="Borough/Region if applicable"
-//             name="region"
-//             value={tour.region}
-//             onChange={handleTextChange}
-//           />
-//         </div>
-//         {/* State Input */}
-//         <div className="mb-3">
-//           <input
-//             type="text"
-//             className="rounded-lg border text-center w-full p-2"
-//             style={{ width: '35%', height: '45px' }}
-//             placeholder="State/County/Province if applicable"
-//             name="state"
-//             value={tour.state}
-//             onChange={handleTextChange}
-//           />
-//         </div>
-//         <br />
-//         {/* Country Input */}
-//         <div className="mb-3">
-//           <input
-//             type="text"
-//             className="text-center rounded-lg"
-//             style={{ width: '25%', height: '45px' }}
-//             placeholder="Enter the Country"
-//             name="country"
-//             value={tour.country}
-//             onChange={handleTextChange}
-//           />
-//         </div>
-//       </div>
-//       <br />
-//       <div className="row mb-3">
-//         <div className="col-md-4">
-//           <select
-//             className="form-control text-center rounded-lg"
-//             style={{ width: '15%', height: '40px' }}
-//             value={tour.duration}
-//             onChange={handleDropdownChange}
-//             id="duration"
-//           >
-//             <option value="Full-day">Full-day</option>
-//             <option value="Half-day">Half-day</option>
-//             <option value="2 hours">2 hours</option>
-//           </select>
-//         </div>
-//         <br />
-//         <div className="col-md-4">
-//           <select
-//             className="form-control text-center rounded-lg"
-//             style={{ width: '15%', height: '40px' }}
-//             value={tour.difficulty}
-//             onChange={handleDropdownChange}
-//             id="difficulty"
-//           >
-//             <option value="Easy">Easy</option>
-//             <option value="Medium">Medium</option>
-//             <option value="Hard">Hard</option>
-//           </select>
-//         </div>
-//         <br />
-//         <div className="col-md-4">
-//           <select
-//             className="form-control text-center rounded-lg"
-//             style={{ width: '15%', height: '40px' }}
-//             value={tour.theme} // Updated: theme instead of tourType
-//             onChange={handleDropdownChange}
-//             id="theme" // Updated: theme instead of tourType
-//           >
-//             <option value="Historic">Historic</option>
-//             <option value="Scenic">Scenic</option>
-//             <option value="Fun">Fun</option>
-//             <option value="Museums">Museums</option>
-//             <option value="Pubs">Pubs</option>
-//           </select>
-//         </div>
-//       </div>
-//       <div className="row mb-3">
-//         <div className="col text-center">
-//           <button
-//             onClick={handleSubmit}
-//             disabled={!tour.city || isLoading}
-//             type="button"
-//             data-te-ripple-init
-//             data-te-ripple-color="light"
-//             class="mt-6 inline-block rounded bg-[#183759] px-6 pb-2 pt-2.5 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
-//           >
-//             Generate Walking Tour
-//           </button>
-//         </div>
-//       </div>
-//       {isLoading ? (
-//         // Conditional rendering for loading animation
-//         <div className="row text-center">
-//           <div className="col">
-//             <p>Loading...</p>
-
-//             <div style={{ margin: '16px 0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-//               <img src={loadingAnimation} alt="Loading..." width="250" height="250" />
-//             </div>
-//           </div>
-//         </div>
-//       ) : (
-
-//         <div className="row">
-//           <div className="col">
-//             {/* Display the city photo */}
-//             {cityPhoto && (
-//               <img src={cityPhoto} alt={`${tour.city}`} style={{ width: '30%', display: 'block', margin: '0 auto' }} />
-//             )}
-//             <br />
-//             <textarea className="form-control" style={{ width: '20%' }} rows="10" value={tourContent} readOnly />
-//           </div>
-
-//           {/* Include the Map component here */}
-//           <Map />
-//         </div>
-//       )}
-
-//       {/* "Start Tour" button */}
-//       <div className="row">
-//         <div className="col text-center">
-//           <Link to="/tourlive">
-//             <button className="btn btn-success">Start Tour</button>
-//           </Link>
-//         </div>
-//       </div>
-
-//     </div>
-//   );
-// }
 
