@@ -13,7 +13,13 @@ export default function Tour() {
     const [pointsOfInterest, setPointsOfInterest] = useState([])
     const [allPointsOfInterest, setAllPointsOfInterest] = useState([])
 
+    // const [date, setDate] = useState([])
+
     const { id } = useParams()
+    console.log(id)
+
+    // let speech = new SpeechSynthesisUtterance();
+    // let synth = window.speechSyntehsis
 
     useEffect(() => {
         axios.get(`${API}/tours/${id}`)
@@ -47,6 +53,23 @@ export default function Tour() {
 
     console.log(tour, pointsOfInterest)
 
+    // let textToSpeech1 = (textParam) => {
+    //     if(!synth.speaking && !synth.paused){
+    //         speech.text= textParam || "TESTING. DUMMY DATA"
+    //         speech.rate = 0.75
+    //         synth.speak(speech)
+    //     } else {
+    //         synth.paused ? synth.resume() : synth.pause();
+    //     }
+    // }
+
+    // let speechStop = () => {
+    //     synth.cancel()
+    // }
+
+
+
+  
     return (
         <div className='tourLive'>
             <div className="relative h-10 w-[200px] ...">
