@@ -219,35 +219,35 @@ export default function CreateNewTour() {
 
 
 
-const parsePointsOfInterestAndCoordinates = (generatedTour) => {
-  try {
+  const parsePointsOfInterestAndCoordinates = (generatedTour) => {
+    try {
 
-    console.log('Input Data:', generatedTour);
+      console.log('Input Data:', generatedTour);
 
-    // Parse the JSON format of the generated tour
-    const tourData = JSON.parse(generatedTour);
+      // Parse the JSON format of the generated tour
+      const tourData = JSON.parse(generatedTour);
 
-    // Check if the parsed data is an array
-    if (!Array.isArray(tourData)) {
-      throw new Error('Invalid data format in the generated tour');
+      // Check if the parsed data is an array
+      if (!Array.isArray(tourData)) {
+        throw new Error('Invalid data format in the generated tour');
+      }
+
+      // Extract the points of interest and coordinates
+      const matches = tourData.map((entry) => {
+        const { poi, coordinates } = entry;
+        return { poi, coordinates };
+      });
+
+      // Log the extracted data
+      console.log('Extracted Data:', matches);
+      console.log(matches);
+
+      return matches;
+    } catch (error) {
+      console.error('Error parsing the generated tour data:', error);
+      return [];
     }
-
-    // Extract the points of interest and coordinates
-    const matches = tourData.map((entry) => {
-      const { poi, coordinates } = entry;
-      return { poi, coordinates };
-    });
-
-    // Log the extracted data
-    console.log('Extracted Data:', matches);
-    console.log(matches);
-
-    return matches;
-  } catch (error) {
-    console.error('Error parsing the generated tour data:', error);
-    return [];
-  }
-};
+  };
 
   // Function to generate a walking tour
   const generateWalkingTour = async () => {
@@ -600,7 +600,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
 
         {/* "Start Tour" button */}
         <div className="mb-3 text-center">
-          <Link to="/tourlive">
+          <Link to={`/tours`}>
             <button className="mt-6 inline-block rounded bg-[#E36E43] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110">Start Tour</button>
           </Link>
         </div>
