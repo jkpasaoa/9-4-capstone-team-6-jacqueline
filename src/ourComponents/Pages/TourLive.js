@@ -12,11 +12,13 @@ export default function Tour() {
     const [tour, setTour] = useState({})
     const [pointsOfInterest, setPointsOfInterest] = useState([])
     const [allPointsOfInterest, setAllPointsOfInterest] = useState([])
+    // const [date, setDate] = useState([])
 
     const { id } = useParams()
+    console.log(id)
 
-    let speech = new SpeechSynthesisUtterance();
-    let synth = window.speechSyntehsis
+    // let speech = new SpeechSynthesisUtterance();
+    // let synth = window.speechSyntehsis
 
     useEffect(() => {
         axios.get(`${API}/tours/${id}`)
@@ -38,31 +40,31 @@ export default function Tour() {
 
     console.log(allPointsOfInterest)
 
-    const stringToDate = (string) => {
-        setDate(new Date(string)) 
-        console.log(date)
-    }
+    // const stringToDate = (string) => {
+    //     setDate(new Date(string)) 
+    //     console.log(date)
+    // }
 
-    useEffect(()=>{
-        stringToDate("2023-08-21T15:30:00.000Z")
-        console.log(date)
-    },[z])
+    // useEffect(()=>{
+    //     stringToDate("2023-08-21T15:30:00.000Z")
+    //     console.log(date)
+    // },[z])
 
     console.log(tour, pointsOfInterest)
 
-    let textToSpeech1 = (textParam) => {
-        if(!synth.speaking && !synth.paused){
-            speech.text= textParam || "TESTING. DUMMY DATA"
-            speech.rate = 0.75
-            synth.speak(speech)
-        } else {
-            synth.paused ? synth.resume() : synth.pause();
-        }
-    }
+    // let textToSpeech1 = (textParam) => {
+    //     if(!synth.speaking && !synth.paused){
+    //         speech.text= textParam || "TESTING. DUMMY DATA"
+    //         speech.rate = 0.75
+    //         synth.speak(speech)
+    //     } else {
+    //         synth.paused ? synth.resume() : synth.pause();
+    //     }
+    // }
 
-    let speechStop = () => {
-        synth.cancel()
-    }
+    // let speechStop = () => {
+    //     synth.cancel()
+    // }
 
     return (
         <div className='tourLive'>
