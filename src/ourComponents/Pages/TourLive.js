@@ -50,9 +50,9 @@ export default function Tour() {
 
     console.log(tour, pointsOfInterest)
 
-    let textToSpeech1 = () => {
+    let textToSpeech1 = (textParam) => {
         if(!synth.speaking && !synth.paused){
-            speech.text="TESTING. DUMMY DATA"
+            speech.text= textParam || "TESTING. DUMMY DATA"
             speech.rate = 0.75
             synth.speak(speech)
         } else {
@@ -73,6 +73,7 @@ export default function Tour() {
                 <h1 className='mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl text-transparent bg-clip-text bg-gradient-to-r to-cyan-600 from-sky-950'>{tour.city}, {tour.state ? `${tour.state},` : null} {tour.country}</h1>
                 <h4 className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Welcome to your {tour.tour_name}</h4>
                 {/* <p>Created on { }</p> */}
+                {/*  &nbsp;<button className="" onClick={() => textToSpeech1()}><HiPlayPause /></button>&nbsp;<button className='' onClick={() => speechStop()}><HiStop /></button> */}
                 <br />
                 <div className="grid grid-cols-2 gap-7">
                     <div>
