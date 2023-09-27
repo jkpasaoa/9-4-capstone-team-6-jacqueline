@@ -12,6 +12,7 @@ export default function Tour() {
     const [tour, setTour] = useState({})
     const [pointsOfInterest, setPointsOfInterest] = useState([])
     const [allPointsOfInterest, setAllPointsOfInterest] = useState([])
+
     // const [date, setDate] = useState([])
 
     const { id } = useParams()
@@ -66,6 +67,9 @@ export default function Tour() {
     //     synth.cancel()
     // }
 
+
+
+  
     return (
         <div className='tourLive'>
             <div className="relative h-10 w-[200px] ...">
