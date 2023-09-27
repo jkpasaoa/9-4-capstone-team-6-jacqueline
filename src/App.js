@@ -30,7 +30,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/createnewtour" element={<CreateNewTour />} />
               <Route path="/tours" element={<TourIndex />} />
-              {/* <Route path="/tours/:id" element={<TourLive />} /> */}
+              <Route path="/tours/:id" element={<TourLive />} />
               {/* <Route path="/tourlive" element={<TourLive />} /> */}
               <Route path="/endtour" element={<EndTour />} />
               {/* Take out or leave once tour live has populated */}
