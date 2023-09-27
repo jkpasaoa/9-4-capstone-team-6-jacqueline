@@ -12,13 +12,14 @@ function NavBar() {
 
   return (
     <div>
-      <nav className="bg-white-200 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <nav className="bg-black bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0">
+      {/* "bg-[#dbd4db] bg-opacity-20 > */}
+        <div className="flex flex-wrap items-center justify-between mx-auto p-4">
           <span className="logo">
             <a href="/home" className="flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
               <img
                 src={logo}
-                className="h-24 mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
+                className="mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
                 alt="CityWhisperer Logo"
               />
               <span className="text-center text-sm">Powered by chatGPT</span> {/* Add the text here */}
