@@ -26,7 +26,7 @@ function NavBar() {
                 className="mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
                 alt="CityWhisperer Logo"
               />
-              <span className="text-center text-sm">Powered by chatGPT</span> {/* Add the text here */}
+              <span className="text-center text-sm">Powered by chatGPT</span>
             </a>
           </span>
 
