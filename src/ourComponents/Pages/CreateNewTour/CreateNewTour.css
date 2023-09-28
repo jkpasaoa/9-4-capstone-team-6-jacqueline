@@ -11,8 +11,31 @@
   font-size: 55px;
 }
 
+.full-background-color {
+  background-color: rgb(248 150 28);
+}
+
+.background-image {
+  background-image: url('../../../assets/createNewTourPhotos/create-new-tour-bkground.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 35%;
+  background-attachment: fixed;
+  padding-top: 80px;
+  padding-bottom: 0px;
+  width: 107%;
+  height: 85vh;
+}
+
 .generator-directions {
   margin: 0px 150px 25px 150px;
+}
+
+.fields-container {
+  margin: 0px 0px 0px 80px;
+  /* 150px 25px 150px; */
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.754);
 }
 
 .field {

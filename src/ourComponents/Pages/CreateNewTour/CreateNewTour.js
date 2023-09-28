@@ -463,112 +463,115 @@ export default function CreateNewTour() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen" style={{ paddingTop: '200px' }}>
+    <div className="flex flex-col items-center justify-center min-h-screen full-background-color" style={{ paddingTop: '115px' }}>
       <div className="container flex flex-col items-center justify-center ">
+        {/* <div className="content-container background-image rounded-lg"> */}
         <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold">
           Ready to Explore?</h1>
-        <br />
-        <p className='text-lg generator-directions'>
+        <p className='generator-directions text-lg font-semibold text-[#333333]'>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at ligula quis elit efficitur vehicula. Curabitur congue justo id lacinia hendrerit. Vestibulum eu viverra justo. Quisque eget justo nec arcu commodo varius id sit amet odio. Sed scelerisque, est id venenatis cursus, felis libero viverra mi, et convallis metus
-        </p>
+        </p><div className="content-container background-image rounded-lg">
+          <div className="container flex flex-col items-center justify-center ">
+            <div className="fields-container rounded-lg">
+              {/* City Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="rounded-lg border w-full p-2"
+                  placeholder="Enter a City to Explore"
+                  name="city"
+                  value={tour.city}
+                  onChange={handleTextChange}
+                />
+              </div>
 
-        {/* City Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Enter a City to Explore"
-            name="city"
-            value={tour.city}
-            onChange={handleTextChange}
-          />
+              {/* Region Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="rounded-lg border w-full p-2"
+                  placeholder="Borough/Region if applicable"
+                  name="region"
+                  value={tour.region}
+                  onChange={handleTextChange}
+                />
+              </div>
+
+              {/* State Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="rounded-lg border w-full p-2"
+                  placeholder="State/County/Province if applicable"
+                  name="state"
+                  value={tour.state}
+                  onChange={handleTextChange}
+                />
+              </div>
+
+              {/* Country Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="rounded-lg border w-full p-2"
+                  placeholder="Enter the Country"
+                  name="country"
+                  value={tour.country}
+                  onChange={handleTextChange}
+                />
+              </div>
+
+              {/* Duration Dropdown */}
+              <div className="field mb-3">
+                <select
+                  className="rounded-lg border w-full p-2"
+                  value={tour.duration}
+                  onChange={handleDropdownChange}
+                  id="duration"
+                >
+
+                  <option value="" disabled>Select Day Duration</option>
+                  <option value="Full-day">Full-day</option>
+                  <option value="Half-day">Half-day</option>
+                  <option value="2 hours">2 hours</option>
+                </select>
+              </div>
+
+              {/* Difficulty Dropdown */}
+              <div className="field mb-3">
+                <select
+                  className="rounded-lg border w-full p-2"
+                  value={tour.difficulty}
+                  onChange={handleDropdownChange}
+                  id="difficulty"
+                >
+                  {/* <select value={selectedOption} onChange={handleOptionChange}></select> */}
+                  <option value="" disabled>Select Walking Difficulty</option>
+                  <option value="Easy">Easy</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+
+              {/* Theme Dropdown */}
+              <div className="field mb-3">
+                <select
+                  className="rounded-lg border w-full p-2"
+                  value={tour.theme}
+                  onChange={handleDropdownChange}
+                  id="theme"
+                >
+                  <option value="" disabled>Select Tour Theme</option>
+                  <option value="Historic">Historic</option>
+                  <option value="Scenic">Scenic</option>
+                  <option value="Fun">Fun</option>
+                  <option value="Museums">Museums</option>
+                  <option value="Pubs">Pubs</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* Region Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Borough/Region if applicable"
-            name="region"
-            value={tour.region}
-            onChange={handleTextChange}
-          />
-        </div>
-
-        {/* State Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="State/County/Province if applicable"
-            name="state"
-            value={tour.state}
-            onChange={handleTextChange}
-          />
-        </div>
-
-        {/* Country Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Enter the Country"
-            name="country"
-            value={tour.country}
-            onChange={handleTextChange}
-          />
-        </div>
-
-        {/* Duration Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.duration}
-            onChange={handleDropdownChange}
-            id="duration"
-          >
-
-            <option value="" disabled>Select Day Duration</option>
-            <option value="Full-day">Full-day</option>
-            <option value="Half-day">Half-day</option>
-            <option value="2 hours">2 hours</option>
-          </select>
-        </div>
-
-        {/* Difficulty Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.difficulty}
-            onChange={handleDropdownChange}
-            id="difficulty"
-          >
-            {/* <select value={selectedOption} onChange={handleOptionChange}></select> */}
-            <option value="" disabled>Select Walking Difficulty</option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-          </select>
-        </div>
-
-        {/* Theme Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.theme}
-            onChange={handleDropdownChange}
-            id="theme"
-          >
-            <option value="" disabled>Select Tour Theme</option>
-            <option value="Historic">Historic</option>
-            <option value="Scenic">Scenic</option>
-            <option value="Fun">Fun</option>
-            <option value="Museums">Museums</option>
-            <option value="Pubs">Pubs</option>
-          </select>
-        </div>
-
         {/* Generate Button */}
         <div className="mb-3 text-center">
           <button
