@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/OfficialCityWhispererLogo.png';
 import './NavBar.css';
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const loc = useLocation()
+  console.log(loc, "loc")
 
   const toggleMenu = () => {
     setMenuOpen(menuOpen => !menuOpen);
@@ -12,11 +15,12 @@ function NavBar() {
 
   return (
     <div>
-      <nav className="bg-black bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0">
-      {/* "bg-[#dbd4db] bg-opacity-20 > */}
+      <nav
+        className={loc.pathname !== '/' ? 'bg-white fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0' : 'bg-black bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0'}>
+        {/* "bg-[#dbd4db] bg-opacity-20 > */}
         <div className="flex flex-wrap items-center justify-between mx-auto p-4">
           <span className="logo">
-            <a href="/home" className="flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
+            <a href="/" className="flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
               <img
                 src={logo}
                 className="mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
@@ -30,7 +34,7 @@ function NavBar() {
             {/* Desktop Menu & Tablet Menu */}
             <ul className="DESKTOP-MENU hidden space-x-8 md:flex lg:flex">
               <li>
-                <a href="/home" className="nav-link home text-black text-shadow-white">
+                <a href="/" className="nav-link home text-black text-shadow-white">
                   Home
                 </a>
               </li>
