@@ -1,17 +1,28 @@
 
+.end-tour-container {
+  padding-top: 155px;
+  padding-bottom: 250px;
+  position: relative;
+}
+
+
 .centered-video {
-  display: flex;
+  /* position: absolute; */
+  /* display: flex; */
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Adjust this to control the height of the centered video */
+  /* height: 100vh; Adjust this to control the height of the centered video */
+  width: 640px;
+  height: 360px;
 }
 
 .form-control {
   font-family: 'Roboto', sans-serif;
   font-size: 120%;
   letter-spacing: 2px;
+  border: 1px solid #000;
 }
 
 .message-container {
-  padding-top: 150px;
+  padding-top: 10px;
 }
