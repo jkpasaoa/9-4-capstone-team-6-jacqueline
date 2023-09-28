@@ -82,6 +82,8 @@ export default function Tour() {
                         <ul>
                             {
                                 pointsOfInterest.map((poi, index) => {
+                                    console.log(poi)
+                                    console.log(index)
                                     return <PointOfInterestCard poi={poi} key={index} />
                                 })
                             }
