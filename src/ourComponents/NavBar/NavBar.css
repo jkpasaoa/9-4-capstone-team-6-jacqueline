@@ -9,7 +9,16 @@
 
 .nav-link {
   font-size: 18px;
-  text-shadow: 0px 0px 9.5px rgba(255, 255, 255, 1);
+  text-shadow: 0px 0px 15px rgba(255, 255, 255, 1);
+  transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+  /* background-color: #ffcc00;
+  color: #ffcc00;
+  border-bottom: 2px solid #ffcc00;
+  text-decoration: underline; */
+  /* transform: rotate(10deg); */
 }
 
 .nav-link.home {
