@@ -62,7 +62,7 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
     `
         }
       ],
-      max_tokens: 500,
+      max_tokens: 2000,
     };
 
     const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
@@ -216,6 +216,7 @@ export default function CreateNewTour() {
   const [tourContent, setTourContent] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Added isLoading state
   const [cityPhoto, setCityPhoto] = useState('');
+  const [poiNames, setPoiNames] = useState([]); // Create state for POI names
 
 
 
@@ -350,6 +351,9 @@ export default function CreateNewTour() {
 
       console.log('Points of Interest: ', sanitizedPointsOfInterest);
       console.log('Coordinates: ', coordinates);
+// Set the POI names in state
+setPoiNames(sanitizedPointsOfInterest);
+      
 
       setIsLoading(false);
 
@@ -396,6 +400,8 @@ export default function CreateNewTour() {
 
     // Parse and sanitize points of interest with coordinates
     const { sanitizedPointsOfInterest, coordinates } = generatedWalkingTour;
+
+
 
     // Fetch the city photo
     const cityPhoto = await fetchCityPhoto(tour.city, setCityPhoto);
@@ -602,7 +608,11 @@ export default function CreateNewTour() {
 
             <br />
 
-            <textarea className="route-container border rounded-lg w-full p-2" rows="10" value={tourContent} readOnly />
+            <ol className="ordered-list">
+              {poiNames.map((poiName, index) => (
+                <li key={index}>{poiName}</li>
+              ))}
+            </ol>
           </div>
         )}
 
