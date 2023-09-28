@@ -34,17 +34,17 @@ function NavBar() {
             {/* Desktop Menu & Tablet Menu */}
             <ul className="DESKTOP-MENU hidden space-x-8 md:flex lg:flex">
               <li>
-                <a href="/" className="nav-link home text-black text-shadow-white">
+                <a href="/" className="nav-link home text-black text-shadow-white drop-shadow-lg">
                   Home
                 </a>
               </li>
               <li>
-                <Link to="/about" className="nav-link about text-black text-shadow-white">
+                <Link to="/about" className="nav-link about text-black text-shadow-white drop-shadow-lg">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/tours" className="nav-link browsetours text-black text-shadow-white">
+                <Link to="/tours" className="nav-link browsetours text-black text-shadow-white drop-shadow-lg">
                   Browse Tours
                 </Link>
               </li>
@@ -56,7 +56,7 @@ function NavBar() {
                   data-te-ripple-color="light"
                   className="create-new-tour rounded bg-[#25588d]
                   border border-gray-500
-                  px-3 pb-1.5 pt-1.5 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out
+                  px-3 pb-1 pt-1 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out
                   hover:bg-primary-600 hover:shadow-[0px 0px 0px #fff]
                   focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
                   focus:outline-none focus:ring-0
