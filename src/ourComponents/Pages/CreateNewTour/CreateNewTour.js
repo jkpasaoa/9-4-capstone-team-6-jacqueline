@@ -62,7 +62,7 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
     `
         }
       ],
-      max_tokens: 500,
+      max_tokens: 2000,
     };
 
     const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
@@ -350,6 +350,8 @@ export default function CreateNewTour() {
 
       console.log('Points of Interest: ', sanitizedPointsOfInterest);
       console.log('Coordinates: ', coordinates);
+
+      
 
       setIsLoading(false);
 
