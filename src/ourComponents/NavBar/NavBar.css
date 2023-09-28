@@ -13,12 +13,17 @@
   transition: background-color 0.3s ease;
 }
 
+.nav-link {
+  color: #000;
+  font-size: 16px;
+  transition: color 0.3s ease, font-size 0.3s ease;
+}
+
 .nav-link:hover {
-  /* background-color: #ffcc00;
-  color: #ffcc00;
-  border-bottom: 2px solid #ffcc00;
-  text-decoration: underline; */
-  /* transform: rotate(10deg); */
+  color: #E36E43;
+  font-size: 18px;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 .nav-link.home {
@@ -35,8 +40,4 @@
 
 .custom-border {
   width: 100%;
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
-  /* margin: 0 0 0 15px; */
 }

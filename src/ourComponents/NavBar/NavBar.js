@@ -54,8 +54,9 @@ function NavBar() {
                   type="button"
                   data-te-ripple-init
                   data-te-ripple-color="light"
-                  className="rounded bg-[#25588d]
-                  px-6 pb-2 pt-2.5 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out
+                  className="create-new-tour rounded bg-[#25588d]
+                  border border-gray-500
+                  px-3 pb-1.5 pt-1.5 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out
                   hover:bg-primary-600 hover:shadow-[0px 0px 0px #fff]
                   focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
                   focus:outline-none focus:ring-0
