@@ -18,8 +18,8 @@ function EndTour() {
   return (
     <div className="end-tour-container">
       {/* Centered Video */}
-      <div className="centered-video">
-        <video autoPlay loop>
+      <div className="centered-video bottom-5 left-0 right-0 z-[2] mx-[25%] mb-4 flex list-none justify-center p-0">
+      <video className="w-full" controls autoPlay muted>
           <source src={AnimatedLogo} type="video/mp4" />
         </video>
       </div>
@@ -27,10 +27,10 @@ function EndTour() {
       <div className="message-container">
         <label className="form-label" htmlFor="message">
           <div className="improve-container" style={{ fontSize: '24px' }}>
-            Help us Improve!
+            We appreciate your feedback
           </div>
           <br />
-          Customer Feedback:
+          How could we improve? And what did you like?
         </label>
         <br />
         <textarea
@@ -43,6 +43,7 @@ function EndTour() {
           placeholder="Write your message here"
           required
         />
+
       </div>
     </div>
   );

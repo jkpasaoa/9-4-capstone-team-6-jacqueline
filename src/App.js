@@ -26,7 +26,7 @@ function App() {
             {/* Check App.css for content-container for padding */}
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/createnewtour" element={<CreateNewTour />} />
               <Route path="/tours" element={<TourIndex />} />
