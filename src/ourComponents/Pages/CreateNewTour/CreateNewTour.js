@@ -465,7 +465,12 @@ export default function CreateNewTour() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen" style={{ paddingTop: '200px' }}>
       <div className="container flex flex-col items-center justify-center ">
-        <h1 className="text-3xl text-center mb-4 underline">Walking Tour Generator</h1>
+        <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold">
+          Ready to Explore?</h1>
+        <br />
+        <p className='text-lg generator-directions'>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at ligula quis elit efficitur vehicula. Curabitur congue justo id lacinia hendrerit. Vestibulum eu viverra justo. Quisque eget justo nec arcu commodo varius id sit amet odio. Sed scelerisque, est id venenatis cursus, felis libero viverra mi, et convallis metus
+        </p>
 
         {/* City Input */}
         <div className="field mb-3">

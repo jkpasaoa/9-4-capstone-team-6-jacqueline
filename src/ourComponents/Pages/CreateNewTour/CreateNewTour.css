@@ -1,3 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+
+.luxury-font {
+  font-family: 'Dancing Script', cursive;
+  font-size: 45px;
+  color: #333;
+}
+
+.dancing-script {
+  font-family: 'Dancing Script', cursive;
+  font-size: 55px;
+}
+
+.generator-directions {
+  margin: 0px 150px 25px 150px;
+}
+
 .field {
   width: 300px;
   height: 45px;
