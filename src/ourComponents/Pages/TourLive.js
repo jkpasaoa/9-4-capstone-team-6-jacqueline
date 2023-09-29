@@ -16,7 +16,6 @@ export default function Tour() {
     // const [date, setDate] = useState([])
 
     const { id } = useParams()
-    console.log(id)
 
     // let speech = new SpeechSynthesisUtterance();
     // let synth = window.speechSyntehsis
@@ -25,7 +24,6 @@ export default function Tour() {
         axios.get(`${API}/tours/${id}`)
             .then((res) => {
                 setTour(res.data)
-                console.log(res.data)
                 setPointsOfInterest(res.data.ordered_points_of_interest)
             })
             .catch((e) => console.warn(e))
@@ -39,7 +37,7 @@ export default function Tour() {
             .catch((e) => console.warn(e))
     }, [])
 
-    console.log(allPointsOfInterest)
+    // console.log(allPointsOfInterest)
 
     // const stringToDate = (string) => {
     //     setDate(new Date(string)) 
@@ -51,7 +49,7 @@ export default function Tour() {
     //     console.log(date)
     // },[z])
 
-    console.log(tour, pointsOfInterest)
+    // console.log(tour, pointsOfInterest)
 
     // let textToSpeech1 = (textParam) => {
     //     if(!synth.speaking && !synth.paused){
@@ -85,10 +83,10 @@ export default function Tour() {
                         <h2 className="text-4xl font-bold dark:text-white text-sky-950">Points of Interest:</h2>
                         <ul>
                             {
-                                pointsOfInterest.map((poi, index) => {
-                                    console.log(poi)
-                                    console.log(index)
-                                    return <PointOfInterestCard poi={poi} key={index} />
+                                pointsOfInterest.length && allPointsOfInterest.length && pointsOfInterest.map((poi, index) => {
+                                    const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
+                                    // return allPoi
+                                    return <PointOfInterestCard poi={allPoi} key={index} />
                                 })
                             }
                         </ul>
