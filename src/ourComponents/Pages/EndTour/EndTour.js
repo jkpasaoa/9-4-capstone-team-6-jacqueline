@@ -49,7 +49,7 @@ const EndTour = () => {
   return (
     <div className="no-content-container">
       <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-white w-3/4 md:w-1/2 lg:w-1/3 p-4 rounded-lg shadow-lg">
+        <div className="bg-amber-300 w-3/4 md:w-1/2 lg:w-1/3 p-4 rounded-lg shadow-lg">
           <div className="mb-4">
             <video className="w-full" controls autoPlay muted>
               <source src={AnimatedLogo} type="video/mp4" />
