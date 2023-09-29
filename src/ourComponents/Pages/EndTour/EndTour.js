@@ -69,15 +69,15 @@ const EndTour = () => {
             <div className="text-gray-600 text-xs mb-2">
               <span>1 - Poor</span> | <span>2 - Fair</span> | <span>3 - Average</span> | <span>4 - Very Good</span> | <span>5 - Excellent</span>
             </div>
-            <p className="text-gray-600 text-sm mb-2 mt-2 font-semibold text-center">
+            {/* <p className="text-gray-600 text-sm mb-2 mt-2 font-semibold text-center">
               Tell us what you liked and how we can improve:
-            </p>
+            </p> */}
             <textarea
               className="w-full p-2 border rounded-md"
               rows={5}
               onChange={handleTextChange}
               value={userMessage.message}
-              placeholder="Write your message here"
+              placeholder="Write here to tell us what you liked and how we can improve."
               required
             />
           </div>
@@ -86,7 +86,7 @@ const EndTour = () => {
             {/* Use Link to navigate to /tours -could decide to change route to /home once decided with team*/}
             <Link to="/tours">
               <button
-                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="inline-block rounded bg-[#E36E43] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
                 onClick={() => {
                   // Handle sending the user message and rating, might change if decide to keep rating stored
                 }}
