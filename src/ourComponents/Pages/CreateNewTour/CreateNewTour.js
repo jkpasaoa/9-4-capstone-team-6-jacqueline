@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import loadingAnimation from '../../../assets/S-Loop_transnparent.gif'; // Import the loading animation
 // import Map from '../../Map/Map';
 import '../CreateNewTour/CreateNewTour.css'
@@ -218,7 +218,7 @@ export default function CreateNewTour() {
   const [cityPhoto, setCityPhoto] = useState('');
   const [poiNames, setPoiNames] = useState([]); // Create state for POI names
 
-
+  const navigate = useNavigate()
 
   const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     try {
@@ -351,11 +351,12 @@ export default function CreateNewTour() {
 
       console.log('Points of Interest: ', sanitizedPointsOfInterest);
       console.log('Coordinates: ', coordinates);
-// Set the POI names in state
-setPoiNames(sanitizedPointsOfInterest);
-      
+      // Set the POI names in state
+      setPoiNames(sanitizedPointsOfInterest);
+
 
       setIsLoading(false);
+
 
       return { generatedTour, sanitizedPointsOfInterest, coordinates };
     } catch (error) {
@@ -365,6 +366,17 @@ setPoiNames(sanitizedPointsOfInterest);
     }
   };
 
+  // const navigateLoading = () => {
+  //   if (isLoading === false) {
+  //     navigate('/tours')
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   navigateLoading()
+  // }, [isLoading])
+
+  
   // Event handler for dropdown select
   const handleDropdownChange = (event) => {
     const { id, value } = event.target;
