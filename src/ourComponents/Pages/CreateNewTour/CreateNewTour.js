@@ -43,6 +43,10 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
           content: 'Provide 500-word descriptions for each point of interest, as if you are a tour guide addressing your tour group. Use this as an example of the tone of voice for the response I want to get.',
         },
         {
+          role: 'user',
+          content: 'Double check that you ONLY provide JSON in your response.',
+        },
+        {
           role: 'assistant',
           content: `As we stand here, gazing up at the towering steel arches of the Sydney Harbour Bridge, let's journey back in time to the early 20th century. Construction of this engineering marvel began in 1924 during the Great Depression, providing much-needed jobs to thousands of workers. It was a time when the idea of spanning the magnificent Sydney Harbour with a bridge seemed audacious, but determination prevailed.
     
@@ -76,11 +80,27 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
 
     console.log('Generated Commentary:', commentary); // Add this line
 
+// Check if the HTTP response status is in the success range (2xx)
+if (response.status >= 200 && response.status < 300) {
+  // Attempt to parse the JSON response
+  const responseContent = response.data;
+
+  if (responseContent && responseContent.choices && responseContent.choices.length > 0) {
+    const commentary = responseContent.choices[0]?.message.content;
+    console.log('Generated Commentary:', commentary);
+
+    // Return the generated commentary
     return commentary;
-  } catch (error) {
-    console.error(`Error generating commentary for ${poiName}:`, error);
-    return ''; // Return an empty string in case of an error
+  } else {
+    throw new Error('Invalid response format from OpenAI API');
   }
+} else {
+  throw new Error(`Failed to fetch data from OpenAI API. Status code: ${response.status}`);
+}
+} catch (error) {
+console.error(`Error generating commentary for ${poiName}:`, error);
+return ''; // Return an empty string in case of an error
+}
 };
 
 
@@ -220,35 +240,92 @@ export default function CreateNewTour() {
 
 
 
+  // const parsePointsOfInterestAndCoordinates = (generatedTour) => {
+  //   try {
+
+  //     console.log('Generated Tour Data:', generatedTour);
+
+
+  //     // Parse the JSON format of the generated tour
+  //     const tourData = JSON.parse(generatedTour);
+
+  //     // Check if the parsed data is an array
+  //     if (!Array.isArray(tourData)) {
+  //       throw new Error('Invalid data format in the generated tour');
+  //     }
+
+  //     // Check if each entry in the array has the expected structure
+  //   const isValidData = tourData.every((entry) => {
+  //     return entry.poi && entry.coordinates && entry.coordinates.latitude && entry.coordinates.longitude;
+  //   });
+
+  //   if (!isValidData) {
+  //     throw new Error('Invalid data structure in the generated tour');
+  //   }
+
+
+  //     // Extract the points of interest and coordinates
+  //     const matches = tourData.map((entry) => {
+  //       const { poi, coordinates } = entry;
+  //       return { poi, coordinates };
+  //     });
+
+  //     // Log the extracted data
+  //     console.log('Extracted Data:', matches);
+  //     console.log(matches);
+
+  //     return matches;
+  //   } catch (error) {
+  //     console.error('Error parsing the generated tour data:', error);
+  //     return [];
+  //   }
+  // };
+
+
+
   const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     try {
 
-      console.log('Input Data:', generatedTour);
+      console.log('Starting parsePointsOfInterestAndCoordinates function...');
+      console.log('Generated Tour Data:', generatedTour);
 
-      // Parse the JSON format of the generated tour
+      // Attempt to parse the JSON format of the generated tour
       const tourData = JSON.parse(generatedTour);
 
+      console.log('const tourData = JSON.parse(generatedTour);', tourData)
+  
       // Check if the parsed data is an array
       if (!Array.isArray(tourData)) {
         throw new Error('Invalid data format in the generated tour');
       }
-
+  
+      // Check if each entry in the array has the expected structure
+      const isValidData = tourData.every((entry) => {
+        return entry.poi && entry.coordinates && entry.coordinates.latitude && entry.coordinates.longitude;
+      });
+  
+      if (!isValidData) {
+        throw new Error('Invalid data structure in the generated tour');
+      }
+  
       // Extract the points of interest and coordinates
       const matches = tourData.map((entry) => {
         const { poi, coordinates } = entry;
         return { poi, coordinates };
       });
-
+  
       // Log the extracted data
       console.log('Extracted Data:', matches);
-      console.log(matches);
-
+  
       return matches;
     } catch (error) {
       console.error('Error parsing the generated tour data:', error);
       return [];
     }
   };
+  
+
+
 
   // Function to generate a walking tour
   const generateWalkingTour = async () => {
@@ -353,7 +430,7 @@ export default function CreateNewTour() {
       console.log('Coordinates: ', coordinates);
 // Set the POI names in state
 setPoiNames(sanitizedPointsOfInterest);
-      
+      console.log(`tourContent is this: `,tourContent)
 
       setIsLoading(false);
 
