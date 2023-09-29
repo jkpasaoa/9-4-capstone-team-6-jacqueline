@@ -218,7 +218,7 @@ export default function CreateNewTour() {
   const [cityPhoto, setCityPhoto] = useState('');
   const [poiNames, setPoiNames] = useState([]); // Create state for POI names
 
-
+console.log(tourContent)
 
   const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     try {
