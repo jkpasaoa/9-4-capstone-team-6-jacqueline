@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import loadingAnimation from '../../../assets/S-Loop_transnparent.gif'; // Import the loading animation
@@ -219,6 +219,8 @@ export default function CreateNewTour() {
   const [poiNames, setPoiNames] = useState([]); // Create state for POI names
 
   const navigate = useNavigate()
+  console.log(navigate())
+  console.log(tourContent)
 
   const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     try {
