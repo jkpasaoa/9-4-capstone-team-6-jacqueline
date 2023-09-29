@@ -1,4 +1,8 @@
 
+.no-content-container {
+  padding-top: 300px;
+}
+
 .end-tour-container {
   padding-top: 155px;
   padding-bottom: 250px;
@@ -25,4 +29,13 @@
 
 .message-container {
   padding-top: 10px;
+}
+
+.star-container {
+  display: flex;
+  align-items: center;
+}
+
+.star-container img {
+  margin-right: 4px;
 }
