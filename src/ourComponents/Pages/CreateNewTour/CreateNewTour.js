@@ -26,7 +26,7 @@ const config = {
 const generatePOICommentary = async (poiName, cityName, countryName) => {
   try {
     // Create a prompt that includes the POI name, city name, and country name
-    const prompt = `Provide a 500-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
+    const prompt = `Provide a 50-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
 
     console.log(`Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
 
@@ -40,15 +40,15 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
         },
         {
           role: 'user',
-          content: 'Provide 500-word descriptions for each point of interest, as if you are a tour guide addressing your tour group. Use this as an example of the tone of voice for the response I want to get.',
+          content: 'Provide 50-word descriptions for each point of interest, as if you are a tour guide addressing your tour group. Use this as an example of the tone of voice for the response I want to get.',
         },
         {
           role: 'user',
-          content: 'Double check that you ONLY provide JSON in your response.',
+          content: 'Double check that you ONLY provide JSON format for your response.',
         },
         {
           role: 'assistant',
-          content: `As we stand here, gazing up at the towering steel arches of the Sydney Harbour Bridge, let's journey back in time to the early 20th century. Construction of this engineering marvel began in 1924 during the Great Depression, providing much-needed jobs to thousands of workers. It was a time when the idea of spanning the magnificent Sydney Harbour with a bridge seemed audacious, but determination prevailed.
+          content: `{As we stand here, gazing up at the towering steel arches of the Sydney Harbour Bridge, let's journey back in time to the early 20th century. Construction of this engineering marvel began in 1924 during the Great Depression, providing much-needed jobs to thousands of workers. It was a time when the idea of spanning the magnificent Sydney Harbour with a bridge seemed audacious, but determination prevailed.
     
     The Sydney Harbour Bridge, often affectionately known as the "Coathanger" due to its distinctive shape, officially opened in 1932. It was an event of immense pride and celebration for the people of Sydney, marking the culmination of years of hard work and ingenuity. Today, it stands as a symbol of resilience and achievement.
     
@@ -62,7 +62,7 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
     
     I want to thank each of you for joining me on this journey across the Sydney Harbour Bridge today. Whether you're a first-time visitor or a seasoned traveler, this bridge offers an experience that leaves an indelible mark on your memories.
     
-    So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.
+    So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.}
     `
         }
       ],
@@ -361,9 +361,9 @@ export default function CreateNewTour() {
           },
           {
             role: 'user',
-            content: 'Include coordinates for each point of interest, if there are none use (0.4144° N, 0.7019° W) as a placeholder.',
+            content: 'Include coordinates for each point of interest, if there are none use (0.4144, -0.7019) as a placeholder.',
           },
-
+// (0.4144° N, 0.7019° W)
           {
             role: 'user',
             content: 'Return valid JSON format.',
