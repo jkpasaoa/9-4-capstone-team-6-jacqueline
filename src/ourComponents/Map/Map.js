@@ -112,23 +112,23 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
     return customMarkerIcon
   }
 
-  const parseDirections = (html) => {
-    let cleanedHtml = html.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
+  // const parseDirections = (html) => {
+  //   let cleanedHtml = html.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
 
-    cleanedHtml = cleanedHtml.replace(/style=".*?"/g, '');
+  //   cleanedHtml = cleanedHtml.replace(/style=".*?"/g, '');
 
-    cleanedHtml = cleanedHtml.replace(/<wbr\/?>/g, ' ');
+  //   cleanedHtml = cleanedHtml.replace(/<wbr\/?>/g, ' ');
 
-    cleanedHtml = cleanedHtml.replace(/<b>(.*?)<\/b>/g, '$1');
+  //   cleanedHtml = cleanedHtml.replace(/<b>(.*?)<\/b>/g, '$1');
 
-    cleanedHtml = cleanedHtml.replace(/<\/?.*?>/g, '');
+  //   cleanedHtml = cleanedHtml.replace(/<\/?.*?>/g, '');
 
-    cleanedHtml = cleanedHtml.replace(/&nbsp;/g, ' ');
+  //   cleanedHtml = cleanedHtml.replace(/&nbsp;/g, ' ');
 
-    cleanedHtml = cleanedHtml.trim();
+  //   cleanedHtml = cleanedHtml.trim();
 
-    return cleanedHtml;
-  }
+  //   return cleanedHtml;
+  // }
 
   return (
     <div position='center' className='h-[300px] w-[600px]'>
@@ -167,11 +167,11 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
       <br />
       <div>
         <ul>
-          {
+          {/* {
             steps.map((step, index) => {
               return <li key={index}>{parseDirections(step.instructions)}</li>
             })
-          }
+          } */}
         </ul>
       </div>
     </div>
