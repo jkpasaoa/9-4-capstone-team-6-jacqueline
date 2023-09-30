@@ -49,7 +49,7 @@ export default function Tour() {
     //     console.log(date)
     // },[z])
 
-    // console.log(tour, pointsOfInterest)
+
 
     // let textToSpeech1 = (textParam) => {
     //     if(!synth.speaking && !synth.paused){
