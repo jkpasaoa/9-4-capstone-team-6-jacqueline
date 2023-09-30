@@ -31,12 +31,12 @@ export default function Tour() {
     }, [id])
 
     useEffect(() => {
-        axios.get(`${API}/pointsOfInterest`)
+        axios.get(`${API}/tours/${id}/pointsOfInterest`)
             .then((res) => {
                 setAllPointsOfInterest(res.data)
             })
             .catch((e) => console.warn(e))
-    }, [])
+    }, [id])
 
     // console.log(allPointsOfInterest)
 
@@ -50,7 +50,7 @@ export default function Tour() {
     //     console.log(date)
     // },[z])
 
-    // console.log(tour, pointsOfInterest)
+
 
     // let textToSpeech1 = (textParam) => {
     //     if(!synth.speaking && !synth.paused){
