@@ -30,12 +30,12 @@ export default function Tour() {
     }, [id])
 
     useEffect(() => {
-        axios.get(`${API}/pointsOfInterest`)
+        axios.get(`${API}/tours/${id}/pointsOfInterest`)
             .then((res) => {
                 setAllPointsOfInterest(res.data)
             })
             .catch((e) => console.warn(e))
-    }, [])
+    }, [id])
 
     // console.log(allPointsOfInterest)
 
@@ -83,10 +83,10 @@ export default function Tour() {
                         <h2 className="text-4xl font-bold dark:text-white text-sky-950">Points of Interest:</h2>
                         <ul>
                             {
-                                pointsOfInterest.length && allPointsOfInterest.length && pointsOfInterest.map((poi, index) => {
-                                    const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
+                                 allPointsOfInterest.length && allPointsOfInterest.map((poi, index) => {
+                                 
                                     // return allPoi
-                                    return <PointOfInterestCard poi={allPoi} key={index} />
+                                    return <PointOfInterestCard poi={poi} key={index} />
                                 })
                             }
                         </ul>
