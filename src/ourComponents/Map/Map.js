@@ -10,10 +10,11 @@ import { IconButton } from '@chakra-ui/react';
 
 // const API = process.env.REACT_APP_API_URL;
 
-export default function Map({ pointsOfInterest, allPointsOfInterest }) {
+const libraries = ['places']
+export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarker }) {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-    libraries: ['places']
+    libraries
   })
 
   const [directionsResponse, setDirectionsResponse] = useState(null)
@@ -101,6 +102,10 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
     setDuration(results.routes[0].legs[0].duration.text)
   }
 
+  useEffect(() => {
+    calculateRoute()
+  }, [isLoaded])
+
   console.log(steps)
 
 
@@ -112,14 +117,21 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
     )
   }
 
-  const settingCustomMarker = (img) => {
+  const settingCustomMarker = (img, name) => {
+    let url = ''
+    if (name === activeMarker) {
+      url = img
+    }
+
     const customMarkerIcon = {
-      url: img,
+      url,
       // eslint-disable-next-line no-undef
       scaledSize: new google.maps.Size(40, 40)
     }
     return customMarkerIcon
   }
+
+  console.log(activeMarker)
 
   // const parseDirections = (html) => {
   //   let cleanedHtml = html.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
@@ -142,8 +154,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
   return (
     <div position='center' className='h-[300px] w-[600px]'>
       <GoogleMap
-        center={{ lat: lat, lng: long }}
-        zoom={10}
+        center={{ lat: Number(firstPoi.latitude), lng: Number(firstPoi.longitude) }}
+        zoom={15}
         mapContainerStyle={{ width: '105%', height: '150%' }}
         options={{
           // zoomControl: false,
@@ -158,7 +170,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
           pointsOfInterest.map((poi) => {
             const newPointsOfInterest = allPointsOfInterest.find((el) => el.poi_name === poi)
             return newPointsOfInterest
-          }).map(({ latitude, longitude, image_url }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} icon={settingCustomMarker(image_url)} animation={null} />)
+          }).map(({ latitude, longitude, image_url, poi_name }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} icon={settingCustomMarker(image_url, poi_name)} animation={null} />)
         }
         {/* <MarkerF position={{ lat: lat, lng: long }} /> */}
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
@@ -171,7 +183,9 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
           map.panTo({ lat: lat, lng: long })
           map.setZoom(10)
         }}
-      /> <button onClick={calculateRoute}> <span>  </span>SHOW ROUTE</button></p>
+      />
+        {/* <button onClick={calculateRoute}> <span>  </span>SHOW ROUTE</button> */}
+      </p>
       <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p>
       <br />
       <div>

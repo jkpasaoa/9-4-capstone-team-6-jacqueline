@@ -12,6 +12,7 @@ export default function Tour() {
     const [tour, setTour] = useState([])
     const [pointsOfInterest, setPointsOfInterest] = useState([])
     const [allPointsOfInterest, setAllPointsOfInterest] = useState([])
+    const [activeMarker, setActiveMarker] = useState('')
 
     // const [date, setDate] = useState([])
 
@@ -67,7 +68,7 @@ export default function Tour() {
 
 
 
-  
+
     return (
         <div className='tourLive'>
             <div className="relative h-10 w-[200px] ...">
@@ -83,17 +84,21 @@ export default function Tour() {
                         <h2 className="text-4xl font-bold dark:text-white text-sky-950">Points of Interest:</h2>
                         <ul>
                             {
-                                 allPointsOfInterest.length && allPointsOfInterest.map((poi, index) => {
-                                 
+                                pointsOfInterest.length && allPointsOfInterest.length && pointsOfInterest.map((poi, index) => {
+                                    const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
+                                    // console.log(allPoi)
                                     // return allPoi
-                                    return <PointOfInterestCard poi={poi} key={index} />
+                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} />
                                 })
                             }
                         </ul>
                     </div>
                     <figure className="max-w-lg">
                         {/* <img src={tour.image_url} alt={tour.city} className="h-auto max-w-full rounded-lg" /> */}
-                        <Map className="h-auto max-w-full rounded-lg" pointsOfInterest={pointsOfInterest} allPointsOfInterest={allPointsOfInterest} />
+                        {
+                            pointsOfInterest.length && allPointsOfInterest.length &&
+                            <Map className="h-auto max-w-full rounded-lg" activeMarker={activeMarker} pointsOfInterest={pointsOfInterest} allPointsOfInterest={allPointsOfInterest} />
+                        }
                         <figcaption className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">{tour.city}, {tour.state ? `${tour.state},` : null} {tour.country} Google Images©</figcaption>
                     </figure>
                 </div>
