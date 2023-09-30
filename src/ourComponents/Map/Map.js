@@ -23,6 +23,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
   const [lat, setLat] = useState(0)
   const [long, setLong] = useState(0)
   const [steps, setSteps] = useState([])
+  // const [centerLat, setCenterLat] = useState(0)
+  // const [centerLong, setCenterLong] = useState(0)
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -61,6 +63,14 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
   //   setSteps(steps1);
   // };
 
+  const firstPoi = allPointsOfInterest.find((el) => el.poi_name === pointsOfInterest[0])
+
+  useEffect(() => {
+    // setCenterLat(Number(firstPoi.latitude))
+    // setCenterLong(Number(firstPoi.longitude))
+    console.log(firstPoi)
+  }, [isLoaded, firstPoi])
+
   const calculateRoute = async () => {
     // if (!startPoint || !endPoint) {
     //   return
@@ -77,7 +87,6 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
       const locationObj = { location: { lat: Number(newPointsOfInterest.latitude), lng: Number(newPointsOfInterest.longitude) } }
       return locationObj
     })
-    const firstPoi = allPointsOfInterest.find((el) => el.poi_name === pointsOfInterest[0])
     const lastPoi = allPointsOfInterest.find((el) => el.poi_name === pointsOfInterest[pointsOfInterest.length - 1])
     const results = await directionsService.route({
       origin: { lat: Number(firstPoi.latitude), lng: Number(firstPoi.longitude) },
@@ -112,23 +121,23 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
     return customMarkerIcon
   }
 
-  const parseDirections = (html) => {
-    let cleanedHtml = html.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
+  // const parseDirections = (html) => {
+  //   let cleanedHtml = html.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
 
-    cleanedHtml = cleanedHtml.replace(/style=".*?"/g, '');
+  //   cleanedHtml = cleanedHtml.replace(/style=".*?"/g, '');
 
-    cleanedHtml = cleanedHtml.replace(/<wbr\/?>/g, ' ');
+  //   cleanedHtml = cleanedHtml.replace(/<wbr\/?>/g, ' ');
 
-    cleanedHtml = cleanedHtml.replace(/<b>(.*?)<\/b>/g, '$1');
+  //   cleanedHtml = cleanedHtml.replace(/<b>(.*?)<\/b>/g, '$1');
 
-    cleanedHtml = cleanedHtml.replace(/<\/?.*?>/g, '');
+  //   cleanedHtml = cleanedHtml.replace(/<\/?.*?>/g, '');
 
-    cleanedHtml = cleanedHtml.replace(/&nbsp;/g, ' ');
+  //   cleanedHtml = cleanedHtml.replace(/&nbsp;/g, ' ');
 
-    cleanedHtml = cleanedHtml.trim();
+  //   cleanedHtml = cleanedHtml.trim();
 
-    return cleanedHtml;
-  }
+  //   return cleanedHtml;
+  // }
 
   return (
     <div position='center' className='h-[300px] w-[600px]'>
@@ -167,11 +176,11 @@ export default function Map({ pointsOfInterest, allPointsOfInterest }) {
       <br />
       <div>
         <ul>
-          {
+          {/* {
             steps.map((step, index) => {
               return <li key={index}>{parseDirections(step.instructions)}</li>
             })
-          }
+          } */}
         </ul>
       </div>
     </div>
