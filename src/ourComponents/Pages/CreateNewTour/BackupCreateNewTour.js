@@ -1,7 +1,8 @@
+
+
 import React, { useState } from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import loadingAnimation from '../../../assets/S-Loop_transnparent.gif'; // Import the loading animation
 // import Map from '../../Map/Map';
 import '../CreateNewTour/CreateNewTour.css'
@@ -43,8 +44,12 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
           content: 'Provide 50-word descriptions for each point of interest, as if you are a tour guide addressing your tour group. Use this as an example of the tone of voice for the response I want to get.',
         },
         {
+          role: 'user',
+          content: 'Double check that you ONLY provide JSON format for your response.',
+        },
+        {
           role: 'assistant',
-          content: `As we stand here, gazing up at the towering steel arches of the Sydney Harbour Bridge, let's journey back in time to the early 20th century. Construction of this engineering marvel began in 1924 during the Great Depression, providing much-needed jobs to thousands of workers. It was a time when the idea of spanning the magnificent Sydney Harbour with a bridge seemed audacious, but determination prevailed.
+          content: `{As we stand here, gazing up at the towering steel arches of the Sydney Harbour Bridge, let's journey back in time to the early 20th century. Construction of this engineering marvel began in 1924 during the Great Depression, providing much-needed jobs to thousands of workers. It was a time when the idea of spanning the magnificent Sydney Harbour with a bridge seemed audacious, but determination prevailed.
     
     The Sydney Harbour Bridge, often affectionately known as the "Coathanger" due to its distinctive shape, officially opened in 1932. It was an event of immense pride and celebration for the people of Sydney, marking the culmination of years of hard work and ingenuity. Today, it stands as a symbol of resilience and achievement.
     
@@ -58,7 +63,7 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
     
     I want to thank each of you for joining me on this journey across the Sydney Harbour Bridge today. Whether you're a first-time visitor or a seasoned traveler, this bridge offers an experience that leaves an indelible mark on your memories.
     
-    So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.
+    So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.}
     `
         }
       ],
@@ -76,18 +81,32 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
 
     console.log('Generated Commentary:', commentary); // Add this line
 
+// Check if the HTTP response status is in the success range (2xx)
+if (response.status >= 200 && response.status < 300) {
+  // Attempt to parse the JSON response
+  const responseContent = response.data;
+
+  if (responseContent && responseContent.choices && responseContent.choices.length > 0) {
+    const commentary = responseContent.choices[0]?.message.content;
+    console.log('Generated Commentary:', commentary);
+
+    // Return the generated commentary
     return commentary;
-  } catch (error) {
-    console.error(`Error generating commentary for ${poiName}:`, error);
-    return ''; // Return an empty string in case of an error
+  } else {
+    throw new Error('Invalid response format from OpenAI API');
   }
+} else {
+  throw new Error(`Failed to fetch data from OpenAI API. Status code: ${response.status}`);
+}
+} catch (error) {
+console.error(`Error generating commentary for ${poiName}:`, error);
+return ''; // Return an empty string in case of an error
+}
 };
 
 
 // Define the insertPointOfInterest function
 const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => {
-
-  
 
   console.log('Inserting Point of Interest:', poi);
   console.log('New Tour ID:', newTourId);
@@ -124,12 +143,13 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
 
 
 // Define the getImageFromUnsplash function
-const getImageFromUnsplash = async (poi, cityName, country) => {
+const getImageFromUnsplash = async (poi, cityName, latitude, longitude) => {
   try {
     // Create a query string that includes POI, cityName, and country
-    const query = `${encodeURIComponent(poi)} ${encodeURIComponent(cityName)} ${encodeURIComponent(country)}`;
+    const query = `${encodeURIComponent(poi)} ${encodeURIComponent(cityName)} ${latitude},${longitude}`;
 
     console.log('POI:', poi);
+    console.log('Coordinates:', latitude, longitude);
 
     const response = await axios.get(
       `https://api.unsplash.com/search/photos?query=${query}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`,
@@ -214,42 +234,56 @@ export default function CreateNewTour() {
     theme: '', // Updated: theme instead of tourType
   });
 
-  // const [tourContent, setTourContent] = useState('');
+  const [tourContent, setTourContent] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Added isLoading state
   const [cityPhoto, setCityPhoto] = useState('');
-  const navigate = useNavigate();
+  const [poiNames, setPoiNames] = useState([]); // Create state for POI names
 
 
 
-const parsePointsOfInterestAndCoordinates = (generatedTour) => {
-  try {
+  const parsePointsOfInterestAndCoordinates = (generatedTour) => {
+    try {
 
-    console.log('Input Data:', generatedTour);
+      console.log('Starting parsePointsOfInterestAndCoordinates function...');
+      console.log('Generated Tour Data:', generatedTour);
 
-    // Parse the JSON format of the generated tour
-    const tourData = JSON.parse(generatedTour);
+      // Attempt to parse the JSON format of the generated tour
+      const tourData = JSON.parse(generatedTour);
 
-    // Check if the parsed data is an array
-    if (!Array.isArray(tourData)) {
-      throw new Error('Invalid data format in the generated tour');
+      console.log('const tourData = JSON.parse(generatedTour);', tourData)
+  
+      // Check if the parsed data is an array
+      if (!Array.isArray(tourData)) {
+        throw new Error('Invalid data format in the generated tour');
+      }
+  
+      // Check if each entry in the array has the expected structure
+      const isValidData = tourData.every((entry) => {
+        return entry.poi && entry.coordinates && entry.coordinates.latitude && entry.coordinates.longitude;
+      });
+  
+      if (!isValidData) {
+        throw new Error('Invalid data structure in the generated tour');
+      }
+  
+      // Extract the points of interest and coordinates
+      const matches = tourData.map((entry) => {
+        const { poi, coordinates } = entry;
+        return { poi, coordinates };
+      });
+  
+      // Log the extracted data
+      console.log('Extracted Data:', matches);
+  
+      return matches;
+    } catch (error) {
+      console.error('Error parsing the generated tour data:', error);
+      return [];
     }
+  };
+  
 
-    // Extract the points of interest and coordinates
-    const matches = tourData.map((entry) => {
-      const { poi, coordinates } = entry;
-      return { poi, coordinates };
-    });
 
-    // Log the extracted data
-    console.log('Extracted Data:', matches);
-    console.log(matches);
-
-    return matches;
-  } catch (error) {
-    console.error('Error parsing the generated tour data:', error);
-    return [];
-  }
-};
 
   // Function to generate a walking tour
   const generateWalkingTour = async () => {
@@ -285,9 +319,9 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
           },
           {
             role: 'user',
-            content: 'Include coordinates for each point of interest, if there are none use (0.4144° N, 0.7019° W) as a placeholder.',
+            content: 'Include coordinates for each point of interest, if there are none use (0.4144, -0.7019) as a placeholder.',
           },
-
+// (0.4144° N, 0.7019° W)
           {
             role: 'user',
             content: 'Return valid JSON format.',
@@ -334,7 +368,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       });
 
       const generatedTour = response.data.choices[0]?.message.content;
-      // setTourContent(generatedTour);
+      setTourContent(generatedTour);
 
       console.log('Generated Tour: ', generatedTour)
       console.log('Response.data: ', response.data)
@@ -352,17 +386,32 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
 
       console.log('Points of Interest: ', sanitizedPointsOfInterest);
       console.log('Coordinates: ', coordinates);
+// Set the POI names in state
+setPoiNames(sanitizedPointsOfInterest);
+      
 
-      // setIsLoading(false);
+      setIsLoading(false);
+
 
       return { generatedTour, sanitizedPointsOfInterest, coordinates };
     } catch (error) {
       console.error('Error:', error);
-      // setTourContent('Error generating the walking tour. Please try again.');
+      setTourContent('Error generating the walking tour. Please try again.');
       setIsLoading(false); // Set loading to false in case of an error
     }
   };
 
+  // const navigateLoading = () => {
+  //   if (isLoading === false) {
+  //     navigate('/tours')
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   navigateLoading()
+  // }, [isLoading])
+
+  
   // Event handler for dropdown select
   const handleDropdownChange = (event) => {
     const { id, value } = event.target;
@@ -398,6 +447,8 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
 
     // Parse and sanitize points of interest with coordinates
     const { sanitizedPointsOfInterest, coordinates } = generatedWalkingTour;
+
+
 
     // Fetch the city photo
     const cityPhoto = await fetchCityPhoto(tour.city, setCityPhoto);
@@ -454,12 +505,8 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
         const commName = poi; // Use the POI name as the commentary name
         const description = commentary; // Use the generated commentary as the description
         await insertCommentary(poiId, commName, description);
-        
+
       }
-      setIsLoading(false);
-
-      navigate(`/tours/${newTourId}`);
-
       console.log('POI added successfully:', coordinates);
     } catch (error) {
       console.error('Error adding tour:', error);
@@ -468,109 +515,116 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
 
 
 
-  
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen full-background-color" style={{ paddingTop: '200px' }}>
+    <div className="flex flex-col items-center justify-center min-h-screen full-background-color" style={{ paddingTop: '100px' }}>
       <div className="container flex flex-col items-center justify-center ">
-        <h1 className="text-3xl text-center mb-4 underline">Walking Tour Generator</h1>
+        {/* <div className="content-container background-image rounded-lg"> */}
+        <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold">
+          Ready to Explore?</h1>
+        <p className='generator-directions text-lg font-semibold text-[#333333]'>
+        Explore the world and create your own adventure! Whether you're a history buff, a foodie, or an outdoor enthusiast, there's a unique journey waiting for you. Uncover hidden gems, savor local flavors, and embark on unforgettable experiences.
+        </p><div className="content-container background-image rounded-lg">
+          <div className="container flex flex-col items-center justify-center ">
+            <div className="fields-container rounded-lg">
+              {/* City Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="rounded-lg border w-full p-2"
+                  placeholder="Enter a City to Explore"
+                  name="city"
+                  value={tour.city}
+                  onChange={handleTextChange}
+                />
+              </div>
 
-        {/* City Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Enter a City to Explore"
-            name="city"
-            value={tour.city}
-            onChange={handleTextChange}
-          />
+              {/* Region Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="rounded-lg border w-full p-2"
+                  placeholder="Borough/Region if applicable"
+                  name="region"
+                  value={tour.region}
+                  onChange={handleTextChange}
+                />
+              </div>
+
+              {/* State Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="rounded-lg border w-full p-2"
+                  placeholder="State/County/Province if applicable"
+                  name="state"
+                  value={tour.state}
+                  onChange={handleTextChange}
+                />
+              </div>
+
+              {/* Country Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="rounded-lg border w-full p-2"
+                  placeholder="Enter the Country"
+                  name="country"
+                  value={tour.country}
+                  onChange={handleTextChange}
+                />
+              </div>
+
+              {/* Duration Dropdown */}
+              <div className="field mb-3">
+                <select
+                  className="rounded-lg border w-full p-2"
+                  value={tour.duration}
+                  onChange={handleDropdownChange}
+                  id="duration"
+                >
+
+                  <option value="" disabled>Select Day Duration</option>
+                  <option value="Full-day">Full-day</option>
+                  <option value="Half-day">Half-day</option>
+                  <option value="2 hours">2 hours</option>
+                </select>
+              </div>
+
+              {/* Difficulty Dropdown */}
+              <div className="field mb-3">
+                <select
+                  className="rounded-lg border w-full p-2"
+                  value={tour.difficulty}
+                  onChange={handleDropdownChange}
+                  id="difficulty"
+                >
+                  {/* <select value={selectedOption} onChange={handleOptionChange}></select> */}
+                  <option value="" disabled>Select Walking Difficulty</option>
+                  <option value="Easy">Easy</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+
+              {/* Theme Dropdown */}
+              <div className="field mb-3">
+                <select
+                  className="rounded-lg border w-full p-2"
+                  value={tour.theme}
+                  onChange={handleDropdownChange}
+                  id="theme"
+                >
+                  <option value="" disabled>Select Tour Theme</option>
+                  <option value="Historic">Historic</option>
+                  <option value="Scenic">Scenic</option>
+                  <option value="Fun">Fun</option>
+                  <option value="Museums">Museums</option>
+                  <option value="Pubs">Pubs</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* Region Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Borough/Region if applicable"
-            name="region"
-            value={tour.region}
-            onChange={handleTextChange}
-          />
-        </div>
-
-        {/* State Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="State/County/Province if applicable"
-            name="state"
-            value={tour.state}
-            onChange={handleTextChange}
-          />
-        </div>
-
-        {/* Country Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Enter the Country"
-            name="country"
-            value={tour.country}
-            onChange={handleTextChange}
-          />
-        </div>
-
-        {/* Duration Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.duration}
-            onChange={handleDropdownChange}
-            id="duration"
-          >
-
-            <option value="" disabled>Select Day Duration</option>
-            <option value="Full-day">Full-day</option>
-            <option value="Half-day">Half-day</option>
-            <option value="2 hours">2 hours</option>
-          </select>
-        </div>
-
-        {/* Difficulty Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.difficulty}
-            onChange={handleDropdownChange}
-            id="difficulty"
-          >
-            {/* <select value={selectedOption} onChange={handleOptionChange}></select> */}
-            <option value="" disabled>Select Walking Difficulty</option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-          </select>
-        </div>
-
-        {/* Theme Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.theme}
-            onChange={handleDropdownChange}
-            id="theme"
-          >
-            <option value="" disabled>Select Tour Theme</option>
-            <option value="Historic">Historic</option>
-            <option value="Scenic">Scenic</option>
-            <option value="Fun">Fun</option>
-            <option value="Museums">Museums</option>
-            <option value="Pubs">Pubs</option>
-          </select>
-        </div>
-
         {/* Generate Button */}
         <div className="mb-3 text-center">
           <button
@@ -589,13 +643,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
             <p>Loading...</p>
 
             <div style={{ margin: '16px 0' }}>
-              {/* Display the city photo */}
-            {cityPhoto && (
-              <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" style={{ width: '175px', height: '175px' }}/>
-            )}
               <img src={loadingAnimation} alt="Loading..." className="w-32 mx-auto" />
-              
-              
             </div>
           </div>
         ) : (
@@ -607,19 +655,21 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
 
             <br />
 
-            {/* <textarea className="route-container border rounded-lg w-full p-2" rows="10" value={tourContent} readOnly /> */}
+            <ol className="ordered-list">
+              {poiNames.map((poiName, index) => (
+                <li key={index}>{poiName}</li>
+              ))}
+            </ol>
           </div>
-        )
-        }
+        )}
 
-        {/* "Start Tour" button
+        {/* "Start Tour" button */}
         <div className="mb-3 text-center">
-          <Link to="/tourlive">
+          <Link to={`/tours`}>
             <button className="mt-6 inline-block rounded bg-[#E36E43] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110">Start Tour</button>
           </Link>
-        </div> */}
+        </div>
       </div>
     </div>
   );
-
 }
