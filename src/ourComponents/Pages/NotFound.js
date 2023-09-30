@@ -8,7 +8,7 @@ export default function NotFound() {
                 <img src={ErrorImage} alt="ErrorImaged" className="error-photo" />
             </p>
             {/* Link to Home Page */}
-            <Link to="/home" className="mt-4 text-blue-700 hover:underline text-2xl">
+            <Link to="/" className="mt-4 text-blue-700 hover:underline text-2xl">
                 Return to Home
             </Link>
         </div>
