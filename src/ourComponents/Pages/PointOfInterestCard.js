@@ -34,7 +34,7 @@ export default function PointOfInterestCard({ poi_id, name }) {
     return (
         <div>
             <li className="text-left"><span onClick={() => textToSpeech()} className="float-left px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 w-[400px]"><h3 className="inline-flex"><ImLocation />{name}</h3>
-                <section>
+                <section className="border-l-2 border-sky-950 ml-1.5">
                     <p><Link>PLAY AUDIO</Link></p>
                     <p>In this paragraph there will be a short description leading to full details...</p>
                     {/* <Link>Show More</Link> */}
