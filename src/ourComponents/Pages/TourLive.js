@@ -67,7 +67,7 @@ export default function Tour() {
 
 
 
-  
+
     return (
         <div className='tourLive'>
             <div className="relative h-10 w-[200px] ...">
@@ -85,8 +85,9 @@ export default function Tour() {
                             {
                                 pointsOfInterest.length && allPointsOfInterest.length && pointsOfInterest.map((poi, index) => {
                                     const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
+                                    // console.log(allPoi)
                                     // return allPoi
-                                    return <PointOfInterestCard poi={allPoi} key={index} />
+                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} key={index} />
                                 })
                             }
                         </ul>
