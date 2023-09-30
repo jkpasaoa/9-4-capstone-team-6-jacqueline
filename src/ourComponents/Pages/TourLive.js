@@ -9,7 +9,7 @@ import './Pages.css';
 const API = process.env.REACT_APP_API_URL;
 
 export default function Tour() {
-    const [tour, setTour] = useState({})
+    const [tour, setTour] = useState([])
     const [pointsOfInterest, setPointsOfInterest] = useState([])
     const [allPointsOfInterest, setAllPointsOfInterest] = useState([])
 

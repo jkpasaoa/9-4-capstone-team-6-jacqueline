@@ -169,7 +169,7 @@ export default function Home() {
       </div>
 
       {/* partition 2 */}
-      <div className="w-screen h-screen relative bg-[#bebac0] shadow-inner">
+      <div className="w-screen h-screen relative shadow-inner">
         <div className="h-[70%] max-[760px]:h-auto  overflow-hidden">
           <img
             src={image2}
