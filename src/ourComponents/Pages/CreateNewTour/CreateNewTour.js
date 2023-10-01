@@ -470,7 +470,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     }
   };
 
-
+//Here comes the return
 
   
   return (
