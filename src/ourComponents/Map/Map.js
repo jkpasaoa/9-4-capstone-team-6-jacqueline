@@ -2,8 +2,8 @@
 import { GoogleMap, MarkerF, useJsApiLoader, DirectionsRenderer } from '@react-google-maps/api'
 import { useState, useEffect } from 'react'; //useRef, useEffect, useMemo
 import loadingLogo from '../../assets/S-Loop_transnparent.gif'
-import { FaLocationArrow } from 'react-icons/fa'
-import { IconButton } from '@chakra-ui/react';
+// import { FaLocationArrow } from 'react-icons/fa'
+// import { IconButton } from '@chakra-ui/react';
 // import axios from 'axios';
 
 // const center = { lat: 40.8448, lng: 40.8448 }
@@ -20,19 +20,19 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
   const [directionsResponse, setDirectionsResponse] = useState(null)
   // const [distance, setDistance] = useState('')
   // const [duration, setDuration] = useState('')
-  const [map, setMap] = useState(/** @type google.maps.Map */(null))
-  const [lat, setLat] = useState(0)
-  const [long, setLong] = useState(0)
+  // const [map, setMap] = useState(/** @type google.maps.Map */(null))
+  // const [lat, setLat] = useState(0)
+  // const [long, setLong] = useState(0)
   const [steps, setSteps] = useState([])
   // const [centerLat, setCenterLat] = useState(0)
   // const [centerLong, setCenterLong] = useState(0)
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setLat(position.coords.latitude)
-      setLong(position.coords.longitude)
-    })
-  }, [isLoaded, lat, long])
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     setLat(position.coords.latitude)
+  //     setLong(position.coords.longitude)
+  //   })
+  // }, [isLoaded, lat, long])
 
   // const matchingPointsOfInterest = () => {
   //   for (let i = 0; i < pointsOfInterest.length; i++) {
@@ -164,19 +164,20 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
           mapTypeControl: false,
           // fullscreenControl: false
         }}
-        onLoad={(map) => setMap(map)}
+      // onLoad={(map) => setMap(map)}
       >
         {
           pointsOfInterest.length && allPointsOfInterest.length &&
           pointsOfInterest.map((poi) => {
             const newPointsOfInterest = allPointsOfInterest.find((el) => el.poi_name === poi)
             return newPointsOfInterest
-          }).map(({ latitude, longitude, image_url, poi_name }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} icon={settingCustomMarker(image_url)} animation={null} />)
+          }).map(({ latitude, longitude, image_url, poi_name }, index) => <MarkerF key={index} position={{ lat: Number(latitude), lng: Number(longitude) }} icon={settingCustomMarker(image_url)} animation={null} />)
         }
         {/* <MarkerF position={{ lat: lat, lng: long }} /> */}
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
       </GoogleMap>
-      <p><IconButton
+      <p>
+        {/* <IconButton
         aria-label='center back'
         icon={<FaLocationArrow />}
         isRound
@@ -184,7 +185,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
           map.panTo({ lat: lat, lng: long })
           map.setZoom(10)
         }}
-      />
+      /> */}
         {/* <button onClick={calculateRoute}> <span>  </span>SHOW ROUTE</button> */}
       </p>
       {/* <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p> */}

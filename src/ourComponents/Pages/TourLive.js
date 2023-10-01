@@ -85,7 +85,7 @@ export default function Tour() {
 
 
     return (
-        <div className='tourLive ml-0'>
+        <div className='tourLive ml-0 mt-[-30px]'>
             <div className="relative h-10 w-[200px] ...">
                 <button className="absolute inline-flex ml-[80px] mt-[40px] left-0 top-0 h-16 w-[200px] font-extrabold text-sky-950 ..."><Link className="inline-flex" to='/tours'>{<TiArrowBack />} ALL TOURS</Link></button>
             </div>
