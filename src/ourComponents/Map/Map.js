@@ -117,14 +117,14 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
     )
   }
 
-  const settingCustomMarker = (img, name) => {
-    let url = ''
-    if (name === activeMarker) {
-      url = img
-    }
+  const settingCustomMarker = (img) => {
+    // let url = ''
+    // if (name === activeMarker) {
+    //   url = img
+    // }
 
     const customMarkerIcon = {
-      url,
+      url: img,
       // eslint-disable-next-line no-undef
       scaledSize: new google.maps.Size(40, 40)
     }
@@ -170,7 +170,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
           pointsOfInterest.map((poi) => {
             const newPointsOfInterest = allPointsOfInterest.find((el) => el.poi_name === poi)
             return newPointsOfInterest
-          }).map(({ latitude, longitude, image_url, poi_name }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} icon={settingCustomMarker(image_url, poi_name)} animation={null} />)
+          }).map(({ latitude, longitude, image_url, poi_name }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} icon={settingCustomMarker(image_url)} animation={null} />)
         }
         {/* <MarkerF position={{ lat: lat, lng: long }} /> */}
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
