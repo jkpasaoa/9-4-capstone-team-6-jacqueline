@@ -4,14 +4,11 @@ import { Link, useParams } from 'react-router-dom';
 import './Pages.css';
 import { useEffect, useState } from 'react';
 import PointOfInterestCard from './PointOfInterestCard.js';
-import GetPlaceId from './GetPlaceId.js';
 import { TiArrowBack } from 'react-icons/ti'
 import './Pages.css';
 import Modal from './Modal.js';
 
 const API = process.env.REACT_APP_API_URL;
-const GOOGLE_API = `https://maps.googleapis.com/maps/api/`
-const GOOGLE_KEY = process.env.REACT_APP_GOOGLE_API_KEY
 
 export default function Tour() {
     const [tour, setTour] = useState([])
@@ -21,23 +18,9 @@ export default function Tour() {
     const [modal, setModal] = useState(false)
     const [currentPoi, setCurrentPoi] = useState('')
     const [modalCommentary, setModalCommentary] = useState('')
-    // const [placeId, setPlaceId] = useState('')
-    // const [locationName, setLocationName] = useState('')
 
 
-    // const getPlaceIdFromName = () => {
-    //     const fetchPlaceId = async () => {
-    //         const placeId2 = await GetPlaceId(locationName, GOOGLE_KEY);
-    //         console.log('Place ID:', placeId2);
-    //     };
-    //     fetchPlaceId();
-    // }
-
-    // useEffect(() => {
-    //     getPlaceIdFromName()
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-    // // const [date, setDate] = useState([])
+    // const [date, setDate] = useState([])
 
     const { id } = useParams()
 
@@ -120,17 +103,7 @@ export default function Tour() {
                                     const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
                                     // console.log(allPoi)
                                     // return allPoi
-                                    return <PointOfInterestCard 
-                                    poi_id={allPoi.id} 
-                                    name={allPoi.poi_name} 
-                                    img={allPoi.image_url} 
-                                    key={index} 
-                                    setActiveMarker={setActiveMarker} 
-                                    toggleModal={toggleModal} 
-                                    setCurrentPoi={setCurrentPoi} 
-                                    setModalCommentary={setModalCommentary} 
-                                    // setLocationName={setLocationName} 
-                                    />
+                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} toggleModal={toggleModal} setCurrentPoi={setCurrentPoi} setModalCommentary={setModalCommentary} />
                                 })
                             }
                         </ul>
