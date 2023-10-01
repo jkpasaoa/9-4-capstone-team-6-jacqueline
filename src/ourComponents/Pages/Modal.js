@@ -2,7 +2,23 @@ import { AiOutlineCloseSquare } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { HiPlay } from 'react-icons/hi2'
 
+let speech = new SpeechSynthesisUtterance();
+let synth = window.speechSynthesis;
+
 export default function Modal({ toggleModal, img, name, commentary }) {
+
+    let textToSpeech = () => {
+
+        if (!synth.speaking || !synth.paused) {
+            speech.text = commentary.description
+            speech.rate = 0.80
+            synth.speak(speech)
+        } else {
+            // synth.paused ? synth.resume() : synth.pause();
+            synth.cancel()
+        }
+    }
+
     return (
         <div className="modal-content content-center">
             <h1 className="text-4xl font-bold dark:text-white text-sky-950">{name}</h1>
