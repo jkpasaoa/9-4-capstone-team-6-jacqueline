@@ -18,8 +18,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
   })
 
   const [directionsResponse, setDirectionsResponse] = useState(null)
-  const [distance, setDistance] = useState('')
-  const [duration, setDuration] = useState('')
+  // const [distance, setDistance] = useState('')
+  // const [duration, setDuration] = useState('')
   const [map, setMap] = useState(/** @type google.maps.Map */(null))
   const [lat, setLat] = useState(0)
   const [long, setLong] = useState(0)
@@ -98,8 +98,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
     })
     setDirectionsResponse(results)
     setSteps(results.routes[0].legs[0].steps)
-    setDistance(results.routes[0].legs[0].distance.text)
-    setDuration(results.routes[0].legs[0].duration.text)
+    // setDistance(results.routes[0].legs[0].distance.text)
+    // setDuration(results.routes[0].legs[0].duration.text)
   }
 
   useEffect(() => {
@@ -117,14 +117,14 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
     )
   }
 
-  const settingCustomMarker = (img, name) => {
-    let url = ''
-    if (name === activeMarker) {
-      url = img
-    }
+  const settingCustomMarker = (img) => {
+    // let url = ''
+    // if (name === activeMarker) {
+    //   url = img
+    // }
 
     const customMarkerIcon = {
-      url,
+      url: img,
       // eslint-disable-next-line no-undef
       scaledSize: new google.maps.Size(40, 40)
     }
@@ -170,7 +170,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
           pointsOfInterest.map((poi) => {
             const newPointsOfInterest = allPointsOfInterest.find((el) => el.poi_name === poi)
             return newPointsOfInterest
-          }).map(({ latitude, longitude, image_url, poi_name }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} icon={settingCustomMarker(image_url, poi_name)} animation={null} />)
+          }).map(({ latitude, longitude, image_url, poi_name }) => <MarkerF position={{ lat: Number(latitude), lng: Number(longitude) }} icon={settingCustomMarker(image_url)} animation={null} />)
         }
         {/* <MarkerF position={{ lat: lat, lng: long }} /> */}
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
@@ -186,7 +186,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
       />
         {/* <button onClick={calculateRoute}> <span>  </span>SHOW ROUTE</button> */}
       </p>
-      <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p>
+      {/* <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p> */}
       <br />
       <div>
         <ul>
