@@ -23,7 +23,9 @@ export default function Tour() {
     const [placeId, setPlaceId] = useState('')
 
 
+    const getPlaceIdFromName = (locationName) =>{
 
+    }
     // const [date, setDate] = useState([])
 
     const { id } = useParams()
