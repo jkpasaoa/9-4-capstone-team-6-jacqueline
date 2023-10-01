@@ -17,6 +17,7 @@ export default function Tour() {
     const [activeMarker, setActiveMarker] = useState('')
     const [modal, setModal] = useState(false)
     const [currentPoi, setCurrentPoi] = useState('')
+    const [modalCommentary, setModalCommentary] = useState('')
 
 
     // const [date, setDate] = useState([])
@@ -102,7 +103,7 @@ export default function Tour() {
                                     const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
                                     // console.log(allPoi)
                                     // return allPoi
-                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} toggleModal={toggleModal} setCurrentPoi={setCurrentPoi} />
+                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} toggleModal={toggleModal} setCurrentPoi={setCurrentPoi} setModalCommentary={setModalCommentary} />
                                 })
                             }
                         </ul>
@@ -122,7 +123,9 @@ export default function Tour() {
                         <div onClick={toggleModal} className='overlay'></div>
                         <Modal toggleModal={toggleModal}
                             img={currentPointOfInterest.image_url}
-                            name={currentPointOfInterest.poi_name} />
+                            name={currentPointOfInterest.poi_name}
+                            commentary={modalCommentary}
+                        />
                     </div>
                 }
             </div>
