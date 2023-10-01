@@ -26,7 +26,7 @@ export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker
 
         if (!synth.speaking || !synth.paused) {
             speech.text = commentary.description
-            speech.rate = 0.80
+            speech.rate = 0.85
             synth.speak(speech)
         } else {
             // synth.paused ? synth.resume() : synth.pause();

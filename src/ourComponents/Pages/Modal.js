@@ -12,7 +12,7 @@ export default function Modal({ toggleModal, img, name, commentary }) {
 
         if (!synth.speaking || !synth.paused) {
             speech.text = commentary
-            speech.rate = 0.80
+            speech.rate = 0.85
             synth.speak(speech)
         } else {
             // synth.paused ? synth.resume() : synth.pause();
