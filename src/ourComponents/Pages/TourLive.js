@@ -16,6 +16,7 @@ export default function Tour() {
     const [allPointsOfInterest, setAllPointsOfInterest] = useState([])
     const [activeMarker, setActiveMarker] = useState('')
     const [modal, setModal] = useState(false)
+    const [currentPoi, setCurrentPoi] = useState('')
 
     // const [date, setDate] = useState([])
 
@@ -99,7 +100,7 @@ export default function Tour() {
                                     const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
                                     // console.log(allPoi)
                                     // return allPoi
-                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} toggleModal={toggleModal} />
+                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} toggleModal={toggleModal} setCurrentPoi={setCurrentPoi} />
                                 })
                             }
                         </ul>
@@ -117,7 +118,13 @@ export default function Tour() {
                     modal &&
                     <div className='modal'>
                         <div onClick={toggleModal} className='overlay'></div>
-                        <Modal toggleModal={toggleModal} />
+                        {
+                            pointsOfInterest.length && allPointsOfInterest.length && pointsOfInterest.map((poi, index) => {
+                                const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
+                                return <Modal toggleModal={toggleModal} img={allPoi.image_url} />
+                            })
+                        }
+
                     </div>
                 }
             </div>
