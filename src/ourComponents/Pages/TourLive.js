@@ -17,6 +17,8 @@ export default function Tour() {
     const [activeMarker, setActiveMarker] = useState('')
     const [modal, setModal] = useState(false)
     const [currentPoi, setCurrentPoi] = useState('')
+    const [modalCommentary, setModalCommentary] = useState('')
+
 
     // const [date, setDate] = useState([])
 
@@ -92,7 +94,7 @@ export default function Tour() {
                 <h4 className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Welcome to your {tour.tour_name}</h4>
                 {/* <p>Created on { }</p> */}
                 <br />
-                <div className="grid grid-cols-2 gap-7 ml-[-150px]">
+                <div className="grid grid-cols-2 gap-5 ml-[-150px]">
                     <div>
                         <h2 className="text-4xl font-bold dark:text-white text-sky-950">Points of Interest:</h2>
                         <ul>
@@ -101,7 +103,7 @@ export default function Tour() {
                                     const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
                                     // console.log(allPoi)
                                     // return allPoi
-                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} toggleModal={toggleModal} setCurrentPoi={setCurrentPoi} />
+                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} toggleModal={toggleModal} setCurrentPoi={setCurrentPoi} setModalCommentary={setModalCommentary} />
                                 })
                             }
                         </ul>
@@ -121,7 +123,9 @@ export default function Tour() {
                         <div onClick={toggleModal} className='overlay'></div>
                         <Modal toggleModal={toggleModal}
                             img={currentPointOfInterest.image_url}
-                            name={currentPointOfInterest.poi_name} />
+                            name={currentPointOfInterest.poi_name}
+                            commentary={modalCommentary}
+                        />
                     </div>
                 }
             </div>
