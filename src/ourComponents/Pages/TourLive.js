@@ -69,6 +69,7 @@ export default function Tour() {
     // let speechStop = () => {
     //     synth.cancel()
     // }
+    const currentPointOfInterest = allPointsOfInterest.find((el) => el.poi_name === currentPoi)
 
     const toggleModal = () => {
         setModal(!modal)
@@ -118,13 +119,7 @@ export default function Tour() {
                     modal &&
                     <div className='modal'>
                         <div onClick={toggleModal} className='overlay'></div>
-                        {
-                            pointsOfInterest.length && allPointsOfInterest.length && pointsOfInterest.map((poi, index) => {
-                                const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
-                                return <Modal toggleModal={toggleModal} img={allPoi.image_url} />
-                            })
-                        }
-
+                        <Modal toggleModal={toggleModal} img={currentPointOfInterest.image_url} />
                     </div>
                 }
             </div>
