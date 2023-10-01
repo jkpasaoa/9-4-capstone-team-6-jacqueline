@@ -30,7 +30,7 @@ function NavBar() {
             </a>
           </span>
 
-          <div className="flex md:order-2 ml-auto">
+          <div className="flex md:order-2 ml-auto inline-flex text-xl font-bold">
             {/* Desktop Menu & Tablet Menu */}
             <ul className="DESKTOP-MENU hidden space-x-8 md:flex lg:flex">
               <li>
