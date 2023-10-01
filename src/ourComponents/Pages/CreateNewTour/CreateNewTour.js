@@ -220,35 +220,71 @@ export default function CreateNewTour() {
   const navigate = useNavigate();
 
 
+// const parsePointsOfInterestAndCoordinates = (generatedTour) => {
+//   try {
+
+//     console.log('Input Data:', generatedTour);
+
+//     // Parse the JSON format of the generated tour
+//     const tourData = JSON.parse(generatedTour);
+
+//     // Check if the parsed data is an array
+//     if (!Array.isArray(tourData)) {
+//       throw new Error('Invalid data format in the generated tour');
+//     }
+
+//     // Extract the points of interest and coordinates
+//     const matches = tourData.map((entry) => {
+//       const { poi, coordinates } = entry;
+//       return { poi, coordinates };
+//     });
+
+//     // Log the extracted data
+//     console.log('Extracted Data:', matches);
+//     console.log(matches);
+
+//     return matches;
+//   } catch (error) {
+//     console.error('Error parsing the generated tour data:', error);
+//     return [];
+//   }
+// };
+
+// Function to extract POI and coordinates using RegEx
 const parsePointsOfInterestAndCoordinates = (generatedTour) => {
-  try {
-
-    console.log('Input Data:', generatedTour);
-
-    // Parse the JSON format of the generated tour
-    const tourData = JSON.parse(generatedTour);
-
-    // Check if the parsed data is an array
-    if (!Array.isArray(tourData)) {
-      throw new Error('Invalid data format in the generated tour');
+  const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
+  const coordinatePattern = /\((-?\d+\.\d+)° ([NS]), (-?\d+\.\d+)° ([EW])\)/g;
+  const matches = [];
+  
+  let match;
+  while ((match = bulletPattern.exec(generatedTour)) !== null) {
+    const poi = match[1];
+    const coordinateMatches = coordinatePattern.exec(generatedTour);
+    
+    if (coordinateMatches) {
+      const latitude = parseFloat(coordinateMatches[1]);
+      const latitudeDirection = coordinateMatches[2];
+      const longitude = parseFloat(coordinateMatches[3]);
+      const longitudeDirection = coordinateMatches[4];
+      
+      const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
+      const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
+      
+      const adjustedLatitude = latitude * latitudeSign;
+      const adjustedLongitude = longitude * longitudeSign;
+      
+      const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
+      
+      matches.push({ poi, coordinates });
     }
-
-    // Extract the points of interest and coordinates
-    const matches = tourData.map((entry) => {
-      const { poi, coordinates } = entry;
-      return { poi, coordinates };
-    });
-
-    // Log the extracted data
-    console.log('Extracted Data:', matches);
-    console.log(matches);
-
-    return matches;
-  } catch (error) {
-    console.error('Error parsing the generated tour data:', error);
-    return [];
   }
+  
+  return matches;
 };
+
+
+
+
 
   // Function to generate a walking tour
   const generateWalkingTour = async () => {
@@ -284,42 +320,42 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
             role: 'user',
             content: prompt,
           },
-          {
-            "role": "user",
-            "content": "Include coordinates for each point of interest, if there are none use \"coordinates\": { \"latitude\": 50.5000, \"longitude\": -50.5000 } as a placeholder."
-          }
-          ,
+          
 
           {
             role: 'user',
-            content: 'Return valid JSON format.',
+            content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same.  The following is just an example of the format I want you to use.  1. Santa Maria del Mar (41.3836° N, 2.1810° E)\n2. Parc de la Ciutadella (41.3883° N, 2.1874° E)
+          
+            // [
+            //   {
+            //     poi: "Santa Maria del Mar",
+            //     coordinates: {
+            //       latitude: 41.3836,
+            //       longitude: 2.1810,
+            //     },
+            //   },
+            //   {
+            //     poi: "Parc de la Ciutadella",
+            //     coordinates: {
+            //       latitude: 41.3883,
+            //       longitude: 2.1874,
+            //     },
+            //   },
+            // ]`
           },
+          {
+            "role": "user",
+            "content": "Include coordinates for each point of interest, if there are none use \"coordinates\": { \"latitude\": 50.5000, \"longitude\": -50.5000 } as a placeholder."
+          },
+
+          // {
+          //   role: 'user',
+          //   content: 'Return valid JSON format.',
+          // },
 
           {
             role: 'user',
             content: 'Only return points of interest and coordinates.',
-          },
-
-          {
-            role: 'user',
-            content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same.  The following is just an example of the format I want you to use.: 
-          
-            [
-              {
-                poi: "Santa Maria del Mar",
-                coordinates: {
-                  latitude: 41.3836,
-                  longitude: 2.1810,
-                },
-              },
-              {
-                poi: "Parc de la Ciutadella",
-                coordinates: {
-                  latitude: 41.3883,
-                  longitude: 2.1874,
-                },
-              },
-            ]`
           },
         ],
 
@@ -616,6 +652,4 @@ return (
     </div>
   </div>
 );
-
-
 }
