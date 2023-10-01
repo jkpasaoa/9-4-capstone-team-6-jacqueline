@@ -18,6 +18,7 @@ export default function Tour() {
     const [modal, setModal] = useState(false)
     const [currentPoi, setCurrentPoi] = useState('')
 
+
     // const [date, setDate] = useState([])
 
     const { id } = useParams()
