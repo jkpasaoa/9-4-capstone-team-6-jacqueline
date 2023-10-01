@@ -16,9 +16,9 @@ function NavBar() {
   return (
     <div>
       <nav
-        className={loc.pathname !== '/' ? 'bg-white fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0' : 'bg-white bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0'}>
+        className={loc.pathname !== '/' ? 'bg-white fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0 h-[17%]' : 'bg-white bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0'}>
         {/* "bg-[#dbd4db] bg-opacity-20 > */}
-        <div className="flex flex-wrap items-center justify-between mx-auto p-4">
+        <div className="flex flex-wrap items-center justify-between mx-auto p-4 text-sky-950">
           <span className="logo">
             <a href="/" className="flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
               <img
@@ -26,25 +26,25 @@ function NavBar() {
                 className="mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
                 alt="CityWhisperer Logo"
               />
-              <span className="text-center text-sm">Powered by chatGPT</span>
+              <span className="text-center text-xs">Powered by chatGPT</span>
             </a>
           </span>
 
-          <div className="flex md:order-2 ml-auto">
+          <div className="flex md:order-2 ml-auto inline-flex text-xl font-bold">
             {/* Desktop Menu & Tablet Menu */}
             <ul className="DESKTOP-MENU hidden space-x-8 md:flex lg:flex">
               <li>
-                <a href="/" className="nav-link home text-black text-shadow-white drop-shadow-lg">
+                <a href="/" className="nav-link home text-sky-950 text-shadow-white drop-shadow-lg">
                   Home
                 </a>
               </li>
               <li>
-                <Link to="/about" className="nav-link about text-black text-shadow-white drop-shadow-lg">
+                <Link to="/about" className="nav-link about text-sky-950 text-shadow-white drop-shadow-lg">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/tours" className="nav-link browsetours text-black text-shadow-white drop-shadow-lg">
+                <Link to="/tours" className="nav-link browsetours text-sky-950 text-shadow-white drop-shadow-lg">
                   Browse Tours
                 </Link>
               </li>
