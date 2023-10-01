@@ -1,6 +1,6 @@
 
 
-export default function Modal() {
+export default function Modal({ toggleModal }) {
     return (
         <div>
             <h1>modal content</h1>
@@ -10,6 +10,8 @@ export default function Modal() {
                 Sapiente dolorum id maiores dolores? Illum pariatur possimus
                 quaerat ipsum quos molestiae rem aspernatur dicta tenetur. Sunt
                 placeat tempora vitae enim incidunt porro fuga ea.</p>
+
+            <button ocClick={() => toggleModal()}></button>
         </div>
     )
 }
