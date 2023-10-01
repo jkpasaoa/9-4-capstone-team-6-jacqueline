@@ -9,6 +9,8 @@ import './Pages.css';
 import Modal from './Modal.js';
 
 const API = process.env.REACT_APP_API_URL;
+const GOOGLE_API = `https://maps.googleapis.com/maps/api/`
+const GOOGLE_KEY = process.env.REACT_APP_GOOGLE_API_KEY
 
 export default function Tour() {
     const [tour, setTour] = useState([])
