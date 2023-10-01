@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ImLocation } from 'react-icons/im';
 import { HiPlay } from 'react-icons/hi2'
 import { useEffect, useState } from "react";
+import { HiMiniPause } from 'react-icons/hi2'
 import axios from "axios";
 
 
@@ -55,7 +56,7 @@ export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker
                 onClick={() => liClick(name)}
             ><span className="float-left px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 w-[400px]"><h3 className="inline-flex text-xl font-bold"><ImLocation />{name}</h3>
                     <section className="border-l-2 border-sky-950 ml-2">
-                        <p className="ml-3"><Link onClick={() => textToSpeech()} className="inline-flex text-sky-800"><HiPlay className="mt-1" /> PLAY AUDIO</Link></p>
+                        <p className="ml-3"><Link onClick={() => textToSpeech()} className="inline-flex text-sky-800"><HiPlay className="mt-1" /> PLAY AUDIO</Link>&nbsp; <Link className="inline-flex text-sky-800" onClick={() => speechPause()}> <HiMiniPause className="mt-1" />PAUSE</Link></p>
 
 
                         <p className="ml-3">Click to view details about {name} and proceed with yout tour...</p>
