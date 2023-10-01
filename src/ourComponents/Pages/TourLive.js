@@ -23,6 +23,7 @@ export default function Tour() {
     const [placeId, setPlaceId] = useState('')
 
 
+
     // const [date, setDate] = useState([])
 
     const { id } = useParams()
