@@ -18,8 +18,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
   })
 
   const [directionsResponse, setDirectionsResponse] = useState(null)
-  const [distance, setDistance] = useState('')
-  const [duration, setDuration] = useState('')
+  // const [distance, setDistance] = useState('')
+  // const [duration, setDuration] = useState('')
   const [map, setMap] = useState(/** @type google.maps.Map */(null))
   const [lat, setLat] = useState(0)
   const [long, setLong] = useState(0)
@@ -98,8 +98,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
     })
     setDirectionsResponse(results)
     setSteps(results.routes[0].legs[0].steps)
-    setDistance(results.routes[0].legs[0].distance.text)
-    setDuration(results.routes[0].legs[0].duration.text)
+    // setDistance(results.routes[0].legs[0].distance.text)
+    // setDuration(results.routes[0].legs[0].duration.text)
   }
 
   useEffect(() => {
@@ -152,7 +152,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
   // }
 
   return (
-    <div position='center' className='h-[300px] w-[600px] fixed'>
+    <div position='center' className='h-[300px] w-[600px]'>
       <GoogleMap
         center={{ lat: Number(firstPoi.latitude), lng: Number(firstPoi.longitude) }}
         zoom={15}
@@ -186,7 +186,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
       />
         {/* <button onClick={calculateRoute}> <span>  </span>SHOW ROUTE</button> */}
       </p>
-      <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p>
+      {/* <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p> */}
       <br />
       <div>
         <ul>

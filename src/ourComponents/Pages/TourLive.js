@@ -70,7 +70,7 @@ export default function Tour() {
 
 
     return (
-        <div className='tourLive'>
+        <div className='tourLive ml-0'>
             <div className="relative h-10 w-[200px] ...">
                 <button className="absolute left-0 top-0 h-16 w-[200px] font-extrabold text-sky-950 ..."><Link to='/tours'>🔙 ALL TOURS</Link></button>
             </div>
@@ -79,7 +79,7 @@ export default function Tour() {
                 <h4 className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Welcome to your {tour.tour_name}</h4>
                 {/* <p>Created on { }</p> */}
                 <br />
-                <div className="grid grid-cols-2 gap-7">
+                <div className="grid grid-cols-2 gap-7 ml-[-150px]">
                     <div>
                         <h2 className="text-4xl font-bold dark:text-white text-sky-950">Points of Interest:</h2>
                         <ul>
