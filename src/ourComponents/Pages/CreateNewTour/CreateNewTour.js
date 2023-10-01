@@ -43,6 +43,10 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
           content: 'Provide 50-word descriptions for each point of interest, as if you are a tour guide addressing your tour group. Use this as an example of the tone of voice for the response I want to get.',
         },
         {
+          role: 'user',
+          content: 'Double check that you ONLY provide JSON format for your response.',
+        },
+        {
           role: 'assistant',
           content: `As we stand here, gazing up at the towering steel arches of the Sydney Harbour Bridge, let's journey back in time to the early 20th century. Construction of this engineering marvel began in 1924 during the Great Depression, providing much-needed jobs to thousands of workers. It was a time when the idea of spanning the magnificent Sydney Harbour with a bridge seemed audacious, but determination prevailed.
     
@@ -74,7 +78,7 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
 
     const commentary = response.data.choices[0]?.message.content;
 
-    console.log('Generated Commentary:', commentary); // Add this line
+    console.log('Generated Commentary:', commentary); 
 
     return commentary;
   } catch (error) {
@@ -473,157 +477,160 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
 //Here comes the return
 
   
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen full-background-color" style={{ paddingTop: '200px' }}>
-      <div className="container flex flex-col items-center justify-center ">
-        <h1 className="text-3xl text-center mb-4 underline">Walking Tour Generator</h1>
+return (
+  <div className="flex flex-col items-center justify-center min-h-screen full-background-color" style={{ paddingTop: '200px' }}>
+    <div className="container flex flex-col items-center justify-center ">
+      <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold">
+        Ready to Explore?
+      </h1>
+      <p className='generator-directions text-lg font-semibold text-[#333333]'>
+        Explore the world and create your own adventure! Whether you're a history buff, a foodie, or an outdoor enthusiast, there's a unique journey waiting for you. Uncover hidden gems, savor local flavors, and embark on unforgettable experiences.
+      </p>
+      <div className="content-container background-image rounded-lg">
+        <div className="container flex flex-col items-center justify-center ">
+          <div className="fields-container rounded-lg">
+            {/* City Input */}
+            <div className="field mb-3">
+              <input
+                type="text"
+                className="rounded-lg border w-full p-2"
+                placeholder="Enter a City to Explore"
+                name="city"
+                value={tour.city}
+                onChange={handleTextChange}
+              />
+            </div>
 
-        {/* City Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Enter a City to Explore"
-            name="city"
-            value={tour.city}
-            onChange={handleTextChange}
-          />
-        </div>
+            {/* Region Input */}
+            <div className="field mb-3">
+              <input
+                type="text"
+                className="rounded-lg border w-full p-2"
+                placeholder="Borough/Region if applicable"
+                name="region"
+                value={tour.region}
+                onChange={handleTextChange}
+              />
+            </div>
 
-        {/* Region Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Borough/Region if applicable"
-            name="region"
-            value={tour.region}
-            onChange={handleTextChange}
-          />
-        </div>
+            {/* State Input */}
+            <div className="field mb-3">
+              <input
+                type="text"
+                className="rounded-lg border w-full p-2"
+                placeholder="State/County/Province if applicable"
+                name="state"
+                value={tour.state}
+                onChange={handleTextChange}
+              />
+            </div>
 
-        {/* State Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="State/County/Province if applicable"
-            name="state"
-            value={tour.state}
-            onChange={handleTextChange}
-          />
-        </div>
+            {/* Country Input */}
+            <div className="field mb-3">
+              <input
+                type="text"
+                className="rounded-lg border w-full p-2"
+                placeholder="Enter the Country"
+                name="country"
+                value={tour.country}
+                onChange={handleTextChange}
+              />
+            </div>
 
-        {/* Country Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Enter the Country"
-            name="country"
-            value={tour.country}
-            onChange={handleTextChange}
-          />
-        </div>
+            {/* Duration Dropdown */}
+            <div className="field mb-3">
+              <select
+                className="rounded-lg border w-full p-2"
+                value={tour.duration}
+                onChange={handleDropdownChange}
+                id="duration"
+              >
+                <option value="" disabled>Select Day Duration</option>
+                <option value="Full-day">Full-day</option>
+                <option value="Half-day">Half-day</option>
+                <option value="2 hours">2 hours</option>
+              </select>
+            </div>
 
-        {/* Duration Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.duration}
-            onChange={handleDropdownChange}
-            id="duration"
-          >
+            {/* Difficulty Dropdown */}
+            <div className="field mb-3">
+              <select
+                className="rounded-lg border w-full p-2"
+                value={tour.difficulty}
+                onChange={handleDropdownChange}
+                id="difficulty"
+              >
+                <option value="" disabled>Select Walking Difficulty</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
 
-            <option value="" disabled>Select Day Duration</option>
-            <option value="Full-day">Full-day</option>
-            <option value="Half-day">Half-day</option>
-            <option value="2 hours">2 hours</option>
-          </select>
-        </div>
-
-        {/* Difficulty Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.difficulty}
-            onChange={handleDropdownChange}
-            id="difficulty"
-          >
-            {/* <select value={selectedOption} onChange={handleOptionChange}></select> */}
-            <option value="" disabled>Select Walking Difficulty</option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-          </select>
-        </div>
-
-        {/* Theme Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.theme}
-            onChange={handleDropdownChange}
-            id="theme"
-          >
-            <option value="" disabled>Select Tour Theme</option>
-            <option value="Historic">Historic</option>
-            <option value="Scenic">Scenic</option>
-            <option value="Fun">Fun</option>
-            <option value="Museums">Museums</option>
-            <option value="Pubs">Pubs</option>
-          </select>
-        </div>
-
-        {/* Generate Button */}
-        <div className="mb-3 text-center">
-          <button
-            onClick={handleSubmit}
-            disabled={!tour.city || isLoading}
-            type="button"
-            className="mt-6 inline-block rounded bg-[#183759] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
-          >
-            Generate Walking Tour
-          </button>
-        </div>
-
-        {isLoading ? (
-          // Conditional rendering for loading animation
-          <div className="text-center">
-            <p>Loading...</p>
-
-            <div style={{ margin: '16px 0' }}>
-              {/* Display the city photo */}
-            {cityPhoto && (
-              <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" style={{ width: '175px', height: '175px' }}/>
-            )}
-              <img src={loadingAnimation} alt="Loading..." className="w-32 mx-auto" />
-              
-              
+            {/* Theme Dropdown */}
+            <div className="field mb-3">
+              <select
+                className="rounded-lg border w-full p-2"
+                value={tour.theme}
+                onChange={handleDropdownChange}
+                id="theme"
+              >
+                <option value="" disabled>Select Tour Theme</option>
+                <option value="Historic">Historic</option>
+                <option value="Scenic">Scenic</option>
+                <option value="Fun">Fun</option>
+                <option value="Museums">Museums</option>
+                <option value="Pubs">Pubs</option>
+              </select>
             </div>
           </div>
-        ) : (
-          <div className="flex flex-col sm:flex-row">
-            {/* Display the city photo */}
-            {cityPhoto && (
-              <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" />
-            )}
-
-            <br />
-
-            {/* <textarea className="route-container border rounded-lg w-full p-2" rows="10" value={tourContent} readOnly /> */}
-          </div>
-        )
-        }
-
-        {/* "Start Tour" button
-        <div className="mb-3 text-center">
-          <Link to="/tourlive">
-            <button className="mt-6 inline-block rounded bg-[#E36E43] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110">Start Tour</button>
-          </Link>
-        </div> */}
+        </div>
       </div>
+      {/* Generate Button */}
+      <div className="mb-3 text-center">
+        <button
+          onClick={handleSubmit}
+          disabled={!tour.city || isLoading}
+          type="button"
+          className="mt-6 inline-block rounded bg-[#183759] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
+        >
+          Generate Walking Tour
+        </button>
+      </div>
+
+      {isLoading ? (
+        // Conditional rendering for loading animation
+        <div className="text-center">
+          <p>Loading...</p>
+
+          <div style={{ margin: '16px 0' }}>
+            <div className="flex justify-center items-center">
+              {cityPhoto && (
+                <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" style={{ width: '175px', height: '175px' }} />
+              )}
+              <img src={loadingAnimation} alt="Loading..." className="w-32 mx-auto" />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col sm:flex-row">
+          {/* Display the city photo */}
+          {cityPhoto && (
+            <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" style={{ width: '175px', height: '175px' }} />
+          )}
+
+          <br />
+
+          {/* <ol className="ordered-list">
+            {poiNames.map((poiName, index) => (
+              <li key={index}>{poiName}</li>
+            ))}
+          </ol> */}
+        </div>
+      )}
     </div>
-  );
+  </div>
+);
+
 
 }
