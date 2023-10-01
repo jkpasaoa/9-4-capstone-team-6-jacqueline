@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import PointOfInterestCard from './PointOfInterestCard.js';
 import { TiArrowBack } from 'react-icons/ti'
 import './Pages.css';
+import Modal from './Modal.js';
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -107,6 +108,10 @@ export default function Tour() {
                         }
                         <figcaption className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">{tour.city}, {tour.state ? `${tour.state},` : null} {tour.country} Google Images©</figcaption>
                     </figure>
+                </div>
+                <div className='modal'>
+                        <div onClick={toggleModal}></div>
+                        <Modal />
                 </div>
             </div>
         </div>
