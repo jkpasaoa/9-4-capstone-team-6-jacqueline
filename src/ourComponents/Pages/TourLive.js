@@ -14,6 +14,7 @@ export default function Tour() {
     const [pointsOfInterest, setPointsOfInterest] = useState([])
     const [allPointsOfInterest, setAllPointsOfInterest] = useState([])
     const [activeMarker, setActiveMarker] = useState('')
+    const [modal, setModal] = useState(false)
 
     // const [date, setDate] = useState([])
 
@@ -67,6 +68,10 @@ export default function Tour() {
     //     synth.cancel()
     // }
 
+    const toggleModal = () => {
+        setModal(!modal)
+    }
+
 
 
 
@@ -89,7 +94,7 @@ export default function Tour() {
                                     const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
                                     // console.log(allPoi)
                                     // return allPoi
-                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} />
+                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} toggleModal={toggleModal} />
                                 })
                             }
                         </ul>
