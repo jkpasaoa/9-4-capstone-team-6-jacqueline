@@ -10,7 +10,7 @@ const API = process.env.REACT_APP_API_URL;
 let speech = new SpeechSynthesisUtterance();
 let synth = window.speechSynthesis;
 
-export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker, toggleModal, setCurrentPoi, setModalCommentary, setLocationName }) {
+export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker, toggleModal, setCurrentPoi, setModalCommentary }) {
 
     const [commentary, setCommentary] = useState("")
 
@@ -21,7 +21,7 @@ export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker
             })
     }, [poi_id])
 
-    console.log(commentary.description)
+    // console.log(commentary.description)
 
     let textToSpeech = () => {
 
@@ -39,10 +39,10 @@ export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker
         window.speechSynthesis.cancel()
     }
 
-    useEffect(() => {
-        setLocationName(name)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [name])
+    // useEffect(() => {
+    //     setLocationName(name)
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [name])
 
     const liClick = (name) => {
         toggleModal()
