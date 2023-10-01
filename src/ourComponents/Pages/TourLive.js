@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import './Pages.css';
 import { useEffect, useState } from 'react';
 import PointOfInterestCard from './PointOfInterestCard.js';
+import GetPlaceId from './GetPlaceId.js';
 import { TiArrowBack } from 'react-icons/ti'
 import './Pages.css';
 import Modal from './Modal.js';
@@ -23,9 +24,14 @@ export default function Tour() {
     const [placeId, setPlaceId] = useState('')
 
 
-    const getPlaceIdFromName = (locationName) =>{
-
-    }
+    useEffect((locationName) => {
+        const fetchPlaceId = async () => {
+            const placeId = await GetPlaceId(locationName, GOOGLE_KEY);
+            console.log('Place ID:', placeId);
+        };
+        fetchPlaceId();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [GOOGLE_KEY]);
     // const [date, setDate] = useState([])
 
     const { id } = useParams()

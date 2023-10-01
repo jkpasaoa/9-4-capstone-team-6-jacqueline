@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getPlaceIdFromName = async (locationName, apiKey) => {
+const GetPlaceId = async (locationName, apiKey) => {
     const apiUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(locationName)}&key=${apiKey}`;
 
     try {
@@ -13,4 +13,4 @@ const getPlaceIdFromName = async (locationName, apiKey) => {
     }
 };
 
-export default getPlaceIdFromName;
+export default GetPlaceId;
