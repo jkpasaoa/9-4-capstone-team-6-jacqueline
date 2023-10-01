@@ -19,6 +19,10 @@ export default function Modal({ toggleModal, img, name, commentary }) {
         }
     }
 
+    let speechPause = () => {
+        window.speechSynthesis.cancel()
+    }
+
     return (
         <div className="modal-content content-center">
             <h1 className="text-4xl font-bold dark:text-white text-sky-950">{name}</h1>
