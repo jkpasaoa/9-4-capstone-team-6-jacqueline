@@ -463,7 +463,9 @@ export default function CreateNewTour() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen full-background-color" style={{ paddingTop: '200px' }}>
+    <div className="flex flex-col items-center justify-center min-h-screen full-background-color"
+    style={{ paddingTop: '200px' }}
+    >
       <div className="container flex flex-col items-center justify-center ">
         <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold">
           Ready to Explore?
