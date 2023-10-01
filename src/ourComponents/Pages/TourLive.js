@@ -119,7 +119,9 @@ export default function Tour() {
                     modal &&
                     <div className='modal mt-[140px]'>
                         <div onClick={toggleModal} className='overlay'></div>
-                        <Modal toggleModal={toggleModal} img={currentPointOfInterest.image_url} />
+                        <Modal toggleModal={toggleModal}
+                            img={currentPointOfInterest.image_url}
+                            name={currentPointOfInterest.poi_name} />
                     </div>
                 }
             </div>
