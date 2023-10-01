@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useAnimation, useViewportScroll } from 'framer-motion';
+import { motion, useAnimation, useScroll } from 'framer-motion';
 import JosephPhoto from '../../../assets/aboutPhotos/Joseph.jpg';
 import RaydelysPhoto from '../../../assets/aboutPhotos/Raydelys.jpg';
 import JacquelinePhoto from '../../../assets/aboutPhotos/Jacqueline.jpg';
@@ -50,7 +50,7 @@ function About() {
       linkedin: "https://www.linkedin.com/in/jacquelinepasaoa/",
     },
   ];
-  const { scrollY } = useViewportScroll();
+  const { scrollY } = useScroll();
 
   const scrollContainerRef = useRef(null);
   const scrollControls = useAnimation();
@@ -66,10 +66,10 @@ function About() {
       }
     };
 
-    scrollY.onChange(handleScroll);
+    scrollY.on("change", handleScroll);
 
     return () => {
-      scrollY.clearListeners();
+      scrollY.clearListeners("change");
     };
   }, [scrollControls, scrollY]);
 
