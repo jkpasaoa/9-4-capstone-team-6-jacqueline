@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import loadingAnimation from '../../../assets/S-Loop_transnparent.gif'; // Import the loading animation
-// import Map from '../../Map/Map';
 import '../CreateNewTour/CreateNewTour.css'
 
 // Sanitizer function to prevent SQL injection
@@ -91,8 +89,6 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
 // Define the insertPointOfInterest function
 const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => {
 
-  
-
   console.log('Inserting Point of Interest:', poi);
   console.log('New Tour ID:', newTourId);
   console.log('Coordinates:', coordinates);
@@ -135,7 +131,6 @@ const getImageFromUnsplash = async (poi, cityName) => {
 
     console.log('POI:', poi);
     console.log(query);
-    // console.log(country);
 
     const response = await axios.get(
       `https://api.unsplash.com/search/photos?query=${query}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`,
@@ -192,7 +187,7 @@ const insertCommentary = async (poiId, commName, description) => {
     const response = await axios.post(`${config.apiUrl}/commentary`, {
       poi_id: poiId,
       comm_name: commName,
-      description: description, // Use the provided description
+      description: description, 
       created_at: new Date().toISOString(),
     }, {
       headers: {
@@ -217,14 +212,12 @@ export default function CreateNewTour() {
     city: '',
     duration: '',
     difficulty: '',
-    theme: '', // Updated: theme instead of tourType
+    theme: '', 
   });
 
-  // const [tourContent, setTourContent] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // Added isLoading state
+  const [isLoading, setIsLoading] = useState(false); 
   const [cityPhoto, setCityPhoto] = useState('');
   const navigate = useNavigate();
-
 
 
 const parsePointsOfInterestAndCoordinates = (generatedTour) => {
@@ -292,9 +285,10 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
             content: prompt,
           },
           {
-            role: 'user',
-            content: 'Include coordinates for each point of interest, if there are none use (0.4144° N, 0.7019° W) as a placeholder.',
-          },
+            "role": "user",
+            "content": "Include coordinates for each point of interest, if there are none use \"coordinates\": { \"latitude\": 50.5000, \"longitude\": -50.5000 } as a placeholder."
+          }
+          ,
 
           {
             role: 'user',
@@ -342,7 +336,6 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       });
 
       const generatedTour = response.data.choices[0]?.message.content;
-      // setTourContent(generatedTour);
 
       console.log('Generated Tour: ', generatedTour)
       console.log('Response.data: ', response.data)
@@ -361,12 +354,9 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       console.log('Points of Interest: ', sanitizedPointsOfInterest);
       console.log('Coordinates: ', coordinates);
 
-      // setIsLoading(false);
-
       return { generatedTour, sanitizedPointsOfInterest, coordinates };
     } catch (error) {
       console.error('Error:', error);
-      // setTourContent('Error generating the walking tour. Please try again.');
       setIsLoading(false); // Set loading to false in case of an error
     }
   };
@@ -392,7 +382,6 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     return name;
   };
 
-
   // Event handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -404,7 +393,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       return;
     }
 
-    // Parse and sanitize points of interest with coordinates
+    // Sanitize points of interest with coordinates
     const { sanitizedPointsOfInterest, coordinates } = generatedWalkingTour;
 
     // Fetch the city photo
@@ -419,8 +408,8 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       duration: sanitizeInput(tour.duration),
       difficulty: sanitizeInput(tour.difficulty),
       theme: sanitizeInput(tour.theme),
-      tour_name: generateTourName(), // Generate the tour name
-      image_url: cityPhoto, // Include the city photo URL
+      tour_name: generateTourName(), 
+      image_url: cityPhoto, 
       ordered_points_of_interest: sanitizedPointsOfInterest, // Use pointsOfInterest from tourContent
     };
 
@@ -445,10 +434,9 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
         try {
           // Attempt to fetch the image URL for the current POI from Unsplash
           const poiCoordinates = coordinates[i]; // Get the corresponding coordinates
-          poiImageUrl = await getImageFromUnsplash(poi, tour.city, poiCoordinates.latitude, poiCoordinates.longitude);
+          poiImageUrl = await getImageFromUnsplash(poi, tour.city, poiCoordinates);
         } catch (imageError) {
           console.error(`Error fetching image for ${poi} from Unsplash:`, imageError);
-          // You can choose to log the error and continue without setting the image URL
         }
 
         // Insert the POI data into the database
@@ -462,19 +450,16 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
         const commName = poi; // Use the POI name as the commentary name
         const description = commentary; // Use the generated commentary as the description
         await insertCommentary(poiId, commName, description);
-        
       }
       setIsLoading(false);
 
-      navigate(`/tours/${newTourId}`);
+      navigate(`/tours/${newTourId}`); //Navigate to the LiveTour
 
       console.log('POI added successfully:', coordinates);
     } catch (error) {
       console.error('Error adding tour:', error);
     }
   };
-
-//Here comes the return
 
   
 return (
