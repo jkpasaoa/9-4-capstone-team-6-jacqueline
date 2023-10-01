@@ -11,7 +11,7 @@ export default function Modal({ toggleModal }) {
                 quaerat ipsum quos molestiae rem aspernatur dicta tenetur. Sunt
                 placeat tempora vitae enim incidunt porro fuga ea.</p>
 
-            <button ocClick={() => toggleModal()}></button>
+            <button ocClick={() => toggleModal()}>CLOSE</button>
         </div>
     )
 }

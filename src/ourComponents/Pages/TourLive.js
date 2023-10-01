@@ -109,10 +109,13 @@ export default function Tour() {
                         <figcaption className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">{tour.city}, {tour.state ? `${tour.state},` : null} {tour.country} Google Images©</figcaption>
                     </figure>
                 </div>
-                <div className='modal'>
+                {
+                    modal &&
+                    <div className='modal'>
                         <div onClick={toggleModal}></div>
-                        <Modal toggleModal={toggleModal}/>
-                </div>
+                        <Modal toggleModal={toggleModal} />
+                    </div>
+                }
             </div>
         </div>
     )
