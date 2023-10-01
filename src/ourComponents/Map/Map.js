@@ -104,6 +104,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
 
   useEffect(() => {
     calculateRoute()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded])
 
   console.log(steps)
