@@ -3,7 +3,7 @@ import { AiOutlineCloseSquare } from 'react-icons/ai'
 export default function Modal({ toggleModal, img, name }) {
     return (
         <div className="modal-content content-center">
-            <h1>{name}</h1>
+            <h1 className="text-4xl font-bold dark:text-white text-sky-950">{name}</h1>
             <img src={img} alt='img' className='w-[400px] ml-[13%]' />
             <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
                 perferendis suscipit officia recusandae, eveniet quaerat assumenda
