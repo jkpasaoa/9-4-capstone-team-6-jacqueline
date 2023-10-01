@@ -22,16 +22,20 @@ export default function Tour() {
     const [currentPoi, setCurrentPoi] = useState('')
     const [modalCommentary, setModalCommentary] = useState('')
     const [placeId, setPlaceId] = useState('')
+    const [locationName, setLocationName] = useState('')
 
 
-    useEffect((locationName) => {
+    const getPlaceIdFromName = (locationName) => {
         const fetchPlaceId = async () => {
             const placeId = await GetPlaceId(locationName, GOOGLE_KEY);
             console.log('Place ID:', placeId);
         };
         fetchPlaceId();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [GOOGLE_KEY]);
+    }
+
+    useEffect(() => {
+        getPlaceIdFromName()
+    }, []);
     // const [date, setDate] = useState([])
 
     const { id } = useParams()
@@ -115,7 +119,7 @@ export default function Tour() {
                                     const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
                                     // console.log(allPoi)
                                     // return allPoi
-                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} toggleModal={toggleModal} setCurrentPoi={setCurrentPoi} setModalCommentary={setModalCommentary} />
+                                    return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} toggleModal={toggleModal} setCurrentPoi={setCurrentPoi} setModalCommentary={setModalCommentary} setLocationName={setLocationName}/>
                                 })
                             }
                         </ul>
