@@ -124,12 +124,14 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
 
 
 // Define the getImageFromUnsplash function
-const getImageFromUnsplash = async (poi, cityName, country) => {
+const getImageFromUnsplash = async (poi, cityName) => {
   try {
     // Create a query string that includes POI, cityName, and country
-    const query = `${encodeURIComponent(poi)} ${encodeURIComponent(cityName)} ${encodeURIComponent(country)}`;
+    const query = `${encodeURIComponent(poi)} ${encodeURIComponent(cityName)}`;
 
     console.log('POI:', poi);
+    console.log(query);
+    // console.log(country);
 
     const response = await axios.get(
       `https://api.unsplash.com/search/photos?query=${query}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`,
@@ -271,6 +273,8 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
 
       const prompt = `Walking Tour in ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme},`;
 
+      console.log(sanitizedCountry)
+      console.log(prompt)
 
       const requestBody = {
         model: 'gpt-3.5-turbo',
@@ -466,7 +470,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     }
   };
 
-
+//Here comes the return
 
   
   return (
