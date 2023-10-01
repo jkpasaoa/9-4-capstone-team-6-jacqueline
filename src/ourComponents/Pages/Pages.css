@@ -35,6 +35,10 @@ body.active-modal {
   position: fixed;
 }
 
+.overlay {
+  background: rgba(49,49,49,0.8);
+}
+
 /* .live-img{
   height: 50%;
   width: 50%;
