@@ -116,7 +116,7 @@ export default function Tour() {
                 {
                     modal &&
                     <div className='modal'>
-                        <div onClick={toggleModal}></div>
+                        <div onClick={toggleModal} className='overlay'></div>
                         <Modal toggleModal={toggleModal} />
                     </div>
                 }
