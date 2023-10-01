@@ -152,7 +152,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
   // }
 
   return (
-    <div position='center' className='h-[300px] w-[600px]'>
+    <div position='center' className='h-[300px] w-[600px] fixed'>
       <GoogleMap
         center={{ lat: Number(firstPoi.latitude), lng: Number(firstPoi.longitude) }}
         zoom={15}
