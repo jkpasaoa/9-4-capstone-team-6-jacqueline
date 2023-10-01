@@ -20,6 +20,7 @@ export default function Tour() {
     const [modal, setModal] = useState(false)
     const [currentPoi, setCurrentPoi] = useState('')
     const [modalCommentary, setModalCommentary] = useState('')
+    const [placeId, setPlaceId] = useState('')
 
 
     // const [date, setDate] = useState([])
