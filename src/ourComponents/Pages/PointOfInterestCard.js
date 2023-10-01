@@ -34,6 +34,10 @@ export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker
         }
     }
 
+    let speechPause = () => {
+        window.speechSynthesis.cancel()
+    }
+
     const liClick = (name) => {
         toggleModal()
         setCurrentPoi(name)
