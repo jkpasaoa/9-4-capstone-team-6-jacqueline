@@ -1,4 +1,4 @@
-
+import { AiOutlineCloseSquare } from 'react-icons/ai'
 
 export default function Modal({ toggleModal }) {
     return (
@@ -10,8 +10,7 @@ export default function Modal({ toggleModal }) {
                 Sapiente dolorum id maiores dolores? Illum pariatur possimus
                 quaerat ipsum quos molestiae rem aspernatur dicta tenetur. Sunt
                 placeat tempora vitae enim incidunt porro fuga ea.</p>
-
-            <button ocClick={() => toggleModal()} className="close-modal">CLOSE</button>
+            <button onClick={() => toggleModal()} className="close-modal">{<AiOutlineCloseSquare />}</button>
         </div>
     )
 }
