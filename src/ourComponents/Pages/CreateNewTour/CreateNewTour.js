@@ -506,12 +506,16 @@ export default function CreateNewTour() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen full-background-color" style={{ paddingTop: '200px' }}>
+
+    <div className="flex flex-col items-center justify-center min-h-screen full-background-color"
+    style={{ paddingTop: '200px' }}
+    >
       <div className="container flex flex-col items-center justify-center ">
-        <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold">
+        <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold text-sky-950 drop-shadow-lg">
           Ready to Explore?
         </h1>
-        <p className='generator-directions text-lg font-semibold text-[#333333]'>
+        <p className='generator-directions text-lg font-semibold text-sky-950 drop-shadow-lg'>
+
           Explore the world and create your own adventure! Whether you're a history buff, a foodie, or an outdoor enthusiast, there's a unique journey waiting for you. Uncover hidden gems, savor local flavors, and embark on unforgettable experiences.
         </p>
         <div className="content-container background-image rounded-lg">
@@ -596,7 +600,9 @@ export default function CreateNewTour() {
               </div>
 
               {/* Theme Dropdown */}
-              <div className="field mb-3">
+
+              <div className="field mb-16">
+
                 <select
                   className="rounded-lg border w-full p-2"
                   value={tour.theme}
@@ -609,16 +615,26 @@ export default function CreateNewTour() {
                   <option value="Fun">Fun</option>
                   <option value="Museums">Museums</option>
                   <option value="Pubs">Pubs</option>
-                  {/* Add an option for custom input */}
-                  <option value="custom">Custom</option>
+
                 </select>
+                {/* Generate Button */}
+                <div className="mb-3 text-center">
+                  <button
+                    onClick={handleSubmit}
+                    disabled={!tour.city || isLoading}
+                    type="button"
+                    className="mt-6 inline-block rounded bg-[#183759] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
+                  >
+                    Generate Walking Tour
+                  </button>
+                </div>
               </div>
-              
             </div>
           </div>
         </div>
-        {/* Generate Button */}
-        <div className="mb-3 text-center">
+        {/* Original Generate Button placement*/}
+        {/* <div className="mb-3 text-center">
+
           <button
             onClick={handleSubmit}
             disabled={!tour.city || isLoading}
@@ -627,7 +643,9 @@ export default function CreateNewTour() {
           >
             Generate Walking Tour
           </button>
-        </div>
+
+        </div> */}
+
 
         {isLoading ? (
           // Conditional rendering for loading animation
