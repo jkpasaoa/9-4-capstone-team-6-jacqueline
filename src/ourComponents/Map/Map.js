@@ -20,8 +20,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
 
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const [tourButton, setTourButton] = useState('START')
-  const [currentPoi, setCurrentPoi] = useState({})
-  const [nextPoi, setNextPoi] = useState({})
+  // const [currentPoi, setCurrentPoi] = useState({})
+  // const [nextPoi, setNextPoi] = useState({})
   // const [distance, setDistance] = useState('')
   // const [duration, setDuration] = useState('')
   // const [map, setMap] = useState(/** @type google.maps.Map */(null))
