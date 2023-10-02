@@ -38,9 +38,19 @@ export default function TourIndex() {
         <div>
             <br></br>
             <br></br>
-            <section className='py-16 pb-[300px] bg-gradient-to-r from-beige-800 to-white-800'>
+            <section className='py-16 pb-[300px] gradient-day-to-night'
+                // 'bg-gradient-to-r from-beige-800 to-white-800'>
+                style={{ paddingTop: '130px' }}>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-                    <h1 className='text-3xl font-extrabold text-sky-950'>TOURS</h1>
+                    <h1 className='text-3xl font-extrabold luxury-font drop-shadow-lg'>
+                        {/* text-sky-950> */}
+                        {/* TOURS */}
+                        Discover the World's Wonders
+                    </h1>
+                    <br />
+                    <h1 className='text-3xl font-light text-sky-950 drop-shadow-lg italic'>
+                        Our Prepackaged Tour Catalog
+                    </h1>
                     <p className='mt-4 text-xl text-gray-300'></p>
                 </div>
                 <div className='mt-12 flex flex-col md:flex-row justify-center items-center gap-5 overflow-x-auto overscroll-none'>
