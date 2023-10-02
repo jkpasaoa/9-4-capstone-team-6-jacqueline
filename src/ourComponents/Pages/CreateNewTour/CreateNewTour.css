@@ -21,7 +21,7 @@
   background-image: url('../../../assets/createNewTourPhotos/solo_traveler.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center 35%;
+  background-position: top center;
   background-attachment: fixed;
   padding-top: 80px;
   padding-bottom: 0px;
@@ -30,9 +30,12 @@
 }
 
 .custom-text {
-  font-size: 25px; /* Adjust the font size as needed */
-  font-weight: bold; /* Adjust the font weight as needed */
-  color: #fff; /* Adjust the text color as needed */
+  font-size: 25px;
+  /* Adjust the font size as needed */
+  font-weight: bold;
+  /* Adjust the font weight as needed */
+  color: #fff;
+  /* Adjust the text color as needed */
   /* Add any other styling properties you want here */
 }
 
@@ -40,13 +43,28 @@
   margin: 0px 150px 25px 150px;
 }
 
+.container {
+  position: relative;
+}
+
 .fields-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
   padding: 15px;
+  position: absolute;
+  left: 100px;
+  top: 0px;
   background-color: rgba(255, 255, 255, 0.754);
+}
+
+@media screen and (max-width: 576px) {
+
+  /* Adjust positioning for screens up to 576px width */
+  .fields-container {
+    left: 50px;
+  }
 }
 
 .field {
@@ -59,27 +77,13 @@
   height: 35%;
 }
 
-.create-background {
-  background-image: url('../../../assets/createNewTourPhotos/create-new-tour-bkground.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-}
-
 .loading-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 999;
-  background: none; /* Set the background to transparent */
+  background: none;
+  /* Set the background to transparent */
   /* Add any other styling for the loading container */
 }
-
-
-
-
-/* .route-container {
-  margin: 0 0 300px;
-} */
