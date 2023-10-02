@@ -2,6 +2,7 @@
 import { GoogleMap, MarkerF, useJsApiLoader, DirectionsRenderer } from '@react-google-maps/api'
 import { useState, useEffect } from 'react'; //useRef, useEffect, useMemo
 import loadingLogo from '../../assets/S-Loop_transnparent.gif'
+import { Link } from 'react-router-dom';
 // import { FaLocationArrow } from 'react-icons/fa'
 // import { IconButton } from '@chakra-ui/react';
 // import axios from 'axios';
@@ -100,25 +101,29 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
       travelMode: google.maps.TravelMode.WALKING
     })
     setDirectionsResponse(results)
-    setSteps(results.routes[0].legs[0].steps)
+    // setSteps(results.routes[0].legs[0].steps)
     // setDistance(results.routes[0].legs[0].distance.text)
     // setDuration(results.routes[0].legs[0].duration.text)
   }
 
-  // const calculateNewRoute = async (start, next) => {
-  //   const results = await directionsService.route({
-  //     origin: start,
-  //     destination: next,
-  //     // eslint-disable-next-line no-undef
-  //     travelMode: google.maps.TravelMode.WALKING
-  //   })
-  //   setDirectionsResponse(results)
-  // }
+  const calculateNewRoute = async (start, next) => {
+    const results = await directionsService.route({
+      origin: start,
+      destination: next,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.WALKING
+    })
+    setSteps(results.routes[0].legs[0].steps)
+    setDirectionsResponse(results)
+  }
+
+  let currentElement, nextElement
+  let currentLoc = {}
+  let nextLoc = {}
 
   const startTour = () => {
     // console.log(pointsOfInterest, "the points of interest")
     const length = pointsOfInterest.length
-    let currentElement, nextElement
     for (let i = 0; i < pointsOfInterest.length; i++) {
       currentElement = pointsOfInterest[i];
       nextElement = pointsOfInterest[(i + 1) % length];
@@ -131,14 +136,16 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
       // eslint-disable-next-line no-loop-func
       const next = allPointsOfInterest.find((el) => el.poi_name === nextElement)
       // console.log(current, next, "this da routeeee")
-      setCurrentPoi({ lat: Number(current.latitude), lng: Number(current.longitude) })
-      setNextPoi({ lat: Number(next.latitude), lng: Number(next.longitude) })
-      console.log(currentPoi, nextPoi, "the states inside")
+      currentLoc = { lat: Number(current.latitude), lng: Number(current.longitude) }
+      nextLoc = { lat: Number(next.latitude), lng: Number(next.longitude) }
+
+      calculateNewRoute(currentLoc, nextLoc)
+      console.log(currentLoc, nextLoc, "the states inside")
       if (currentElement === pointsOfInterest[pointsOfInterest.length - 1]) {
         break
       }
     }
-    console.log(currentPoi, nextPoi, "the states outside")
+    console.log(currentLoc, nextLoc, "the states outside")
   }
 
   useEffect(() => {
@@ -146,7 +153,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded])
 
-  console.log(steps)
+  // console.log(steps)
 
 
   if (!isLoaded) {
@@ -171,25 +178,25 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
     return customMarkerIcon
   }
 
-  console.log(activeMarker)
+  // console.log(activeMarker)
 
-  // const parseDirections = (html) => {
-  //   let cleanedHtml = html.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
+  const parseDirections = (html) => {
+    let cleanedHtml = html.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
 
-  //   cleanedHtml = cleanedHtml.replace(/style=".*?"/g, '');
+    cleanedHtml = cleanedHtml.replace(/style=".*?"/g, '');
 
-  //   cleanedHtml = cleanedHtml.replace(/<wbr\/?>/g, ' ');
+    cleanedHtml = cleanedHtml.replace(/<wbr\/?>/g, ' ');
 
-  //   cleanedHtml = cleanedHtml.replace(/<b>(.*?)<\/b>/g, '$1');
+    cleanedHtml = cleanedHtml.replace(/<b>(.*?)<\/b>/g, '$1');
 
-  //   cleanedHtml = cleanedHtml.replace(/<\/?.*?>/g, '');
+    cleanedHtml = cleanedHtml.replace(/<\/?.*?>/g, '');
 
-  //   cleanedHtml = cleanedHtml.replace(/&nbsp;/g, ' ');
+    cleanedHtml = cleanedHtml.replace(/&nbsp;/g, ' ');
 
-  //   cleanedHtml = cleanedHtml.trim();
+    cleanedHtml = cleanedHtml.trim();
 
-  //   return cleanedHtml;
-  // }
+    return cleanedHtml;
+  }
 
   return (
     <div position='center' className='h-[300px] w-[600px]'>
@@ -225,18 +232,19 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
           map.setZoom(10)
         }}
       /> */}
-        <button onClick={startTour}>{tourButton}</button>
+        <button className='relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800' onClick={startTour}><span className='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>{tourButton}</span></button>
+        <button className='relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800'><Link className='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0' to={'/endtour'}>END TOUR</Link></button>
         {/* <button onClick={calculateRoute}> <span>  </span>SHOW ROUTE</button> */}
       </p>
       {/* <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p> */}
       <br />
       <div>
         <ul>
-          {/* {
+          {
             steps.map((step, index) => {
               return <li key={index}>{parseDirections(step.instructions)}</li>
             })
-          } */}
+          }
         </ul>
       </div>
     </div>
