@@ -114,11 +114,19 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
   }
 
   const startTour = () => {
-    let result = []
+    console.log(pointsOfInterest, "the points of interest")
+
     for (let i = 0; i < pointsOfInterest.length; i++) {
+
       const currentElement = pointsOfInterest[i];
       const nextElement = pointsOfInterest[i + 1];
-
+      console.log("current", currentElement, "next:", nextElement)
+      const current = allPointsOfInterest.find((el) => el.poi_name === currentElement)
+      const next = allPointsOfInterest.find((el) => el.poi_name === nextElement)
+      console.log(current, next, "this da routeeee")
+      if (currentElement === pointsOfInterest[pointsOfInterest.length - 1]) {
+        break
+      }
     }
   }
 
@@ -206,6 +214,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
           map.setZoom(10)
         }}
       /> */}
+        <button onClick={startTour}>start route</button>
         {/* <button onClick={calculateRoute}> <span>  </span>SHOW ROUTE</button> */}
       </p>
       {/* <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p> */}
