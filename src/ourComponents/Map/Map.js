@@ -18,6 +18,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
   })
 
   const [directionsResponse, setDirectionsResponse] = useState(null)
+  // const [currentPoi, setCurrentPoi] = useState('')
   // const [distance, setDistance] = useState('')
   // const [duration, setDuration] = useState('')
   // const [map, setMap] = useState(/** @type google.maps.Map */(null))
@@ -72,6 +73,8 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
     console.log(firstPoi)
   }, [isLoaded, firstPoi])
 
+  // eslint-disable-next-line no-undef
+  const directionsService = new google.maps.DirectionsService()
   const calculateRoute = async () => {
     // if (!startPoint || !endPoint) {
     //   return
@@ -79,8 +82,6 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
 
     // const google = window.google;
 
-    // eslint-disable-next-line no-undef
-    const directionsService = new google.maps.DirectionsService()
     const waypoints = pointsOfInterest.slice(1, -1).map((poi) => {
       const newPointsOfInterest = allPointsOfInterest.find((el) => el.poi_name === poi)
       // console.log(newPointsOfInterest)
@@ -100,6 +101,25 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
     setSteps(results.routes[0].legs[0].steps)
     // setDistance(results.routes[0].legs[0].distance.text)
     // setDuration(results.routes[0].legs[0].duration.text)
+  }
+
+  const calculateNewRoute = async (start, next) => {
+    const results = await directionsService.route({
+      origin: start,
+      destination: next,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.WALKING
+    })
+    setDirectionsResponse(results)
+  }
+
+  const startTour = () => {
+    let result = []
+    for (let i = 0; i < pointsOfInterest.length; i++) {
+      const currentElement = pointsOfInterest[i];
+      const nextElement = pointsOfInterest[i + 1];
+
+    }
   }
 
   useEffect(() => {
