@@ -60,9 +60,14 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
     
     I want to thank each of you for joining me on this journey across the Sydney Harbour Bridge today. Whether you're a first-time visitor or a seasoned traveler, this bridge offers an experience that leaves an indelible mark on your memories.
     
-    So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.
-    `
-        }
+    So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.`
+        },
+        {
+          role: 'user',
+          content: 'Do not use the phrase \'Apologies for the confusion earlier—I will provide\'',
+        },
+
+
       ],
       max_tokens: 2000,
     };
@@ -88,8 +93,10 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
 
 // Define the insertPointOfInterest function
 const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => {
+  // Extract just the name from the poi parameter
+  const poiName = poi.split(' (')[0];
 
-  console.log('Inserting Point of Interest:', poi);
+  console.log('Inserting Point of Interest:', poiName);
   console.log('New Tour ID:', newTourId);
   console.log('Coordinates:', coordinates);
   console.log('Image URL:', image_url);
@@ -97,7 +104,7 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
   try {
     // Insert the POI data into the database
     const response = await axios.post(`${config.apiUrl}/pointofinterest`, {
-      poi_name: poi,
+      poi_name: poiName,
       tour_id: newTourId,
       latitude: coordinates.latitude || null,
       longitude: coordinates.longitude || null,
@@ -220,67 +227,67 @@ export default function CreateNewTour() {
   const navigate = useNavigate();
 
 
-// const parsePointsOfInterestAndCoordinates = (generatedTour) => {
-//   try {
+  // const parsePointsOfInterestAndCoordinates = (generatedTour) => {
+  //   try {
 
-//     console.log('Input Data:', generatedTour);
+  //     console.log('Input Data:', generatedTour);
 
-//     // Parse the JSON format of the generated tour
-//     const tourData = JSON.parse(generatedTour);
+  //     // Parse the JSON format of the generated tour
+  //     const tourData = JSON.parse(generatedTour);
 
-//     // Check if the parsed data is an array
-//     if (!Array.isArray(tourData)) {
-//       throw new Error('Invalid data format in the generated tour');
-//     }
+  //     // Check if the parsed data is an array
+  //     if (!Array.isArray(tourData)) {
+  //       throw new Error('Invalid data format in the generated tour');
+  //     }
 
-//     // Extract the points of interest and coordinates
-//     const matches = tourData.map((entry) => {
-//       const { poi, coordinates } = entry;
-//       return { poi, coordinates };
-//     });
+  //     // Extract the points of interest and coordinates
+  //     const matches = tourData.map((entry) => {
+  //       const { poi, coordinates } = entry;
+  //       return { poi, coordinates };
+  //     });
 
-//     // Log the extracted data
-//     console.log('Extracted Data:', matches);
-//     console.log(matches);
+  //     // Log the extracted data
+  //     console.log('Extracted Data:', matches);
+  //     console.log(matches);
 
-//     return matches;
-//   } catch (error) {
-//     console.error('Error parsing the generated tour data:', error);
-//     return [];
-//   }
-// };
+  //     return matches;
+  //   } catch (error) {
+  //     console.error('Error parsing the generated tour data:', error);
+  //     return [];
+  //   }
+  // };
 
-// Function to extract POI and coordinates using RegEx
-const parsePointsOfInterestAndCoordinates = (generatedTour) => {
-  const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
-  const coordinatePattern = /\((-?\d+\.\d+)° ([NS]), (-?\d+\.\d+)° ([EW])\)/g;
-  const matches = [];
-  
-  let match;
-  while ((match = bulletPattern.exec(generatedTour)) !== null) {
-    const poi = match[1];
-    const coordinateMatches = coordinatePattern.exec(generatedTour);
-    
-    if (coordinateMatches) {
-      const latitude = parseFloat(coordinateMatches[1]);
-      const latitudeDirection = coordinateMatches[2];
-      const longitude = parseFloat(coordinateMatches[3]);
-      const longitudeDirection = coordinateMatches[4];
-      
-      const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
-      const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
-      
-      const adjustedLatitude = latitude * latitudeSign;
-      const adjustedLongitude = longitude * longitudeSign;
-      
-      const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
-      
-      matches.push({ poi, coordinates });
+  // Function to extract POI and coordinates using RegEx
+  const parsePointsOfInterestAndCoordinates = (generatedTour) => {
+    const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
+    const coordinatePattern = /\((-?\d+\.\d+)° ([NS]), (-?\d+\.\d+)° ([EW])\)/g;
+    const matches = [];
+
+    let match;
+    while ((match = bulletPattern.exec(generatedTour)) !== null) {
+      const poi = match[1];
+      const coordinateMatches = coordinatePattern.exec(generatedTour);
+
+      if (coordinateMatches) {
+        const latitude = parseFloat(coordinateMatches[1]);
+        const latitudeDirection = coordinateMatches[2];
+        const longitude = parseFloat(coordinateMatches[3]);
+        const longitudeDirection = coordinateMatches[4];
+
+        const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
+        const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
+
+        const adjustedLatitude = latitude * latitudeSign;
+        const adjustedLongitude = longitude * longitudeSign;
+
+        const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
+
+        matches.push({ poi, coordinates });
+      }
     }
-  }
-  
-  return matches;
-};
+
+    return matches;
+  };
 
 
 
@@ -320,7 +327,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
             role: 'user',
             content: prompt,
           },
-          
+
 
           {
             role: 'user',
@@ -499,6 +506,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
 
 
   return (
+
     <div className="flex flex-col items-center justify-center min-h-screen full-background-color"
     style={{ paddingTop: '200px' }}
     >
@@ -507,6 +515,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
           Ready to Explore?
         </h1>
         <p className='generator-directions text-lg font-semibold text-sky-950 drop-shadow-lg'>
+
           Explore the world and create your own adventure! Whether you're a history buff, a foodie, or an outdoor enthusiast, there's a unique journey waiting for you. Uncover hidden gems, savor local flavors, and embark on unforgettable experiences.
         </p>
         <div className="content-container background-image rounded-lg">
@@ -591,7 +600,9 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
               </div>
 
               {/* Theme Dropdown */}
+
               <div className="field mb-16">
+
                 <select
                   className="rounded-lg border w-full p-2"
                   value={tour.theme}
@@ -604,6 +615,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
                   <option value="Fun">Fun</option>
                   <option value="Museums">Museums</option>
                   <option value="Pubs">Pubs</option>
+
                 </select>
                 {/* Generate Button */}
                 <div className="mb-3 text-center">
@@ -622,6 +634,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
         </div>
         {/* Original Generate Button placement*/}
         {/* <div className="mb-3 text-center">
+
           <button
             onClick={handleSubmit}
             disabled={!tour.city || isLoading}
@@ -630,7 +643,9 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
           >
             Generate Walking Tour
           </button>
+
         </div> */}
+
 
         {isLoading ? (
           // Conditional rendering for loading animation
@@ -660,9 +675,9 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
               <li key={index}>{poiName}</li>
             ))}
           </ol> */}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
 }
