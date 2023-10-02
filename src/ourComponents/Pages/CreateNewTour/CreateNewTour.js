@@ -503,10 +503,10 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     style={{ paddingTop: '200px' }}
     >
       <div className="container flex flex-col items-center justify-center ">
-        <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold">
+        <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold text-sky-950 drop-shadow-lg">
           Ready to Explore?
         </h1>
-        <p className='generator-directions text-lg font-semibold text-[#333333]'>
+        <p className='generator-directions text-lg font-semibold text-sky-950 drop-shadow-lg'>
           Explore the world and create your own adventure! Whether you're a history buff, a foodie, or an outdoor enthusiast, there's a unique journey waiting for you. Uncover hidden gems, savor local flavors, and embark on unforgettable experiences.
         </p>
         <div className="content-container background-image rounded-lg">
