@@ -64,9 +64,12 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
         },
         {
           role: 'user',
-          content: 'Do not use the phrase \'Apologies for the confusion earlier—I will provide\'',
+          content: 'Do not use the phrase \'Apologies for the confusion earlier—I will provide... or Certainly! Here is a 50-word commentary...\'',
         },
-
+        {
+          role: 'user',
+          content: 'Do not return anything other than the commentary',
+        },
 
       ],
       max_tokens: 2000,
@@ -94,9 +97,9 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
 // Define the insertPointOfInterest function
 const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => {
   // Extract just the name from the poi parameter
-  const poiName = poi.split(' (')[0];
+  // const poiName = poi.split(' (')[0];
 
-  console.log('Inserting Point of Interest:', poiName);
+  console.log('Inserting Point of Interest:', poi);
   console.log('New Tour ID:', newTourId);
   console.log('Coordinates:', coordinates);
   console.log('Image URL:', image_url);
@@ -104,7 +107,7 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
   try {
     // Insert the POI data into the database
     const response = await axios.post(`${config.apiUrl}/pointofinterest`, {
-      poi_name: poiName,
+      poi_name: poi,
       tour_id: newTourId,
       latitude: coordinates.latitude || null,
       longitude: coordinates.longitude || null,
@@ -257,37 +260,37 @@ export default function CreateNewTour() {
   //   }
   // };
 
-  // Function to extract POI and coordinates using RegEx
   const parsePointsOfInterestAndCoordinates = (generatedTour) => {
-    const bulletPattern = /^\s*\d+\.\s(.+)$/gm;
-    const coordinatePattern = /\((-?\d+\.\d+)° ([NS]), (-?\d+\.\d+)° ([EW])\)/g;
+    const bulletPattern = /^(\d+)\.\s(.+?)\s\((-?\d+\.\d+)°\s([NS]),\s(-?\d+\.\d+)°\s([EW])\)/gm;
     const matches = [];
-
+    
     let match;
+  
     while ((match = bulletPattern.exec(generatedTour)) !== null) {
-      const poi = match[1];
-      const coordinateMatches = coordinatePattern.exec(generatedTour);
-
-      if (coordinateMatches) {
-        const latitude = parseFloat(coordinateMatches[1]);
-        const latitudeDirection = coordinateMatches[2];
-        const longitude = parseFloat(coordinateMatches[3]);
-        const longitudeDirection = coordinateMatches[4];
-
-        const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
-        const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
-
-        const adjustedLatitude = latitude * latitudeSign;
-        const adjustedLongitude = longitude * longitudeSign;
-
-        const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
-
-        matches.push({ poi, coordinates });
-      }
+      const poi = match[2];
+      const latitude = parseFloat(match[3]);
+      const latitudeDirection = match[4];
+      const longitude = parseFloat(match[5]);
+      const longitudeDirection = match[6];
+  
+      const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
+      const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
+  
+      const adjustedLatitude = latitude * latitudeSign;
+      const adjustedLongitude = longitude * longitudeSign;
+  
+      const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
+  
+      matches.push({ poi, coordinates });
+      console.log(`This is the Parsed poi: ${poi}`);
+      console.log(`Coordinates: Latitude ${adjustedLatitude}, Longitude ${adjustedLongitude}`);
     }
-
+  
     return matches;
   };
+  
+  
+  
 
 
 
@@ -471,6 +474,7 @@ export default function CreateNewTour() {
       for (let i = 0; i < sanitizedPointsOfInterest.length; i++) {
         const poi = sanitizedPointsOfInterest[i];
         const poiCoordinates = coordinates[i]; // Get the corresponding coordinates
+        console.log('POI added successfully:', poi);
 
         let poiImageUrl = ''; // Initialize with an empty string
 
@@ -496,9 +500,12 @@ export default function CreateNewTour() {
       }
       setIsLoading(false);
 
-      navigate(`/tours/${newTourId}`); //Navigate to the LiveTour
+      //Navigate to the LiveTour
+      console.log(`This is the navigate: /tours/${newTourId}`);
 
-      console.log('POI added successfully:', coordinates);
+      navigate(`/tours/${newTourId}`); 
+
+
     } catch (error) {
       console.error('Error adding tour:', error);
     }
