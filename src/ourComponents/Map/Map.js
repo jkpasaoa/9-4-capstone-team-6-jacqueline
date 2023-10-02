@@ -18,7 +18,9 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
   })
 
   const [directionsResponse, setDirectionsResponse] = useState(null)
-  // const [currentPoi, setCurrentPoi] = useState('')
+  const [tourButton, setTourButton] = useState('START')
+  const [currentPoi, setCurrentPoi] = useState({})
+  const [nextPoi, setNextPoi] = useState({})
   // const [distance, setDistance] = useState('')
   // const [duration, setDuration] = useState('')
   // const [map, setMap] = useState(/** @type google.maps.Map */(null))
@@ -67,11 +69,11 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
 
   const firstPoi = allPointsOfInterest.find((el) => el.poi_name === pointsOfInterest[0])
 
-  useEffect(() => {
-    // setCenterLat(Number(firstPoi.latitude))
-    // setCenterLong(Number(firstPoi.longitude))
-    console.log(firstPoi)
-  }, [isLoaded, firstPoi])
+  // useEffect(() => {
+  //   // setCenterLat(Number(firstPoi.latitude))
+  //   // setCenterLong(Number(firstPoi.longitude))
+  //   // console.log(firstPoi)
+  // }, [isLoaded, firstPoi])
 
   // eslint-disable-next-line no-undef
   const directionsService = new google.maps.DirectionsService()
@@ -103,31 +105,40 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
     // setDuration(results.routes[0].legs[0].duration.text)
   }
 
-  const calculateNewRoute = async (start, next) => {
-    const results = await directionsService.route({
-      origin: start,
-      destination: next,
-      // eslint-disable-next-line no-undef
-      travelMode: google.maps.TravelMode.WALKING
-    })
-    setDirectionsResponse(results)
-  }
+  // const calculateNewRoute = async (start, next) => {
+  //   const results = await directionsService.route({
+  //     origin: start,
+  //     destination: next,
+  //     // eslint-disable-next-line no-undef
+  //     travelMode: google.maps.TravelMode.WALKING
+  //   })
+  //   setDirectionsResponse(results)
+  // }
 
   const startTour = () => {
-    console.log(pointsOfInterest, "the points of interest")
-
+    // console.log(pointsOfInterest, "the points of interest")
+    const length = pointsOfInterest.length
+    let currentElement, nextElement
     for (let i = 0; i < pointsOfInterest.length; i++) {
-
-      const currentElement = pointsOfInterest[i];
-      const nextElement = pointsOfInterest[i + 1];
-      console.log("current", currentElement, "next:", nextElement)
+      currentElement = pointsOfInterest[i];
+      nextElement = pointsOfInterest[(i + 1) % length];
+      pointsOfInterest[i] = nextElement
+      nextElement = pointsOfInterest[(i + 1)]
+      setTourButton('NEXT')
+      // console.log("current", currentElement, "next:", nextElement)
+      // eslint-disable-next-line no-loop-func
       const current = allPointsOfInterest.find((el) => el.poi_name === currentElement)
+      // eslint-disable-next-line no-loop-func
       const next = allPointsOfInterest.find((el) => el.poi_name === nextElement)
-      console.log(current, next, "this da routeeee")
+      // console.log(current, next, "this da routeeee")
+      setCurrentPoi({ lat: Number(current.latitude), lng: Number(current.longitude) })
+      setNextPoi({ lat: Number(next.latitude), lng: Number(next.longitude) })
+      console.log(currentPoi, nextPoi, "the states inside")
       if (currentElement === pointsOfInterest[pointsOfInterest.length - 1]) {
         break
       }
     }
+    console.log(currentPoi, nextPoi, "the states outside")
   }
 
   useEffect(() => {
@@ -214,7 +225,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
           map.setZoom(10)
         }}
       /> */}
-        <button onClick={startTour}>start route</button>
+        <button onClick={startTour}>{tourButton}</button>
         {/* <button onClick={calculateRoute}> <span>  </span>SHOW ROUTE</button> */}
       </p>
       {/* <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p> */}
