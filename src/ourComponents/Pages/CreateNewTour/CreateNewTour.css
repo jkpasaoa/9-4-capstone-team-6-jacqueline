@@ -31,12 +31,8 @@
 
 .custom-text {
   font-size: 25px;
-  /* Adjust the font size as needed */
   font-weight: bold;
-  /* Adjust the font weight as needed */
   color: #fff;
-  /* Adjust the text color as needed */
-  /* Add any other styling properties you want here */
 }
 
 .generator-directions {
@@ -54,36 +50,39 @@
   justify-content: center; */
   padding: 15px;
   position: absolute;
-  left: 100px;
+  left: 200px;
   top: 0px;
   background-color: rgba(255, 255, 255, 0.754);
+  width: 385px;
 }
 
 @media screen and (max-width: 576px) {
 
-  /* Adjust positioning for screens up to 576px width */
   .fields-container {
-    left: 50px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  .input {
+    /* width: 100vw; */
+  }
+
+  .field {
+    box-sizing: border-box;
+    padding: 0;
+    width: 100vw;
+    height: auto;
   }
 }
 
+.input {
+  padding: 0.5rem;
+  width: 100%;
+}
+
 .field {
-  width: 300px;
-  height: 45px;
-}
-
-.city-photo {
-  width: 35%;
-  height: 35%;
-}
-
-.loading-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
-  background: none;
-  /* Set the background to transparent */
-  /* Add any other styling for the loading container */
+  box-sizing: border-box;
+  width: 350px;
+  height: 55px;
 }
