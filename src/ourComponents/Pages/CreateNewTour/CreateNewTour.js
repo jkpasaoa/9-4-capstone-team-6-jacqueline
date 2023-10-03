@@ -19,6 +19,7 @@ const config = {
   pixabayApiKey: process.env.REACT_APP_PIXABAY_API_KEY,
 };
 
+
 // GeneratePOICommentary function to accept poiName, cityName and countryName
 const generatePOICommentary = async (poiName, cityName, countryName) => {
   try {
@@ -92,8 +93,11 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
   }
 };
 
+
 // Define the insertPointOfInterest function
 const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => {
+  // Extract just the name from the poi parameter
+  // const poiName = poi.split(' (')[0];
 
   console.log('Inserting Point of Interest:', poi);
   console.log('New Tour ID:', newTourId);
@@ -101,14 +105,6 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
   console.log('Image URL:', image_url);
 
   try {
-
-    // Check if poi, coordinates, and image_url are empty
-    if (!poi || (!coordinates.latitude && !coordinates.longitude) || !image_url) {
-      console.error("Error: Empty fields detected. poi, coordinates, and image_url are required.");
-      return; // Return or handle the error as needed
-    }
-
-
     // Insert the POI data into the database
     const response = await axios.post(`${config.apiUrl}/pointofinterest`, {
       poi_name: poi,
@@ -129,7 +125,6 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
 
     // Return the poiId obtained from the response
     // return response.data.poiId;
-    console.log(poiId)
     return poiId;
 
   } catch (error) {
@@ -235,34 +230,70 @@ export default function CreateNewTour() {
   const navigate = useNavigate();
 
 
+  // const parsePointsOfInterestAndCoordinates = (generatedTour) => {
+  //   try {
+
+  //     console.log('Input Data:', generatedTour);
+
+  //     // Parse the JSON format of the generated tour
+  //     const tourData = JSON.parse(generatedTour);
+
+  //     // Check if the parsed data is an array
+  //     if (!Array.isArray(tourData)) {
+  //       throw new Error('Invalid data format in the generated tour');
+  //     }
+
+  //     // Extract the points of interest and coordinates
+  //     const matches = tourData.map((entry) => {
+  //       const { poi, coordinates } = entry;
+  //       return { poi, coordinates };
+  //     });
+
+  //     // Log the extracted data
+  //     console.log('Extracted Data:', matches);
+  //     console.log(matches);
+
+  //     return matches;
+  //   } catch (error) {
+  //     console.error('Error parsing the generated tour data:', error);
+  //     return [];
+  //   }
+  // };
+
   const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     const bulletPattern = /^(\d+)\.\s(.+?)\s\((-?\d+\.\d+)°\s([NS]),\s(-?\d+\.\d+)°\s([EW])\)/gm;
     const matches = [];
-
+    
     let match;
-
+  
     while ((match = bulletPattern.exec(generatedTour)) !== null) {
       const poi = match[2];
       const latitude = parseFloat(match[3]);
       const latitudeDirection = match[4];
       const longitude = parseFloat(match[5]);
       const longitudeDirection = match[6];
-
+  
       const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
       const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
-
+  
       const adjustedLatitude = latitude * latitudeSign;
       const adjustedLongitude = longitude * longitudeSign;
-
+  
       const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
-
+  
       matches.push({ poi, coordinates });
       console.log(`This is the Parsed poi: ${poi}`);
       console.log(`Coordinates: Latitude ${adjustedLatitude}, Longitude ${adjustedLongitude}`);
     }
-
+  
     return matches;
   };
+  
+  
+  
+
+
+
 
 
   // Function to generate a walking tour
@@ -299,37 +330,48 @@ export default function CreateNewTour() {
             role: 'user',
             content: prompt,
           },
+
+
           {
             role: 'user',
             content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same.  The following is just an example of the format I want you to use.  1. Santa Maria del Mar (41.3836° N, 2.1810° E)\n2. Parc de la Ciutadella (41.3883° N, 2.1874° E)
           
-            1. Plaça de Catalunya (Latitude: 41.3879, Longitude: 2.1699)
-            2. La Rambla (Latitude: 41.3799, Longitude: 2.1732)
-            3. Palau Güell (Latitude: 41.3752, Longitude: 2.1749)
-            4. Plaça Reial (Latitude: 41.3755, Longitude: 2.1759)
-            5. Barcelona Cathedral (Latitude: 41.3834, Longitude: 2.1765)
-            6. Santa Maria del Mar (Latitude: 41.3836, Longitude: 2.1810)
-            7. Picasso Museum (Latitude: 41.3859, Longitude: 2.1804)
-            8. Parc de la Ciutadella (Latitude: 41.3883, Longitude: 2.1874)
-            9. Arc de Triomf (Latitude: 41.3911, Longitude: 2.1804)
-            10. Sagrada Família (Latitude: 41.4044, Longitude: 2.1743)
-            11. Casa Batlló (Latitude: 41.3916, Longitude: 2.1635)
-            12. Casa Milà (La Pedrera) (Latitude: 41.3952, Longitude: 2.1619)
-            13. Passeig de Gràcia (Latitude: 41.3910, Longitude: 2.1635)
-            14. Plaça de Catalunya (Latitude: 41.3879, Longitude: 2.1699)
-            `
+            // [
+            //   {
+            //     poi: "Santa Maria del Mar",
+            //     coordinates: {
+            //       latitude: 41.3836,
+            //       longitude: 2.1810,
+            //     },
+            //   },
+            //   {
+            //     poi: "Parc de la Ciutadella",
+            //     coordinates: {
+            //       latitude: 41.3883,
+            //       longitude: 2.1874,
+            //     },
+            //   },
+            // ]`
           },
           {
             "role": "user",
             "content": "Include coordinates for each point of interest, if there are none use \"coordinates\": { \"latitude\": 50.5000, \"longitude\": -50.5000 } as a placeholder."
           },
+
+          // {
+          //   role: 'user',
+          //   content: 'Return valid JSON format.',
+          // },
+
           {
             role: 'user',
             content: 'Only return points of interest and coordinates.',
           },
         ],
+
         // Add a max_tokens parameter to limit the response length
-        max_tokens: 2000,
+        // max_tokens: 500, // to limit photos temp.
+
       };
 
       const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
@@ -461,7 +503,7 @@ export default function CreateNewTour() {
       //Navigate to the LiveTour
       console.log(`This is the navigate: /tours/${newTourId}`);
 
-      navigate(`/tours/${newTourId}`);
+      navigate(`/tours/${newTourId}`); 
 
 
     } catch (error) {
