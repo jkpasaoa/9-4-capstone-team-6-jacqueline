@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import loadingAnimation from '../../../assets/S-Loop_transnparent.gif'; // Import the loading animation
-// import Map from '../../Map/Map';
 import '../CreateNewTour/CreateNewTour.css'
 
 // Sanitizer function to prevent SQL injection
@@ -43,6 +41,10 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
           content: 'Provide 50-word descriptions for each point of interest, as if you are a tour guide addressing your tour group. Use this as an example of the tone of voice for the response I want to get.',
         },
         {
+          role: 'user',
+          content: 'Double check that you ONLY provide JSON format for your response.',
+        },
+        {
           role: 'assistant',
           content: `As we stand here, gazing up at the towering steel arches of the Sydney Harbour Bridge, let's journey back in time to the early 20th century. Construction of this engineering marvel began in 1924 during the Great Depression, providing much-needed jobs to thousands of workers. It was a time when the idea of spanning the magnificent Sydney Harbour with a bridge seemed audacious, but determination prevailed.
     
@@ -58,9 +60,17 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
     
     I want to thank each of you for joining me on this journey across the Sydney Harbour Bridge today. Whether you're a first-time visitor or a seasoned traveler, this bridge offers an experience that leaves an indelible mark on your memories.
     
-    So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.
-    `
-        }
+    So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.`
+        },
+        {
+          role: 'user',
+          content: 'Do not use the phrase \'Apologies for the confusion earlier—I will provide... or Certainly! Here is a 50-word commentary...\'',
+        },
+        {
+          role: 'user',
+          content: 'Do not return anything other than the commentary',
+        },
+
       ],
       max_tokens: 2000,
     };
@@ -74,7 +84,7 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
 
     const commentary = response.data.choices[0]?.message.content;
 
-    console.log('Generated Commentary:', commentary); // Add this line
+    console.log('Generated Commentary:', commentary);
 
     return commentary;
   } catch (error) {
@@ -86,8 +96,8 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
 
 // Define the insertPointOfInterest function
 const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => {
-
-  
+  // Extract just the name from the poi parameter
+  // const poiName = poi.split(' (')[0];
 
   console.log('Inserting Point of Interest:', poi);
   console.log('New Tour ID:', newTourId);
@@ -124,12 +134,13 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
 
 
 // Define the getImageFromUnsplash function
-const getImageFromUnsplash = async (poi, cityName, country) => {
+const getImageFromUnsplash = async (poi, cityName) => {
   try {
     // Create a query string that includes POI, cityName, and country
-    const query = `${encodeURIComponent(poi)} ${encodeURIComponent(cityName)} ${encodeURIComponent(country)}`;
+    const query = `${encodeURIComponent(poi)} ${encodeURIComponent(cityName)}`;
 
     console.log('POI:', poi);
+    console.log(query);
 
     const response = await axios.get(
       `https://api.unsplash.com/search/photos?query=${query}&client_id=${config.unsplashApiKey}&count=1&order_by=relevant&per_page=1`,
@@ -186,7 +197,7 @@ const insertCommentary = async (poiId, commName, description) => {
     const response = await axios.post(`${config.apiUrl}/commentary`, {
       poi_id: poiId,
       comm_name: commName,
-      description: description, // Use the provided description
+      description: description,
       created_at: new Date().toISOString(),
     }, {
       headers: {
@@ -211,45 +222,43 @@ export default function CreateNewTour() {
     city: '',
     duration: '',
     difficulty: '',
-    theme: '', // Updated: theme instead of tourType
+    theme: '',
   });
 
-  // const [tourContent, setTourContent] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // Added isLoading state
+  const [isLoading, setIsLoading] = useState(false);
   const [cityPhoto, setCityPhoto] = useState('');
   const navigate = useNavigate();
 
 
+  const parsePointsOfInterestAndCoordinates = (generatedTour) => {
+    const bulletPattern = /^(\d+)\.\s(.+?)\s\((-?\d+\.\d+)°\s([NS]),\s(-?\d+\.\d+)°\s([EW])\)/gm;
+    const matches = [];
 
-const parsePointsOfInterestAndCoordinates = (generatedTour) => {
-  try {
+    let match;
 
-    console.log('Input Data:', generatedTour);
+    while ((match = bulletPattern.exec(generatedTour)) !== null) {
+      const poi = match[2];
+      const latitude = parseFloat(match[3]);
+      const latitudeDirection = match[4];
+      const longitude = parseFloat(match[5]);
+      const longitudeDirection = match[6];
 
-    // Parse the JSON format of the generated tour
-    const tourData = JSON.parse(generatedTour);
+      const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
+      const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
 
-    // Check if the parsed data is an array
-    if (!Array.isArray(tourData)) {
-      throw new Error('Invalid data format in the generated tour');
+      const adjustedLatitude = latitude * latitudeSign;
+      const adjustedLongitude = longitude * longitudeSign;
+
+      const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
+
+      matches.push({ poi, coordinates });
+      console.log(`This is the Parsed poi: ${poi}`);
+      console.log(`Coordinates: Latitude ${adjustedLatitude}, Longitude ${adjustedLongitude}`);
     }
 
-    // Extract the points of interest and coordinates
-    const matches = tourData.map((entry) => {
-      const { poi, coordinates } = entry;
-      return { poi, coordinates };
-    });
-
-    // Log the extracted data
-    console.log('Extracted Data:', matches);
-    console.log(matches);
-
     return matches;
-  } catch (error) {
-    console.error('Error parsing the generated tour data:', error);
-    return [];
-  }
-};
+  };
+
 
   // Function to generate a walking tour
   const generateWalkingTour = async () => {
@@ -271,6 +280,8 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
 
       const prompt = `Walking Tour in ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme},`;
 
+      console.log(sanitizedCountry)
+      console.log(prompt)
 
       const requestBody = {
         model: 'gpt-3.5-turbo',
@@ -285,39 +296,31 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
           },
           {
             role: 'user',
-            content: 'Include coordinates for each point of interest, if there are none use (0.4144° N, 0.7019° W) as a placeholder.',
+            content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same.  The following is just an example of the format I want you to use.  1. Santa Maria del Mar (41.3836° N, 2.1810° E)\n2. Parc de la Ciutadella (41.3883° N, 2.1874° E)
+          
+            1. Plaça de Catalunya (Latitude: 41.3879, Longitude: 2.1699)
+            2. La Rambla (Latitude: 41.3799, Longitude: 2.1732)
+            3. Palau Güell (Latitude: 41.3752, Longitude: 2.1749)
+            4. Plaça Reial (Latitude: 41.3755, Longitude: 2.1759)
+            5. Barcelona Cathedral (Latitude: 41.3834, Longitude: 2.1765)
+            6. Santa Maria del Mar (Latitude: 41.3836, Longitude: 2.1810)
+            7. Picasso Museum (Latitude: 41.3859, Longitude: 2.1804)
+            8. Parc de la Ciutadella (Latitude: 41.3883, Longitude: 2.1874)
+            9. Arc de Triomf (Latitude: 41.3911, Longitude: 2.1804)
+            10. Sagrada Família (Latitude: 41.4044, Longitude: 2.1743)
+            11. Casa Batlló (Latitude: 41.3916, Longitude: 2.1635)
+            12. Casa Milà (La Pedrera) (Latitude: 41.3952, Longitude: 2.1619)
+            13. Passeig de Gràcia (Latitude: 41.3910, Longitude: 2.1635)
+            14. Plaça de Catalunya (Latitude: 41.3879, Longitude: 2.1699)
+            `
           },
-
           {
-            role: 'user',
-            content: 'Return valid JSON format.',
+            "role": "user",
+            "content": "Include coordinates for each point of interest, if there are none use \"coordinates\": { \"latitude\": 50.5000, \"longitude\": -50.5000 } as a placeholder."
           },
-
           {
             role: 'user',
             content: 'Only return points of interest and coordinates.',
-          },
-
-          {
-            role: 'user',
-            content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same.  The following is just an example of the format I want you to use.: 
-          
-            [
-              {
-                poi: "Santa Maria del Mar",
-                coordinates: {
-                  latitude: 41.3836,
-                  longitude: 2.1810,
-                },
-              },
-              {
-                poi: "Parc de la Ciutadella",
-                coordinates: {
-                  latitude: 41.3883,
-                  longitude: 2.1874,
-                },
-              },
-            ]`
           },
         ],
 
@@ -334,7 +337,6 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       });
 
       const generatedTour = response.data.choices[0]?.message.content;
-      // setTourContent(generatedTour);
 
       console.log('Generated Tour: ', generatedTour)
       console.log('Response.data: ', response.data)
@@ -353,12 +355,9 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       console.log('Points of Interest: ', sanitizedPointsOfInterest);
       console.log('Coordinates: ', coordinates);
 
-      // setIsLoading(false);
-
       return { generatedTour, sanitizedPointsOfInterest, coordinates };
     } catch (error) {
       console.error('Error:', error);
-      // setTourContent('Error generating the walking tour. Please try again.');
       setIsLoading(false); // Set loading to false in case of an error
     }
   };
@@ -384,7 +383,6 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     return name;
   };
 
-
   // Event handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -396,7 +394,7 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       return;
     }
 
-    // Parse and sanitize points of interest with coordinates
+    // Sanitize points of interest with coordinates
     const { sanitizedPointsOfInterest, coordinates } = generatedWalkingTour;
 
     // Fetch the city photo
@@ -411,8 +409,8 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       duration: sanitizeInput(tour.duration),
       difficulty: sanitizeInput(tour.difficulty),
       theme: sanitizeInput(tour.theme),
-      tour_name: generateTourName(), // Generate the tour name
-      image_url: cityPhoto, // Include the city photo URL
+      tour_name: generateTourName(),
+      image_url: cityPhoto,
       ordered_points_of_interest: sanitizedPointsOfInterest, // Use pointsOfInterest from tourContent
     };
 
@@ -431,16 +429,16 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
       for (let i = 0; i < sanitizedPointsOfInterest.length; i++) {
         const poi = sanitizedPointsOfInterest[i];
         const poiCoordinates = coordinates[i]; // Get the corresponding coordinates
+        console.log('POI added successfully:', poi);
 
         let poiImageUrl = ''; // Initialize with an empty string
 
         try {
           // Attempt to fetch the image URL for the current POI from Unsplash
           const poiCoordinates = coordinates[i]; // Get the corresponding coordinates
-          poiImageUrl = await getImageFromUnsplash(poi, tour.city, poiCoordinates.latitude, poiCoordinates.longitude);
+          poiImageUrl = await getImageFromUnsplash(poi, tour.city, poiCoordinates);
         } catch (imageError) {
           console.error(`Error fetching image for ${poi} from Unsplash:`, imageError);
-          // You can choose to log the error and continue without setting the image URL
         }
 
         // Insert the POI data into the database
@@ -454,172 +452,176 @@ const parsePointsOfInterestAndCoordinates = (generatedTour) => {
         const commName = poi; // Use the POI name as the commentary name
         const description = commentary; // Use the generated commentary as the description
         await insertCommentary(poiId, commName, description);
-        
       }
       setIsLoading(false);
 
+      //Navigate to the LiveTour
+      console.log(`This is the navigate: /tours/${newTourId}`);
+
       navigate(`/tours/${newTourId}`);
 
-      console.log('POI added successfully:', coordinates);
+
     } catch (error) {
       console.error('Error adding tour:', error);
     }
   };
 
 
-
-  
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen full-background-color" style={{ paddingTop: '200px' }}>
+
+    <div className="flex flex-col items-center justify-center min-h-screen full-background-color"
+      style={{ paddingTop: '200px' }}
+    >
       <div className="container flex flex-col items-center justify-center ">
-        <h1 className="text-3xl text-center mb-4 underline">Walking Tour Generator</h1>
+        <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold text-sky-950 drop-shadow-lg">
+          Ready to Explore?
+        </h1>
+        <p className='generator-directions text-lg font-semibold text-sky-950 drop-shadow-lg'>
 
-        {/* City Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Enter a City to Explore"
-            name="city"
-            value={tour.city}
-            onChange={handleTextChange}
-          />
+          Explore the world and create your own adventure! Whether you're a history buff, a foodie, or an outdoor enthusiast, there's a unique journey waiting for you. Uncover hidden gems, savor local flavors, and embark on unforgettable experiences.
+        </p>
+        <div className="content-container background-image rounded-lg">
+          <div className="container flex flex-col items-center justify-center ">
+            <div className="fields-container rounded-lg">
+              {/* City Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="input rounded-lg border"
+                  placeholder="Enter a City to Explore"
+                  name="city"
+                  value={tour.city}
+                  onChange={handleTextChange}
+                />
+              </div>
+
+              {/* Region Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="input rounded-lg border"
+                  placeholder="Borough/Region if applicable"
+                  name="region"
+                  value={tour.region}
+                  onChange={handleTextChange}
+                />
+              </div>
+
+              {/* State Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="input rounded-lg border"
+                  placeholder="State/County/Province if applicable"
+                  name="state"
+                  value={tour.state}
+                  onChange={handleTextChange}
+                />
+              </div>
+
+              {/* Country Input */}
+              <div className="field mb-3">
+                <input
+                  type="text"
+                  className="input rounded-lg border"
+                  placeholder="Enter the Country"
+                  name="country"
+                  value={tour.country}
+                  onChange={handleTextChange}
+                />
+              </div>
+
+              {/* Duration Dropdown */}
+              <div className="field mb-3">
+                <select
+                  className="input rounded-lg border"
+                  value={tour.duration}
+                  onChange={handleDropdownChange}
+                  id="duration"
+                >
+                  <option value="" disabled>Select Day Duration</option>
+                  <option value="Full-day">Full-day</option>
+                  <option value="Half-day">Half-day</option>
+                  <option value="2 hours">2 hours</option>
+                </select>
+              </div>
+
+              {/* Difficulty Dropdown */}
+              <div className="field mb-3">
+                <select
+                  className="input rounded-lg border"
+                  value={tour.difficulty}
+                  onChange={handleDropdownChange}
+                  id="difficulty"
+                >
+                  <option value="" disabled>Select Walking Difficulty</option>
+                  <option value="Easy">Easy</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+
+              {/* Theme Dropdown */}
+
+              <div className="field mb-16">
+                <select
+                  className="input rounded-lg border"
+                  value={tour.theme}
+                  onChange={handleDropdownChange}
+                  id="theme"
+                >
+                  <option value="" disabled>Select Tour Theme</option>
+                  <option value="Historic">Historic</option>
+                  <option value="Scenic">Scenic</option>
+                  <option value="Fun">Fun</option>
+                  <option value="Museums">Museums</option>
+                  <option value="Pubs">Pubs</option>
+                </select>
+                {/* Generate Button */}
+                <div className="mb-3 text-center">
+                  <button
+                    onClick={handleSubmit}
+                    disabled={!tour.city || isLoading}
+                    type="button"
+                    className="mt-6 inline-block rounded bg-[#183759] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
+                  >
+                    Generate Walking Tour
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* Region Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Borough/Region if applicable"
-            name="region"
-            value={tour.region}
-            onChange={handleTextChange}
-          />
-        </div>
-
-        {/* State Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="State/County/Province if applicable"
-            name="state"
-            value={tour.state}
-            onChange={handleTextChange}
-          />
-        </div>
-
-        {/* Country Input */}
-        <div className="field mb-3">
-          <input
-            type="text"
-            className="rounded-lg border w-full p-2"
-            placeholder="Enter the Country"
-            name="country"
-            value={tour.country}
-            onChange={handleTextChange}
-          />
-        </div>
-
-        {/* Duration Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.duration}
-            onChange={handleDropdownChange}
-            id="duration"
-          >
-
-            <option value="" disabled>Select Day Duration</option>
-            <option value="Full-day">Full-day</option>
-            <option value="Half-day">Half-day</option>
-            <option value="2 hours">2 hours</option>
-          </select>
-        </div>
-
-        {/* Difficulty Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.difficulty}
-            onChange={handleDropdownChange}
-            id="difficulty"
-          >
-            {/* <select value={selectedOption} onChange={handleOptionChange}></select> */}
-            <option value="" disabled>Select Walking Difficulty</option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-          </select>
-        </div>
-
-        {/* Theme Dropdown */}
-        <div className="field mb-3">
-          <select
-            className="rounded-lg border w-full p-2"
-            value={tour.theme}
-            onChange={handleDropdownChange}
-            id="theme"
-          >
-            <option value="" disabled>Select Tour Theme</option>
-            <option value="Historic">Historic</option>
-            <option value="Scenic">Scenic</option>
-            <option value="Fun">Fun</option>
-            <option value="Museums">Museums</option>
-            <option value="Pubs">Pubs</option>
-          </select>
-        </div>
-
-        {/* Generate Button */}
-        <div className="mb-3 text-center">
-          <button
-            onClick={handleSubmit}
-            disabled={!tour.city || isLoading}
-            type="button"
-            className="mt-6 inline-block rounded bg-[#183759] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
-          >
-            Generate Walking Tour
-          </button>
-        </div>
-
+        {/* Loading animation */}
         {isLoading ? (
           // Conditional rendering for loading animation
-          <div className="text-center">
+          <div className="loading-logo text-center fixed inset-0 flex flex-col items-center justify-center bg-gray-800 bg-opacity-50">
             <p>Loading...</p>
 
             <div style={{ margin: '16px 0' }}>
-              {/* Display the city photo */}
-            {cityPhoto && (
-              <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" style={{ width: '175px', height: '175px' }}/>
-            )}
-              <img src={loadingAnimation} alt="Loading..." className="w-32 mx-auto" />
-              
-              
+              <div className="flex justify-center items-center">
+                <img src={loadingAnimation} alt="Loading..." className="w-32 mx-auto" />
+                {cityPhoto && (
+                  <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2 rounded-lg float-right" style={{ width: '175px', height: '175px' }} />
+                )}
+              </div>
             </div>
           </div>
         ) : (
           <div className="flex flex-col sm:flex-row">
             {/* Display the city photo */}
             {cityPhoto && (
-              <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" />
+              <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" style={{ width: '175px', height: '175px' }} />
             )}
 
-            <br />
-
-            {/* <textarea className="route-container border rounded-lg w-full p-2" rows="10" value={tourContent} readOnly /> */}
+            {/* <ol className="ordered-list">
+            {poiNames.map((poiName, index) => (
+              <li key={index}>{poiName}</li>
+            ))}
+          </ol> */}
           </div>
-        )
-        }
-
-        {/* "Start Tour" button
-        <div className="mb-3 text-center">
-          <Link to="/tourlive">
-            <button className="mt-6 inline-block rounded bg-[#E36E43] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110">Start Tour</button>
-          </Link>
-        </div> */}
+        )}
       </div>
     </div>
   );
-
 }

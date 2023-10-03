@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useAnimation, useViewportScroll } from 'framer-motion';
+import { motion, useAnimation, useScroll } from 'framer-motion';
 import JosephPhoto from '../../../assets/aboutPhotos/Joseph.jpg';
 import RaydelysPhoto from '../../../assets/aboutPhotos/Raydelys.jpg';
 import JacquelinePhoto from '../../../assets/aboutPhotos/Jacqueline.jpg';
@@ -13,14 +13,6 @@ import '../About/About.css';
 function About() {
 
   const teamMembers = [
-    {
-      name: "Joseph Rodriguez",
-      photo: JosephPhoto,
-      bio: `I am Joseph Rodriguez, a compassionate and driven junior full stack developer. With a passion for technology and empathy for users, I excel in creating innovative solutions. Continuously seeking growth and learning, I aim to make a positive impact in the ever-changing world of software development.`,
-      github: "https://github.com/jRodriguezIV",
-      linkedin: "https://www.linkedin.com/in/josephrodrigueziv/",
-    },
-
     {
       name: "Mark Roberston",
       photo: MarkPhoto,
@@ -49,8 +41,15 @@ function About() {
       github: "https://github.com/jkpasaoa",
       linkedin: "https://www.linkedin.com/in/jacquelinepasaoa/",
     },
+    {
+      name: "Joseph Rodriguez",
+      photo: JosephPhoto,
+      bio: `I am Joseph Rodriguez, a compassionate and driven junior full stack developer. With a passion for technology and empathy for users, I excel in creating innovative solutions. Continuously seeking growth and learning, I aim to make a positive impact in the ever-changing world of software development.`,
+      github: "https://github.com/jRodriguezIV",
+      linkedin: "https://www.linkedin.com/in/josephrodrigueziv/",
+    },
   ];
-  const { scrollY } = useViewportScroll();
+  const { scrollY } = useScroll();
 
   const scrollContainerRef = useRef(null);
   const scrollControls = useAnimation();
@@ -66,10 +65,10 @@ function About() {
       }
     };
 
-    scrollY.onChange(handleScroll);
+    scrollY.on("change", handleScroll);
 
     return () => {
-      scrollY.clearListeners();
+      scrollY.clearListeners("change");
     };
   }, [scrollControls, scrollY]);
 
@@ -78,41 +77,46 @@ function About() {
       <div className="container mx-auto px-4">
         <div className="about">
           <div className="app-summary-container bg-cyan-200 rounded-lg">
-              <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
-              <strong className="luxury-font font-size">City Whisperer</strong>
-              <br />
-              <p className='text-lg p'>
-              Introduced in August and September 2023 as a capstone project, redefines the way travelers experience cities. This app empowers tourists with pre-planned walking routes and points of interest, complemented by audio commentary, facilitating efficient and immersive city exploration. By providing valuable insights and a user-friendly interface, City Whisperer enhances the overall travel experience, enabling users to make the most of their visits while enjoying the freedom of self-guided tours. It's the perfect companion for travelers seeking both convenience and adventure on their journeys.</p>
+            <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
+            <strong className="luxury-font font-size text-sky-950 drop-shadow-lg">City Whisperer</strong>
             <br />
-              <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
-              <strong className="luxury-font font-size">The Features</strong>
-              <p className='text-lg p'>
-              City Whisperer features include AI-generated walking tours, customizable filters, and seamless Google Maps integration, you can explore cities like never before. Enjoy audio commentary in multiple languages through Text-to-Speech (TTS) and experience secure and convenient login options.</p>
+            <p className='text-lg font-medium p text-sky-950 drop-shadow-lg'>
+              Introduced in August 2023 as a capstone project, redefines the way travelers experience cities. This app empowers tourists with pre-planned walking routes and points of interest, complemented by audio commentary, facilitating efficient and immersive city exploration. By providing valuable insights and a user-friendly interface, City Whisperer enhances the overall travel experience, enabling users to make the most of their visits while enjoying the freedom of self-guided tours. It's the perfect companion for travelers seeking both convenience and adventure on their journeys.</p>
             <br />
-              <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
-              <strong className="luxury-font font-size">Our Mission</strong>
-              <br />
-              <p className='text-lg p'>
+            <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
+            <strong className="luxury-font font-size text-sky-950 drop-shadow-lg">The Features</strong>
+            <p className='text-lg p font-medium text-sky-950 drop-shadow-lg'>
+              City Whisperer features include AI-generated walking tours, customizable filters, and seamless Google Maps integration, you can explore cities like never before. Enjoy audio commentary through Text-to-Speech (TTS). And in the later future the team will integrate secure and convenient login options for all users.</p>
+            <br />
+            <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
+            <strong className="luxury-font font-size text-sky-950 drop-shadow-lg">Our Mission</strong>
+            <br />
+            <p className='text-lg p font-medium text-sky-950 drop-shadow-lg'>
               Our mission is to empower travelers to experience cities like never before. We believe in enhancing the journey by offering self-guided walking tours that are not only informative but also deeply personalized. Our goal is to provide users with the freedom to explore at their own pace, uncover hidden gems, and connect with the culture and history of the places they visit. We're dedicated to curating an ever-growing library of AI-generated tours, fostering a sense of discovery, and making travel more accessible and enriching for everyone. City Whisperer is on a mission to redefine city exploration, one step at a time.</p>
             <br />
-              <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
-              <strong className="luxury-font font-size">Our Development Team</strong>
-              <br />
-              <p className='text-lg p'>
-               Our team is a dynamic and passionate group of full-stack developers, each bringing their unique skills and backgrounds to the project. Together, this dedicated team is committed to redefining city exploration through AI-generated walking tours, making travel more enriching and accessible for all.
+            <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
+            <strong className="luxury-font font-size text-sky-950 drop-shadow-lg">Our Development Team</strong>
+            <br />
+            <p className='text-lg p font-medium text-sky-950 drop-shadow-lg'>
+              Our team is a dynamic and passionate group of full-stack developers, each bringing their unique skills and backgrounds to the project. Together, this dedicated team is committed to redefining city exploration through AI-generated walking tours, making travel more enriching and accessible for all.
             </p>
           </div>
         </div>
-        <div className="team-container flex flex-col items-center">
-          <img src={marker} alt="markerPin" className="markerPin" />&nbsp;
-          <h1 className="font-bold text-xl text-center my-0 dancing-script text-blue-950">
-            Meet the Team</h1>
-          <br />
-          <br />
+        <div className="flex flex-col items-center">
+          <div className="team-container rounded-lg">
+            <img
+              src={marker}
+              alt="markerPin"
+              className="markerPin"
+              style={{ width: '24px', height: '24px' }}
+            />&nbsp;
+            <h1 className="font-bold text-xl text-center my-0 dancing-script text-sky-950 drop-shadow-lg p-2">
+              Meet the Team</h1>
+          </div>
           <div className="team-members mt-4">
             {teamMembers.map((member, index) => (
               <div key={index} className="team-member-card">
-                <h5 className="text-3xl font-medium leading-tight text-neutral-800">
+                <h5 className="text-3xl font-bold leading-tight text-sky-950">
                   {member.name}
                 </h5>
                 <div className="mt-4 relative overflow-hidden bg-cover bg-no-repeat centered-photo">
@@ -131,7 +135,7 @@ function About() {
                     className="scrollable-content" //custom styling for scrolling content
                   >
                     <motion.p
-                      className="text-base bio-paragraph text-black text-lg"
+                      className="text-base bio-paragraph font-semibold text-lg text-sky-950"
                       initial={{ opacity: 0, y: 100 }}
                       animate={scrollControls}
                       transition={{ duration: 0.5, delay: 0.2 }}

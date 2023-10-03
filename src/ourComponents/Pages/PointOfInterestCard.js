@@ -1,7 +1,8 @@
-
 import { Link } from "react-router-dom";
-
+import { ImLocation } from 'react-icons/im';
+import { HiPlay } from 'react-icons/hi2'
 import { useEffect, useState } from "react";
+import { HiMiniPause } from 'react-icons/hi2'
 import axios from "axios";
 
 
@@ -9,53 +10,65 @@ const API = process.env.REACT_APP_API_URL;
 const synth = window.speechSynthesis;
 
 
-export default function PointOfInterestCard({ poi }) {
+export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker, toggleModal, setCurrentPoi, setModalCommentary }) {
 
     const [commentary, setCommentary] = useState("")
 
-
-
     useEffect(() => {
-        axios.get(`${API}/commentary/${poi.id}`)
-        .then((res) => {
-            setCommentary(res.data)
-        })
-    }, [poi])
+        axios.get(`${API}/commentary/${poi_id}`)
+            .then((res) => {
+                setCommentary(res.data)
+            })
+    }, [poi_id])
 
-    
     let textToSpeech = () => {
-        const speech = new SpeechSynthesisUtterance();
 
-    if (!synth.speaking && !synth.paused) {
-        // speech.text = commentary.description
-        speech.text = "Testing WE NEED TIME TO FIGURE OUT THE ISSUE , BUT NOT TOO MUCH TIME"
-        speech.rate = 0.80
-        synth.speak(speech)
-    } else {
-        // synth.paused ? synth.resume() : synth.pause();
-        console.log(synth)
-        synth.cancel()
-
-    }
+        if (!synth.speaking || !synth.paused) {
+            speech.text = commentary.description
+            speech.rate = 0.85
+            synth.speak(speech)
+        } else {
+            // synth.paused ? synth.resume() : synth.pause();
+            synth.cancel()
+        }
     }
 
-    const speechStop = () => {
-      
-            window.speechSynthesis.cancel()
-            console.log(window.speechSynthesis)
-        
-
+    let speechPause = () => {
+        window.speechSynthesis.cancel()
     }
 
+    // useEffect(() => {
+    //     setLocationName(name)
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [name])
 
+    const liClick = (name) => {
+        toggleModal()
+        setCurrentPoi(name)
+        setModalCommentary(commentary.description)
+    }
+
+    // const shortCommentary = commentary.description.substring(0,75)
 
     return (
         <div>
-            <li className="relative inline-flex float-left p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-sky-950 to-cyan-600 group-hover:from-cyan-500 group-hover:to-sky-950 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800 w-[400px]"><span onClick={() => textToSpeech()} className="float-left px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 w-[400px]"><h3>{poi.poi_name}</h3>
-                <Link>PLAY AUDIO</Link>
-                <p>In this paragraph there will be a short description leading to full details...</p>
-                {/* <Link>Show More</Link> */}
-            </span>
+
+            <li className="text-left"
+                onMouseOver={() => setActiveMarker(name)}
+                onMouseLeave={() => setActiveMarker('')}
+                onClick={() => liClick(name)}
+            ><span className="float-left px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 w-[400px]"><h3 className="inline-flex text-xl font-bold"><ImLocation />{name}</h3>
+                    <section className="border-l-2 border-sky-950 ml-2">
+                        <p className="ml-3"><Link onClick={() => textToSpeech()} className="inline-flex text-sky-800"><HiPlay className="mt-1" /> PLAY AUDIO</Link>&nbsp; <Link className="inline-flex text-sky-800" onClick={() => speechPause()}> <HiMiniPause className="mt-1" />PAUSE</Link></p>
+
+
+                        <p className="ml-3">Click to view details about {name} and proceed with yout tour...</p>
+
+                        {/* <Link>Show More</Link> */}
+                    </section>
+
+                </span>
+                {/* <img className="w-[200px] h-[110px]" src={img} alt={name} /> */}
             </li>
                 <button onClick={() => speechStop()}>STOP</button>
         </div>
