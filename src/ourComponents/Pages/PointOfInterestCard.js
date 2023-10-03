@@ -7,8 +7,9 @@ import axios from "axios";
 
 
 const API = process.env.REACT_APP_API_URL;
-let speech = new SpeechSynthesisUtterance();
-let synth = window.speechSynthesis;
+const speech = new SpeechSynthesisUtterance()
+const synth = window.speechSynthesis;
+
 
 export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker, toggleModal, setCurrentPoi, setModalCommentary }) {
 
@@ -20,8 +21,6 @@ export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker
                 setCommentary(res.data)
             })
     }, [poi_id])
-
-    // console.log(commentary.description)
 
     let textToSpeech = () => {
 
@@ -72,6 +71,7 @@ export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker
                 </span>
                 {/* <img className="w-[200px] h-[110px]" src={img} alt={name} /> */}
             </li>
+                <button onClick={() => speechPause()}>STOP</button>
         </div>
     )
 }
