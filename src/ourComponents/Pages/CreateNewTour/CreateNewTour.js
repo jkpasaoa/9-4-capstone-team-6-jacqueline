@@ -487,7 +487,7 @@ export default function CreateNewTour() {
               <div className="field mb-3">
                 <input
                   type="text"
-                  className="rounded-lg border w-full p-2"
+                  className="input rounded-lg border"
                   placeholder="Enter a City to Explore"
                   name="city"
                   value={tour.city}
@@ -499,7 +499,7 @@ export default function CreateNewTour() {
               <div className="field mb-3">
                 <input
                   type="text"
-                  className="rounded-lg border w-full p-2"
+                  className="input rounded-lg border"
                   placeholder="Borough/Region if applicable"
                   name="region"
                   value={tour.region}
@@ -511,7 +511,7 @@ export default function CreateNewTour() {
               <div className="field mb-3">
                 <input
                   type="text"
-                  className="rounded-lg border w-full p-2"
+                  className="input rounded-lg border"
                   placeholder="State/County/Province if applicable"
                   name="state"
                   value={tour.state}
@@ -523,7 +523,7 @@ export default function CreateNewTour() {
               <div className="field mb-3">
                 <input
                   type="text"
-                  className="rounded-lg border w-full p-2"
+                  className="input rounded-lg border"
                   placeholder="Enter the Country"
                   name="country"
                   value={tour.country}
@@ -534,7 +534,7 @@ export default function CreateNewTour() {
               {/* Duration Dropdown */}
               <div className="field mb-3">
                 <select
-                  className="rounded-lg border w-full p-2"
+                  className="input rounded-lg border"
                   value={tour.duration}
                   onChange={handleDropdownChange}
                   id="duration"
@@ -549,7 +549,7 @@ export default function CreateNewTour() {
               {/* Difficulty Dropdown */}
               <div className="field mb-3">
                 <select
-                  className="rounded-lg border w-full p-2"
+                  className="input rounded-lg border"
                   value={tour.difficulty}
                   onChange={handleDropdownChange}
                   id="difficulty"
@@ -566,7 +566,7 @@ export default function CreateNewTour() {
               <div className="field mb-16">
 
                 <select
-                  className="rounded-lg border w-full p-2"
+                  className="input rounded-lg border"
                   value={tour.theme}
                   onChange={handleDropdownChange}
                   id="theme"
@@ -611,15 +611,15 @@ export default function CreateNewTour() {
 
         {isLoading ? (
           // Conditional rendering for loading animation
-          <div className="text-center">
+          <div className="loading-logo text-center fixed inset-0 flex flex-col items-center justify-center bg-gray-800 bg-opacity-50">
             <p>Loading...</p>
 
             <div style={{ margin: '16px 0' }}>
               <div className="flex justify-center items-center">
-                {cityPhoto && (
-                  <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" style={{ width: '175px', height: '175px' }} />
-                )}
                 <img src={loadingAnimation} alt="Loading..." className="w-32 mx-auto" />
+                {cityPhoto && (
+                  <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2 rounded-lg float-right" style={{ width: '175px', height: '175px' }} />
+                )}
               </div>
             </div>
           </div>
@@ -629,8 +629,6 @@ export default function CreateNewTour() {
             {cityPhoto && (
               <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" style={{ width: '175px', height: '175px' }} />
             )}
-
-            <br />
 
             {/* <ol className="ordered-list">
             {poiNames.map((poiName, index) => (
