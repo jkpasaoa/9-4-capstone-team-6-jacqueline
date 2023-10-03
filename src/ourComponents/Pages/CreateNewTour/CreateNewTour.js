@@ -19,7 +19,6 @@ const config = {
   pixabayApiKey: process.env.REACT_APP_PIXABAY_API_KEY,
 };
 
-
 // GeneratePOICommentary function to accept poiName, cityName and countryName
 const generatePOICommentary = async (poiName, cityName, countryName) => {
   try {
@@ -48,19 +47,19 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
           role: 'assistant',
           content: `As we stand here, gazing up at the towering steel arches of the Sydney Harbour Bridge, let's journey back in time to the early 20th century. Construction of this engineering marvel began in 1924 during the Great Depression, providing much-needed jobs to thousands of workers. It was a time when the idea of spanning the magnificent Sydney Harbour with a bridge seemed audacious, but determination prevailed.
     
-    The Sydney Harbour Bridge, often affectionately known as the "Coathanger" due to its distinctive shape, officially opened in 1932. It was an event of immense pride and celebration for the people of Sydney, marking the culmination of years of hard work and ingenuity. Today, it stands as a symbol of resilience and achievement.
+          The Sydney Harbour Bridge, often affectionately known as the "Coathanger" due to its distinctive shape, officially opened in 1932. It was an event of immense pride and celebration for the people of Sydney, marking the culmination of years of hard work and ingenuity. Today, it stands as a symbol of resilience and achievement.
     
-    This bridge is more than just a feat of engineering; it's a vital artery of Sydney, connecting the city's central business district with the northern suburbs. As we traverse the bridge's pedestrian walkway, you'll be treated to panoramic views of Sydney Harbour, the Sydney Opera House, and the city skyline. It's a vista that takes your breath away and offers countless photo opportunities.
+          This bridge is more than just a feat of engineering; it's a vital artery of Sydney, connecting the city's central business district with the northern suburbs. As we traverse the bridge's pedestrian walkway, you'll be treated to panoramic views of Sydney Harbour, the Sydney Opera House, and the city skyline. It's a vista that takes your breath away and offers countless photo opportunities.
     
-    If you're feeling adventurous, you can even climb the Sydney Harbour Bridge with a guided tour. Scaling this iconic structure provides a thrilling and unique perspective of the city and its surroundings. Whether you're a daredevil or simply seeking an unforgettable experience, the bridge climb is an option you won't want to miss.
+          If you're feeling adventurous, you can even climb the Sydney Harbour Bridge with a guided tour. Scaling this iconic structure provides a thrilling and unique perspective of the city and its surroundings. Whether you're a daredevil or simply seeking an unforgettable experience, the bridge climb is an option you won't want to miss.
     
-    The Sydney Harbour Bridge is more than just a physical connector; it's a symbol of unity and celebration. Every year, on New Year's Eve, the bridge becomes the centerpiece of one of the world's most spectacular fireworks displays, lighting up the night sky and drawing crowds from near and far.
+          The Sydney Harbour Bridge is more than just a physical connector; it's a symbol of unity and celebration. Every year, on New Year's Eve, the bridge becomes the centerpiece of one of the world's most spectacular fireworks displays, lighting up the night sky and drawing crowds from near and far.
     
-    As we stand here, taking in the breathtaking views and the history that surrounds us, remember that the Sydney Harbour Bridge is more than just steel and concrete. It's a testament to human vision, determination, and the enduring spirit of Sydney.
+          As we stand here, taking in the breathtaking views and the history that surrounds us, remember that the Sydney Harbour Bridge is more than just steel and concrete. It's a testament to human vision, determination, and the enduring spirit of Sydney.
     
-    I want to thank each of you for joining me on this journey across the Sydney Harbour Bridge today. Whether you're a first-time visitor or a seasoned traveler, this bridge offers an experience that leaves an indelible mark on your memories.
+          I want to thank each of you for joining me on this journey across the Sydney Harbour Bridge today. Whether you're a first-time visitor or a seasoned traveler, this bridge offers an experience that leaves an indelible mark on your memories.
     
-    So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.`
+          So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.`
         },
         {
           role: 'user',
@@ -93,11 +92,8 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
   }
 };
 
-
 // Define the insertPointOfInterest function
 const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => {
-  // Extract just the name from the poi parameter
-  // const poiName = poi.split(' (')[0];
 
   console.log('Inserting Point of Interest:', poi);
   console.log('New Tour ID:', newTourId);
@@ -105,6 +101,14 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
   console.log('Image URL:', image_url);
 
   try {
+
+    // Check if poi, coordinates, and image_url are empty
+    if (!poi || (!coordinates.latitude && !coordinates.longitude) || !image_url) {
+      console.error("Error: Empty fields detected. poi, coordinates, and image_url are required.");
+      return; // Return or handle the error as needed
+    }
+
+
     // Insert the POI data into the database
     const response = await axios.post(`${config.apiUrl}/pointofinterest`, {
       poi_name: poi,
@@ -125,6 +129,7 @@ const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => 
 
     // Return the poiId obtained from the response
     // return response.data.poiId;
+    console.log(poiId)
     return poiId;
 
   } catch (error) {
@@ -323,10 +328,8 @@ export default function CreateNewTour() {
             content: 'Only return points of interest and coordinates.',
           },
         ],
-
         // Add a max_tokens parameter to limit the response length
-        // max_tokens: 500, // to limit photos temp.
-
+        max_tokens: 2000,
       };
 
       const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
