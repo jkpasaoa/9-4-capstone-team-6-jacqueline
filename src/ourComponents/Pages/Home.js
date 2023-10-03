@@ -6,6 +6,7 @@ import image2 from "../../assets/travelPhotos/dan-novac-1naE8177_bI-unsplash.jpg
 import image3 from "../../assets/travelPhotos/bjorn-agerbeek-ak8uY9rVDOs-unsplash.jpg";
 import image4 from"../../assets/travelPhotos/timo-stern-iUBgeNeyVy8-unsplash.jpg"
 
+
 // import image4 from "../../assets/travelPhotos/dan-novac-1naE8177_bI-unsplash.jpg";
 // import image5 from "../../assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg"
 import { Carousel, Ripple, initTE } from "tw-elements";
@@ -168,8 +169,8 @@ export default function Home() {
       </div>
 
       {/* partition 2 */}
-      <div className="w-screen h-screen relative shadow-inner">
-        <div className="h-[70%] max-[760px]:h-auto  overflow-hidden">
+      <div className="w-screen h-screen relative">
+        <div className="h-[90%] max-[760px]:h-auto shadow-2xl overflow-hidden">
           <img
             src={image2}
             alt="WanderLust"
@@ -178,15 +179,15 @@ export default function Home() {
         </div>
 
         <div className=""> 
-          <div className="text-2xl max-[760px]:text-xl mx-40 px-5 py-10 max-[760px]:mx-5 max-[760px]:py-5 text-[#183759] rounded-lg bg-[#ddd8df] font-normal max-[760px]:mt-0 shadow-md">
+          <div className="absolute bottom-40 text-3xl max-[760px]:text-xl mx-40 px-14 py-10 max-[760px]:mx-5 max-[760px]:py-5 text-[#183759] rounded-lg bg-[#e8e2eac7] font-normal max-[760px]:mt-0 shadow-md font-serif">
         Discover hidden gems and explore iconic landmarks like a local. Our ChatGPT-powered virtual tour guide will chat with you, offering recommendations, historical tidbits, and insider tips along the way
             </div>
              </div>
         
       </div>
 
-      {/* partition 3 */}
-      <div className=" w-screen h-screen relative">
+      {/* partition 3 */} 
+      <div className=" w-screen h-screen relative shadow-inner bg-[#efe3e0] rounded-br-full">
         <div className="absolute max-[760px]:w-screen max-[760px]:text-4xl max-[760px]:top-[21.7%]  top-[43.4%] w-1/2 text-[#cdc6cd] font-semibold text-7xl  drop-shadow-[4px_4px_rgba(24,55,89,.9)] z-10">
           Freedom of Choice
         </div>
@@ -201,14 +202,14 @@ export default function Home() {
       </div>
 
       {/* partition 4 */}
-      <div className="h-screen ">
-        <div className="">
-          <img src={image4} alt="FindYourWay" className="w-1/4 object-center inline-block rounded-lg mt-5" />
-        </div>
-        <div className="mx-60 my-5">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere sint quidem asperiores quia neque dicta autem distinctio? Ut facilis id sint obcaecati corporis reiciendis illum? Totam minus nihil minima a.
+      <div className="h-screen">
+        <div className="bg-blackbg h-5/6 mt-[15%] mx-40 r-5 rounded-3xl shadow-2xl">
+          <img src={image4} alt="FindYourWay" className="w-1/4 object-center inline-block rounded-lg mt-[3%]" />
+        <div className="mx-[12%] my-[3%] text-[#ffffff] font-serif text-3xl font-medium">
+        Embark on endless journeys with CityWhisperer and let your curiosity guide you. Join us in discovering the world, one step at a time.
         </div>
       </div>
+        </div>
 
     </div>
   );
