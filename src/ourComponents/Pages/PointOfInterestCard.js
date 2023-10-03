@@ -7,6 +7,7 @@ import axios from "axios";
 
 
 const API = process.env.REACT_APP_API_URL;
+const speech = new SpeechSynthesisUtterance()
 const synth = window.speechSynthesis;
 
 
@@ -70,7 +71,7 @@ export default function PointOfInterestCard({ poi_id, name, img, setActiveMarker
                 </span>
                 {/* <img className="w-[200px] h-[110px]" src={img} alt={name} /> */}
             </li>
-                <button onClick={() => speechStop()}>STOP</button>
+                <button onClick={() => speechPause()}>STOP</button>
         </div>
     )
 }

@@ -32,7 +32,6 @@ export default function Home() {
         id="carouselExampleCaptions"
         className="relative shadow-2xl"
         data-te-carousel-init
-        data-te-ride="carousel"
       >
         <div
           className="absolute bottom-5 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-center p-0"
@@ -62,7 +61,7 @@ export default function Home() {
             data-te-carousel-item
             data-te-carousel-active
           >
-            <video className="w-full" controls autoPlay muted>
+            <video className="w-full" controls autoPlay loop muted>
               <source src={video1} type="video/mp4" />
             </video>
             <div className="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block">
@@ -75,7 +74,7 @@ export default function Home() {
             data-te-carousel-fade
             data-te-carousel-item
           >
-            <video className="w-full" controls autoPlay muted>
+            <video className="w-full" controls autoPlay loop muted>
               <source src={video2} type="video/mp4" />
             </video>
             <div className="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block">
