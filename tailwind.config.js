@@ -8,7 +8,8 @@ module.exports = {
     theme: {
       extend: {
         backgroundImage: {
-          'clouds': "url('/src/assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg')"
+          'clouds': "url('/src/assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg')",
+          'blackbg': "url('/src/assets/travelPhotos/klim-musalimov-rDMacl1FDjw-unsplash.jpg')"
         }
       },
     },

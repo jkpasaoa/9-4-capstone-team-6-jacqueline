@@ -6,6 +6,7 @@ import image2 from "../../assets/travelPhotos/dan-novac-1naE8177_bI-unsplash.jpg
 import image3 from "../../assets/travelPhotos/bjorn-agerbeek-ak8uY9rVDOs-unsplash.jpg";
 import image4 from"../../assets/travelPhotos/timo-stern-iUBgeNeyVy8-unsplash.jpg"
 
+
 // import image4 from "../../assets/travelPhotos/dan-novac-1naE8177_bI-unsplash.jpg";
 // import image5 from "../../assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg"
 import { Carousel, Ripple, initTE } from "tw-elements";
@@ -201,14 +202,14 @@ export default function Home() {
       </div>
 
       {/* partition 4 */}
-      <div className="h-screen ">
-        <div className="">
+      <div className="h-screen">
+        <div className="bg-blackbg h-2/3 mt-[15%] r-5">
           <img src={image4} alt="FindYourWay" className="w-1/4 object-center inline-block rounded-lg mt-5" />
-        </div>
-        <div className="mx-60 my-5">
+        <div className="mx-60 my-5 text-[#dbd4db] font-serif">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere sint quidem asperiores quia neque dicta autem distinctio? Ut facilis id sint obcaecati corporis reiciendis illum? Totam minus nihil minima a.
         </div>
       </div>
+        </div>
 
     </div>
   );
