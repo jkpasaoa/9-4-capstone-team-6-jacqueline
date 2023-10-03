@@ -1,4 +1,4 @@
-/*global google*/
+// /*global google*/
 import { GoogleMap, MarkerF, DirectionsRenderer } from '@react-google-maps/api' //useJsApiLoader,
 import { useState, useEffect } from 'react'; //useRef, useEffect, useMemo
 // import loadingLogo from '../../assets/S-Loop_transnparent.gif'
@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 // import { FaLocationArrow } from 'react-icons/fa'
 // import { IconButton } from '@chakra-ui/react';
 // import axios from 'axios';
+
+const google = window.google = window.google ? window.google : {}
 
 // const center = { lat: 40.8448, lng: 40.8448 }
 
