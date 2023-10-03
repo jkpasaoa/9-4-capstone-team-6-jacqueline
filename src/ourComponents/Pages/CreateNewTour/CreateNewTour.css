@@ -53,6 +53,7 @@
   left: 200px;
   top: 0px;
   background-color: rgba(255, 255, 255, 0.754);
+  width: 385px;
 }
 
 @media screen and (max-width: 576px) {
@@ -65,7 +66,6 @@
 
   .input {
     /* width: 100vw; */
-
   }
 
   .field {
@@ -86,17 +86,3 @@
   width: 350px;
   height: 55px;
 }
-
-/* .city-photo {
-  width: 75%;
-  height: 75%;
-} */
-
-/* .loading-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
-  background: none;
-} */

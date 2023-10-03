@@ -564,7 +564,6 @@ export default function CreateNewTour() {
               {/* Theme Dropdown */}
 
               <div className="field mb-16">
-
                 <select
                   className="input rounded-lg border"
                   value={tour.theme}
@@ -577,7 +576,6 @@ export default function CreateNewTour() {
                   <option value="Fun">Fun</option>
                   <option value="Museums">Museums</option>
                   <option value="Pubs">Pubs</option>
-
                 </select>
                 {/* Generate Button */}
                 <div className="mb-3 text-center">
@@ -594,21 +592,7 @@ export default function CreateNewTour() {
             </div>
           </div>
         </div>
-        {/* Original Generate Button placement*/}
-        {/* <div className="mb-3 text-center">
-
-          <button
-            onClick={handleSubmit}
-            disabled={!tour.city || isLoading}
-            type="button"
-            className="mt-6 inline-block rounded bg-[#183759] px-6 py-2 text-xs font-bold text-[#dbd4db] uppercase leading-normal transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] hover:scale-110"
-          >
-            Generate Walking Tour
-          </button>
-
-        </div> */}
-
-
+        {/* Loading animation */}
         {isLoading ? (
           // Conditional rendering for loading animation
           <div className="loading-logo text-center fixed inset-0 flex flex-col items-center justify-center bg-gray-800 bg-opacity-50">
