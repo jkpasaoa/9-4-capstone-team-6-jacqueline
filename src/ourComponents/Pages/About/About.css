@@ -12,7 +12,7 @@
 }
 
 .about-background {
-  background-image: url('../../../assets/aboutPhotos/about-background.jpg');
+  background-image: url('../../../assets/aboutPhotos/about-page.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -37,7 +37,7 @@
 .app-summary-container {
   margin: 0px 150px 25px 150px;
   padding: 15px;
-  background-color: rgba(255, 255, 255, 0.754);
+  background-color: rgba(255, 255, 255, 0.85);
 }
 
 .medium-photo {
@@ -115,5 +115,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 0px 150px 25px 150px;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.9);
   /* height: 100vh; */
 }
