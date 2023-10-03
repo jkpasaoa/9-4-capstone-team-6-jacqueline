@@ -1,7 +1,7 @@
-// /*global google*/
-import { GoogleMap, MarkerF, useJsApiLoader, DirectionsRenderer } from '@react-google-maps/api'
+/*global google*/
+import { GoogleMap, MarkerF, DirectionsRenderer } from '@react-google-maps/api' //useJsApiLoader,
 import { useState, useEffect } from 'react'; //useRef, useEffect, useMemo
-import loadingLogo from '../../assets/S-Loop_transnparent.gif'
+// import loadingLogo from '../../assets/S-Loop_transnparent.gif'
 import { Link } from 'react-router-dom';
 // import { FaLocationArrow } from 'react-icons/fa'
 // import { IconButton } from '@chakra-ui/react';
@@ -11,12 +11,12 @@ import { Link } from 'react-router-dom';
 
 // const API = process.env.REACT_APP_API_URL;
 
-const libraries = ['places']
+// const libraries = ['places']
 export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarker }) {
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-    libraries
-  })
+  // const { isLoaded } = useJsApiLoader({
+  //   id: "__googleMapsScriptId",
+  //   libraries
+  // })
 
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const [tourButton, setTourButton] = useState('START')
@@ -151,18 +151,18 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
   useEffect(() => {
     calculateRoute()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoaded])
+  }, [])
 
   // console.log(steps)
 
 
-  if (!isLoaded) {
-    return (
-      <div>
-        <img src={loadingLogo} alt='loading...' />
-      </div>
-    )
-  }
+  // if (!isLoaded) {
+  //   return (
+  //     <div>
+  //       <img src={loadingLogo} alt='loading...' />
+  //     </div>
+  //   )
+  // }
 
   const settingCustomMarker = (img) => {
     // let url = ''
