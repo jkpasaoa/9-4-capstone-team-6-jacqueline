@@ -8,7 +8,6 @@ import MarkPhoto from '../../../assets/aboutPhotos/Mark.jpg';
 import githubJPEG from '../../../assets/aboutPhotos/github.jpeg';
 import linkedinPNG from '../../../assets/aboutPhotos/linkedin.png';
 import marker from '../../../assets/aboutPhotos/markerSite.png'
-import city from '../../../assets/aboutPhotos/skyscraper-icon.png'
 import '../About/About.css';
 
 function About() {
