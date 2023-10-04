@@ -337,6 +337,10 @@ export default function CreateNewTour() {
             role: 'user',
             content: 'Only return points of interest and coordinates.',
           },
+          {
+            role: 'user',
+            content: 'Do not return more than 25 points of interest and coordinates.',
+          },
         ],
 
         // Add a max_tokens parameter to limit the response length
@@ -474,7 +478,6 @@ export default function CreateNewTour() {
       console.log(`This is the navigate: /tours/${newTourId}`);
 
       navigate(`/tours/${newTourId}`);
-
 
     } catch (error) {
       console.error('Error adding tour:', error);
