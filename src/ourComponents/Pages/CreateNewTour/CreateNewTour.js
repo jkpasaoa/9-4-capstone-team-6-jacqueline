@@ -232,10 +232,12 @@ export default function CreateNewTour() {
   const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     const bulletPattern = /^(\d+)\.\s(.+?)\s\((-?\d+\.\d+)°\s([NS]),\s(-?\d+\.\d+)°\s([EW])\)/gm;
     const matches = [];
-
+    
+    console.log(generatedTour, bulletPattern)
     let match;
 
     while ((match = bulletPattern.exec(generatedTour)) !== null) {
+      console.log(match)
       const poi = match[2];
       const latitude = parseFloat(match[3]);
       const latitudeDirection = match[4];
@@ -313,20 +315,20 @@ export default function CreateNewTour() {
             role: 'user',
             content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same.  The following is just an example of the format I want you to use.  1. Santa Maria del Mar (41.3836° N, 2.1810° E)\n2. Parc de la Ciutadella (41.3883° N, 2.1874° E)
           
-            1. Plaça de Catalunya (Latitude: 41.3879, Longitude: 2.1699)
-            2. La Rambla (Latitude: 41.3799, Longitude: 2.1732)
-            3. Palau Güell (Latitude: 41.3752, Longitude: 2.1749)
-            4. Plaça Reial (Latitude: 41.3755, Longitude: 2.1759)
-            5. Barcelona Cathedral (Latitude: 41.3834, Longitude: 2.1765)
-            6. Santa Maria del Mar (Latitude: 41.3836, Longitude: 2.1810)
-            7. Picasso Museum (Latitude: 41.3859, Longitude: 2.1804)
-            8. Parc de la Ciutadella (Latitude: 41.3883, Longitude: 2.1874)
-            9. Arc de Triomf (Latitude: 41.3911, Longitude: 2.1804)
-            10. Sagrada Família (Latitude: 41.4044, Longitude: 2.1743)
-            11. Casa Batlló (Latitude: 41.3916, Longitude: 2.1635)
-            12. Casa Milà (La Pedrera) (Latitude: 41.3952, Longitude: 2.1619)
-            13. Passeig de Gràcia (Latitude: 41.3910, Longitude: 2.1635)
-            14. Plaça de Catalunya (Latitude: 41.3879, Longitude: 2.1699)
+            1. Plaça de Catalunya (41.3879° N, 2.1699° E)
+            2. La Rambla (41.3799° N, 2.1732° E)
+            3. Palau Güell (41.3752° N, 2.1749° E)
+            4. Plaça Reial (41.3755° N, 2.1759° E)
+            5. Barcelona Cathedral (41.3834° N, 2.1765° E)
+            6. Santa Maria del Mar (41.3836° N, 2.1810° E)
+            7. Picasso Museum (41.3859° N, 2.1804° E)
+            8. Parc de la Ciutadella (41.3883° N, 2.1874° E)
+            // 9. Arc de Triomf (Latitude: 41.3911, Longitude: 2.1804)
+            // 10. Sagrada Família (Latitude: 41.4044, Longitude: 2.1743)
+            // 11. Casa Batlló (Latitude: 41.3916, Longitude: 2.1635)
+            // 12. Casa Milà (La Pedrera) (Latitude: 41.3952, Longitude: 2.1619)
+            // 13. Passeig de Gràcia (Latitude: 41.3910, Longitude: 2.1635)
+            // 14. Plaça de Catalunya (Latitude: 41.3879, Longitude: 2.1699)
             `
           },
           {
@@ -343,7 +345,7 @@ export default function CreateNewTour() {
           },
           {
             role: 'user',
-            content: 'Return no more than the maxPointsOfInterest.',
+            content: `Return no more than the ${maxPointsOfInterest}.`,
           },
         ],
 
