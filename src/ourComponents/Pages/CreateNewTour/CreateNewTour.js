@@ -337,6 +337,10 @@ export default function CreateNewTour() {
             role: 'user',
             content: 'Only return points of interest and coordinates.',
           },
+          {
+            role: 'user',
+            content: 'Do not return more than 25 points of interest and coordinates.',
+          },
         ],
 
         // Add a max_tokens parameter to limit the response length
@@ -474,7 +478,6 @@ export default function CreateNewTour() {
       console.log(`This is the navigate: /tours/${newTourId}`);
 
       navigate(`/tours/${newTourId}`);
-
 
     } catch (error) {
       console.error('Error adding tour:', error);
@@ -617,23 +620,14 @@ export default function CreateNewTour() {
               <div className="flex justify-center items-center">
                 <img src={loadingAnimation} alt="Loading..." className="w-32 mx-auto" />
                 {cityPhoto && (
-                  <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2 rounded-lg float-right" style={{ width: '175px', height: '175px' }} />
+                  <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2 rounded-lg float-right" style={{ width: '275px', height: '275px' }} />
                 )}
               </div>
             </div>
           </div>
         ) : (
           <div className="flex flex-col sm:flex-row">
-            {/* Display the city photo */}
-            {cityPhoto && (
-              <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" style={{ width: '275px', height: '275px' }} />
-            )}
-
-            {/* <ol className="ordered-list">
-            {poiNames.map((poiName, index) => (
-              <li key={index}>{poiName}</li>
-            ))}
-          </ol> */}
+            <p>Something isn't right !</p>
           </div>
         )}
       </div>
