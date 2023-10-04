@@ -24,7 +24,7 @@ const config = {
 const generatePOICommentary = async (poiName, cityName, countryName) => {
   try {
     // Create a prompt that includes the POI name, city name, and country name
-    const prompt = `Provide a 50-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
+    const prompt = `Provide a 25-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
 
     console.log(`Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
 
@@ -37,7 +37,7 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
         },
         {
           role: 'user',
-          content: 'Provide 50-word descriptions for each point of interest, as if you are a tour guide addressing your tour group. Use this as an example of the tone of voice for the response I want to get.',
+          content: 'Provide 25-word descriptions for each point of interest, as if you are a tour guide addressing your tour group. Use this as an example of the tone of voice for the response I want to get.',
         },
         {
           role: 'user',
@@ -293,7 +293,7 @@ export default function CreateNewTour() {
       console.log(`Maximum allowed points of interest for ${sanitizedDuration}: ${maxPointsOfInterest}`);
 
       // Construct the prompt dynamically with the maximum allowed points of interest
-      const prompt = `Walking Tour in ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nMaximum Points of Interest: ${maxPointsOfInterest}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme},`;
+      const prompt = `Walking Tour in ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nMaximum Points of Interest: ${maxPointsOfInterest}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme}`;
 
       console.log(sanitizedCountry)
       console.log(prompt)
@@ -341,12 +341,16 @@ export default function CreateNewTour() {
             role: 'user',
             content: 'Do not return more than 25 points of interest and coordinates.',
           },
+          {
+            role: 'user',
+            content: 'Return no more than the maxPointsOfInterest.',
+          },
         ],
 
         // Add a max_tokens parameter to limit the response length
         // max_tokens: 500, // to limit photos temp.
-
       };
+
 
       const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
         headers: {
