@@ -206,7 +206,7 @@ export default function Home() {
         <div className="bg-blackbg h-5/6 mt-[15%] mx-40 r-5 rounded-3xl shadow-2xl">
           <img src={image4} alt="FindYourWay" className="w-1/4 object-center inline-block rounded-lg mt-[3%]" />
         <div className="mx-[12%] my-[3%] text-[#ffffff] font-serif text-3xl font-medium">
-        Embark on endless journeys with CityWhisperer and let your curiosity guide you. Join us in discovering the world, one step at a time.
+        Embark on endless journeys with <span className="text-[#295583] font-semibold">CityWhisperer</span> and let your curiosity guide you. Join us in discovering the world, one step at a time.
         </div>
       </div>
         </div>
