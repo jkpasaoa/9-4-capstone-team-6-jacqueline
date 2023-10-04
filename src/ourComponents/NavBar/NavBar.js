@@ -16,9 +16,9 @@ function NavBar() {
   return (
     <div>
       <nav
-        className={loc.pathname !== '/' ? 'bg-white fixed w-full z-20 top-0  left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0 px-3 h-[16%]' : 'bg-white bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0'}>
+        className={loc.pathname !== '/' ? 'bg-[#fffffff6] fixed w-full z-20 top-0  left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0 px-3 h-[15%] shadow-2xl' : 'bg-white bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0'}>
         {/* "bg-[#dbd4db] bg-opacity-20 > */}
-        <div className="flex flex-wrap items-center justify-between mx-auto p-4 text-sky-950">
+        <div className="flex flex-wrap items-center justify-between mx-auto p-2 text-sky-950">
           <span className="logo ">
             <a href="/" className="flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
               <img
