@@ -30,8 +30,14 @@ export default function TourIndex() {
             .catch((e) => console.warn(e))
     }, [])
 
+    // useEffect(() => {
+    //     console.log(tours)
+    // }, [tours])
+
     useEffect(() => {
-        console.log(tours)
+        if (tours.length > 0) {
+            console.log(tours);
+        }
     }, [tours])
 
     return (
