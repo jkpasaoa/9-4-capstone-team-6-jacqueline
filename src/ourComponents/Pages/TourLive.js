@@ -91,13 +91,13 @@ export default function Tour() {
                 <div className="relative h-10 w-[200px] ...">
                     <button className="absolute inline-flex ml-[80px] mt-[40px] left-0 top-0 h-16 w-[200px] font-extrabold text-sky-950 ..."><Link className="inline-flex" to='/tours'>{<TiArrowBack />} ALL TOURS</Link></button>
                 </div>
-                <div className="TourLive-content">
+                <div className="TourLive-content h-screen">
                     <h1 className='mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl text-transparent bg-clip-text bg-gradient-to-r to-cyan-600 from-sky-950'>{tour.city}, {tour.state ? `${tour.state},` : null} {tour.country}</h1>
                     <h4 className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Welcome to your {tour.tour_name}</h4>
                     {/* <p>Created on { }</p> */}
                     <br />
                     <div className="grid grid-cols-2 gap-5 ml-[-150px]">
-                        <div>
+                        <div className='sticky overflow-y-scroll h-2/6 overscroll-contain shadow-2xl'>
                             <h2 className="text-4xl font-bold dark:text-white text-sky-950">Points of Interest:</h2>
                             <ul>
                                 {
