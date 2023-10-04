@@ -28,7 +28,6 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
 
     console.log(`Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
 
-
     const requestBody = {
       model: 'gpt-3.5-turbo',
       messages: [
@@ -233,29 +232,28 @@ export default function CreateNewTour() {
   const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     const bulletPattern = /^(\d+)\.\s(.+?)\s\((-?\d+\.\d+)°\s([NS]),\s(-?\d+\.\d+)°\s([EW])\)/gm;
     const matches = [];
-    
+
     let match;
-  
+
     while ((match = bulletPattern.exec(generatedTour)) !== null) {
       const poi = match[2];
       const latitude = parseFloat(match[3]);
       const latitudeDirection = match[4];
       const longitude = parseFloat(match[5]);
       const longitudeDirection = match[6];
-  
+
       const latitudeSign = latitudeDirection === 'N' ? 1 : -1;
       const longitudeSign = longitudeDirection === 'E' ? 1 : -1;
-  
+
       const adjustedLatitude = latitude * latitudeSign;
       const adjustedLongitude = longitude * longitudeSign;
-  
+
       const coordinates = { latitude: adjustedLatitude, longitude: adjustedLongitude };
-  
+
       matches.push({ poi, coordinates });
       console.log(`This is the Parsed poi: ${poi}`);
       console.log(`Coordinates: Latitude ${adjustedLatitude}, Longitude ${adjustedLongitude}`);
     }
-  
     return matches;
   };
 
@@ -277,7 +275,25 @@ export default function CreateNewTour() {
       const sanitizedDifficulty = sanitizeInput(tour.difficulty);
       const sanitizedTheme = sanitizeInput(tour.theme);
 
-      const prompt = `Walking Tour in ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme},`;
+      // Determine the maximum allowed points of interest based on tour duration
+      let maxPointsOfInterest;
+      if (sanitizedDuration === '2 hours') {
+        maxPointsOfInterest = 10;
+      } else if (sanitizedDuration === 'Half-day') {
+        maxPointsOfInterest = 15;
+      } else if (sanitizedDuration === 'Full-day') {
+        maxPointsOfInterest = 25;
+      } else {
+        // Handle other duration options or invalid inputs
+        console.error('Invalid duration or duration not specified.');
+        setIsLoading(false);
+        return;
+      }
+
+      console.log(`Maximum allowed points of interest for ${sanitizedDuration}: ${maxPointsOfInterest}`);
+
+      // Construct the prompt dynamically with the maximum allowed points of interest
+      const prompt = `Walking Tour in ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nMaximum Points of Interest: ${maxPointsOfInterest}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme},`;
 
       console.log(sanitizedCountry)
       console.log(prompt)
@@ -457,7 +473,7 @@ export default function CreateNewTour() {
       //Navigate to the LiveTour
       console.log(`This is the navigate: /tours/${newTourId}`);
 
-      navigate(`/tours/${newTourId}`); 
+      navigate(`/tours/${newTourId}`);
 
 
     } catch (error) {
@@ -610,7 +626,7 @@ export default function CreateNewTour() {
           <div className="flex flex-col sm:flex-row">
             {/* Display the city photo */}
             {cityPhoto && (
-              <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" style={{ width: '175px', height: '175px' }} />
+              <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2" style={{ width: '275px', height: '275px' }} />
             )}
 
             {/* <ol className="ordered-list">
