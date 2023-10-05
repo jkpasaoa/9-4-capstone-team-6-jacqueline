@@ -20,15 +20,20 @@ const config = {
 };
 
 
-// GeneratePOICommentary function to accept poiName, cityName and countryName
+// GeneratePOICommentary function with retry and timeout logic
 const generatePOICommentary = async (poiName, cityName, countryName) => {
-  try {
-    // Create a prompt that includes the POI name, city name, and country name
-    const prompt = `Provide a 25-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
+  let retries = 0;
 
-    console.log(`Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
+  while (retries < 5) { // Set the maximum number of retries to 5
+    try {
+      // Create a promise that wraps the axios request
+      const commentaryPromise = new Promise(async (resolve, reject) => {
+        // Create a prompt that includes the POI name, city name, and country name
+        const prompt = `Provide a 25-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
 
-    const requestBody = {
+        console.log(`Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
+
+        const requestBody = {
       model: 'gpt-3.5-turbo',
       messages: [
         {
@@ -74,23 +79,53 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
       max_tokens: 2000,
     };
 
-    const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${config.openaiApiKey}`,
-      },
-    });
+    try {
+      const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${config.openaiApiKey}`,
+        },
+      });
 
-    const commentary = response.data.choices[0]?.message.content;
+      const commentary = response.data.choices[0]?.message.content;
 
-    console.log('Generated Commentary:', commentary);
+      console.log('Generated Commentary:', commentary);
 
-    return commentary;
-  } catch (error) {
-    console.error(`Error generating commentary for ${poiName}:`, error);
-    return ''; // Return an empty string in case of an error
-  }
+      if (commentary) {
+        resolve(commentary); // Resolve the promise with commentary if successful
+      } else {
+        reject('Empty commentary'); // Reject the promise with an error message if commentary is empty
+      }
+    } catch (error) {
+      reject(error); // Reject the promise with the error if there's an issue with the request
+    }
+  });
+
+  // Use Promise.race to set a timeout of 15 seconds
+  const commentaryPromiseWithTimeout = Promise.race([
+    commentaryPromise,
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject('Timeout'); // Reject the promise with a timeout error after 15 seconds
+      }, 15000); // 15 seconds timeout
+    }),
+  ]);
+
+  const commentary = await commentaryPromiseWithTimeout;
+
+  return commentary; // Return commentary if successful
+} catch (error) {
+  console.error(`Error generating commentary for ${poiName}:`, error);
+}
+
+retries++;
+}
+
+console.error(`Failed to generate commentary for ${poiName} after 5 retries.`);
+return ''; // Return an empty string if retries are exhausted
 };
+
+
 
 
 // Define the insertPointOfInterest function
@@ -305,7 +340,7 @@ export default function CreateNewTour() {
         messages: [
           {
             role: 'system',
-            content: 'Create a self-guided walking tour that starts at the first point of interest, continues to each point of interest, and returns to the starting point (the first point of interest). Provide a circular tour route and list the points of interest on that route with their coordinates. Ensure that the last point in the list connects back to the first point to complete the tour loop. Do not include any additional information beyond the points of interest and their coordinates.',
+            content: 'Create a self-guided walking tour that starts at the first point of interest, continues to each point of interest, and returns to the first point of interest. Provide a circular tour route and list the points of interest on that route with their coordinates. Ensure that the last point in the list connects back to the first point to complete the tour loop. Do not include any additional information beyond the points of interest and their coordinates.',
           },
           {
             role: 'user',
@@ -321,7 +356,7 @@ export default function CreateNewTour() {
           },
           {
             role: 'user',
-            content: `1. Plaça de Catalunya (41.3879° N, 2.1699° E)\n2. La Rambla (41.3799° N, 2.1732° E)\n3. Palau Güell (41.3752° N, 2.1749° E)\n4. Plaça Reial (41.3755° N, 2.1759° E)\n5. Barcelona Cathedral (41.3834° N, 2.1765° E)\n6. (Continue listing all points of interest)\n7. Plaça de Catalunya (41.3879° N, 2.1699° E) (return to the first point)`,
+            content: `1. Plaça de Catalunya (41.3879° N, 2.1699° E)\n2. La Rambla (41.3799° N, 2.1732° E)\n3. Palau Güell (41.3752° N, 2.1749° E)\n4. Plaça Reial (41.3755° N, 2.1759° E)\n5. Barcelona Cathedral (41.3834° N, 2.1765° E)\n6. (Continue listing all points of interest)\n7. Plaça de Catalunya (41.3879° N, 2.1699° E) `,
           },
           {
             role: 'user',
@@ -334,6 +369,10 @@ export default function CreateNewTour() {
           {
             role: 'user',
             content: `Return no more than the maximum allowed points of interest: ${maxPointsOfInterest}.`,
+          },
+          {
+            role: 'user',
+            content: `Tour must start and end at the same points of interest.`,
           },
         ],
 
