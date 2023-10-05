@@ -305,47 +305,35 @@ export default function CreateNewTour() {
         messages: [
           {
             role: 'system',
-            content: 'Create a self guided walking tour where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only want the tour route and what points of interest are on that route with the coordinates for each point of interest. I will ask later for an in depth tour or each point of interest.',
+            content: 'Create a self-guided walking tour that starts at the first point of interest, continues to each point of interest, and returns to the starting point (the first point of interest). Provide a circular tour route and list the points of interest on that route with their coordinates. Ensure that the last point in the list connects back to the first point to complete the tour loop. Do not include any additional information beyond the points of interest and their coordinates.',
           },
           {
             role: 'user',
-            content: prompt,
+            content: `Provide a clear and efficient route and ensure that the tour route is truly circular so that the first point of interest is also the last point of interest. Use only N, S, E, and W for directions. Do not use negative numbers. Minimize unnecessary backtracking or overlaps between adjacent locations`,
           },
           {
             role: 'user',
-            content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same.  The following is just an example of the format I want you to use.  Do not use negative numbers, only N, S, E, and W.
-          
-            1. Plaça de Catalunya (41.3879° N, 2.1699° E)
-            2. La Rambla (41.3799° N, 2.1732° E)
-            3. Palau Güell (41.3752° N, 2.1749° E)
-            4. Plaça Reial (41.3755° N, 2.1759° E)
-            5. Barcelona Cathedral (41.3834° N, 2.1765° E)
-            6. Santa Maria del Mar (41.3836° N, 2.1810° E)
-            7. Picasso Museum (41.3859° N, 2.1804° E)
-            8. Parc de la Ciutadella (41.3883° N, 2.1874° E)
-            // 9. Arc de Triomf (Latitude: 41.3911, Longitude: 2.1804)
-            // 10. Sagrada Família (Latitude: 41.4044, Longitude: 2.1743)
-            // 11. Casa Batlló (Latitude: 41.3916, Longitude: 2.1635)
-            // 12. Casa Milà (La Pedrera) (Latitude: 41.3952, Longitude: 2.1619)
-            // 13. Passeig de Gràcia (Latitude: 41.3910, Longitude: 2.1635)
-            // 14. Plaça de Catalunya (Latitude: 41.3879, Longitude: 2.1699)
-            `
-          },
-          {
-            "role": "user",
-            "content": "Include coordinates for each point of interest, if there are none use \"coordinates\": { \"latitude\": 50.5000, \"longitude\": -50.5000 } as a placeholder."
+            content: `Tour Location: ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nMaximum Points of Interest: ${maxPointsOfInterest}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme}`,
           },
           {
             role: 'user',
-            content: 'Only return points of interest and coordinates.',
+            content: `Use the following format for the response, where each point of interest is listed with its coordinates (latitude and longitude):`,
           },
           {
             role: 'user',
-            content: 'Do not return more than 25 points of interest and coordinates.',
+            content: `1. Plaça de Catalunya (41.3879° N, 2.1699° E)\n2. La Rambla (41.3799° N, 2.1732° E)\n3. Palau Güell (41.3752° N, 2.1749° E)\n4. Plaça Reial (41.3755° N, 2.1759° E)\n5. Barcelona Cathedral (41.3834° N, 2.1765° E)\n6. (Continue listing all points of interest)\n7. Plaça de Catalunya (41.3879° N, 2.1699° E) (return to the first point)`,
           },
           {
             role: 'user',
-            content: `Return no more than the ${maxPointsOfInterest}.`,
+            content: `If a point of interest has no coordinates, use the following placeholder: "coordinates": { "latitude": 50.5000, "longitude": -50.5000 }`,
+          },
+          {
+            role: 'user',
+            content: 'Limit the response to no more than 25 points of interest and coordinates.',
+          },
+          {
+            role: 'user',
+            content: `Return no more than the maximum allowed points of interest: ${maxPointsOfInterest}.`,
           },
         ],
 
