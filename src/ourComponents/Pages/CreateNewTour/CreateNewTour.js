@@ -313,7 +313,7 @@ export default function CreateNewTour() {
           },
           {
             role: 'user',
-            content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same.  The following is just an example of the format I want you to use.  1. Santa Maria del Mar (41.3836° N, 2.1810° E)\n2. Parc de la Ciutadella (41.3883° N, 2.1874° E)
+            content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same.  The following is just an example of the format I want you to use.  Do not use negative numbers, only N, S, E, and W.
           
             1. Plaça de Catalunya (41.3879° N, 2.1699° E)
             2. La Rambla (41.3799° N, 2.1732° E)
