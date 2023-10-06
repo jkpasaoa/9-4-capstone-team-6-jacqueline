@@ -22,16 +22,16 @@ const config = {
 
 // GeneratePOICommentary function with retry and timeout logic
 const generatePOICommentary = async (poiName, cityName, countryName) => {
-  let retries = 0;
+  let retries = 1;
 
-  while (retries < 5) { // Set the maximum number of retries to 5
+  while (retries < 6) { // Set the maximum number of retries to 5
     try {
       // Create a promise that wraps the axios request
       const commentaryPromise = new Promise(async (resolve, reject) => {
         // Create a prompt that includes the POI name, city name, and country name
         const prompt = `Provide a 25-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
 
-        console.log(`Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
+        console.log(`Attempt #: ${retries} Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
 
         const requestBody = {
       model: 'gpt-3.5-turbo',
@@ -315,7 +315,7 @@ export default function CreateNewTour() {
       // Determine the maximum allowed points of interest based on tour duration
       let maxPointsOfInterest;
       if (sanitizedDuration === '2 hours') {
-        maxPointsOfInterest = 10;
+        maxPointsOfInterest = 7;
       } else if (sanitizedDuration === 'Half-day') {
         maxPointsOfInterest = 15;
       } else if (sanitizedDuration === 'Full-day') {
