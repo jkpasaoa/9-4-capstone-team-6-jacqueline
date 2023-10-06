@@ -306,14 +306,18 @@ export default function CreateNewTour() {
     return matches;
   };
 
-  // Function to generate a walking tour
-  const generateWalkingTour = async () => {
+
+// Function to generate a walking tour with retry and timeout logic
+const generateWalkingTour = async () => {
+  let retries = 1;
+
+  // Define a function for generating the tour
+  const generateTour = async () => {
     try {
       setIsLoading(true); // Set loading to true
 
       // Log that the function is being called
       console.log('generateWalkingTour function called');
-
 
       // Sanitize the input values
       const sanitizedCity = sanitizeInput(tour.city);
@@ -333,7 +337,7 @@ export default function CreateNewTour() {
       } else if (sanitizedDuration === 'Full-day') {
         maxPointsOfInterest = 25;
       } else {
-        // Handle other duration options or invalid inputs
+        // Handle other duration options or invalid inputs, somehow.
         console.error('Invalid duration or duration not specified.');
         setIsLoading(false);
         return;
@@ -423,8 +427,35 @@ export default function CreateNewTour() {
     } catch (error) {
       console.error('Error:', error);
       setIsLoading(false); // Set loading to false in case of an error
+      return null;
     }
   };
+
+  let tourData = null;
+
+  while (retries < 6) { // Set the maximum number of retries to 5
+    console.log(`Attempt ${retries}: Generating tour...`);
+    tourData = await generateTour();
+
+    // If the tour is generated successfully and sanitizedPointsOfInterest is not empty, break the loop
+    if (tourData && tourData.sanitizedPointsOfInterest.length > 0) {
+      setIsLoading(false); // Set loading to false if the tour data is successfully generated
+      break;
+    }
+
+    retries++;
+  }
+
+  if (!tourData || tourData.sanitizedPointsOfInterest.length === 0) {
+    console.error(`Failed to generate tour after 5 retries.`);
+    setIsLoading(false); // Set loading to false if retries are exhausted
+    return null; // Return null if retries are exhausted or no points of interest were generated
+  }
+
+  return tourData;
+};
+
+
 
   // Event handler for dropdown select
   const handleDropdownChange = (event) => {
