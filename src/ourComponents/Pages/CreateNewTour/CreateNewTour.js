@@ -22,16 +22,15 @@ const config = {
 
 // GeneratePOICommentary function with retry and timeout logic
 const generatePOICommentary = async (poiName, cityName, countryName) => {
-  let retries = 1;
+  let retries = 0;
 
-  while (retries < 6) { // Set the maximum number of retries to 5
+  // Define a function for generating commentary
+  const generateCommentary = async (retryCount) => {
     try {
       // Create a promise that wraps the axios request
       const commentaryPromise = new Promise(async (resolve, reject) => {
-        // Create a prompt that includes the POI name, city name, and country name
+        // Create a prompt for generating commentary here...
         const prompt = `Provide a 25-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
-
-        console.log(`Attempt #: ${retries} Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
 
         const requestBody = {
       model: 'gpt-3.5-turbo',
@@ -116,6 +115,19 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
   return commentary; // Return commentary if successful
 } catch (error) {
   console.error(`Error generating commentary for ${poiName}:`, error);
+}
+
+retries++;
+console.log(`Attempt ${retryCount + 1}: Retrying...`);
+return generateCommentary(retryCount + 1); // Retry by calling the function recursively
+};
+
+while (retries < 5) { // Set the maximum number of retries to 5
+console.log(`Attempt ${retries + 1}: Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
+const commentary = await generateCommentary(retries);
+
+if (commentary) {
+  return commentary; // Return commentary if successful
 }
 
 retries++;
