@@ -40,7 +40,7 @@ The front-end of our application is built on React, offering a seamless and intu
 |-|
 
 
-NN
+
 ## Developer Team
 
 Our team who worked on City Whisperer.
