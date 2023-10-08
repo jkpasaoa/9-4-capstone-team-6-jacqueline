@@ -47,7 +47,7 @@ const EndTour = () => {
   };
 
   return (
-    <div className="no-content-container">
+    <div className="no-content-container mt-36 sm:mt-32 md:mt-60 lg:mt-36 xl:mt-36 pb-8 sm:pb-16 md:pb-24 lg:pb-16 xl:pb-16">
       <div className="fixed inset-0 flex items-center justify-center z-50">
         <div className="bg-amber-300 w-3/4 md:w-1/2 lg:w-1/3 p-4 rounded-lg shadow-xl">
           <div className="mb-4">
