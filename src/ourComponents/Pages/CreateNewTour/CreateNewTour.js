@@ -138,8 +138,6 @@ return ''; // Return an empty string if retries are exhausted
 };
 
 
-
-
 // Define the insertPointOfInterest function
 const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => {
   // Extract just the name from the poi parameter
@@ -426,7 +424,8 @@ const generateWalkingTour = async () => {
       return { generatedTour, sanitizedPointsOfInterest, coordinates };
     } catch (error) {
       console.error('Error:', error);
-      setIsLoading(false); // Set loading to false in case of an error
+      // Set loading to false in case of an error
+      setIsLoading(false); 
       return null;
     }
   };
@@ -439,7 +438,8 @@ const generateWalkingTour = async () => {
 
     // If the tour is generated successfully and sanitizedPointsOfInterest is not empty, break the loop
     if (tourData && tourData.sanitizedPointsOfInterest.length > 0) {
-      setIsLoading(false); // Set loading to false if the tour data is successfully generated
+      // Set loading to false if the tour data is successfully generated
+      // setIsLoading(false);
       break;
     }
 
@@ -454,8 +454,6 @@ const generateWalkingTour = async () => {
 
   return tourData;
 };
-
-
 
   // Event handler for dropdown select
   const handleDropdownChange = (event) => {
@@ -481,6 +479,8 @@ const generateWalkingTour = async () => {
   // Event handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true); // Set loading to true before starting API calls
 
     let generatedWalkingTour = await generateWalkingTour();
 
