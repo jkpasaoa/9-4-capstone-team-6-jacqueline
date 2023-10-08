@@ -20,15 +20,19 @@ const config = {
 };
 
 
-// GeneratePOICommentary function to accept poiName, cityName and countryName
+// GeneratePOICommentary function with retry and timeout logic
 const generatePOICommentary = async (poiName, cityName, countryName) => {
-  try {
-    // Create a prompt that includes the POI name, city name, and country name
-    const prompt = `Provide a 25-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
+  let retries = 0;
 
-    console.log(`Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
+  // Define a function for generating commentary
+  const generateCommentary = async (retryCount) => {
+    try {
+      // Create a promise that wraps the axios request
+      const commentaryPromise = new Promise(async (resolve, reject) => {
+        // Create a prompt for generating commentary here...
+        const prompt = `Provide a 25-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
 
-    const requestBody = {
+        const requestBody = {
       model: 'gpt-3.5-turbo',
       messages: [
         {
@@ -74,23 +78,66 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
       max_tokens: 2000,
     };
 
-    const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${config.openaiApiKey}`,
-      },
-    });
+    try {
+      const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${config.openaiApiKey}`,
+        },
+      });
 
-    const commentary = response.data.choices[0]?.message.content;
+      const commentary = response.data.choices[0]?.message.content;
 
-    console.log('Generated Commentary:', commentary);
+      console.log('Generated Commentary:', commentary);
 
-    return commentary;
-  } catch (error) {
-    console.error(`Error generating commentary for ${poiName}:`, error);
-    return ''; // Return an empty string in case of an error
-  }
+      if (commentary) {
+        resolve(commentary); // Resolve the promise with commentary if successful
+      } else {
+        reject('Empty commentary'); // Reject the promise with an error message if commentary is empty
+      }
+    } catch (error) {
+      reject(error); // Reject the promise with the error if there's an issue with the request
+    }
+  });
+
+  // Use Promise.race to set a timeout of 15 seconds
+  const commentaryPromiseWithTimeout = Promise.race([
+    commentaryPromise,
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject('Timeout'); // Reject the promise with a timeout error after 15 seconds
+      }, 15000); // 15 seconds timeout
+    }),
+  ]);
+
+  const commentary = await commentaryPromiseWithTimeout;
+
+  return commentary; // Return commentary if successful
+} catch (error) {
+  console.error(`Error generating commentary for ${poiName}:`, error);
+}
+
+retries++;
+console.log(`Attempt ${retryCount + 1}: Retrying...`);
+return generateCommentary(retryCount + 1); // Retry by calling the function recursively
 };
+
+while (retries < 5) { // Set the maximum number of retries to 5
+console.log(`Attempt ${retries + 1}: Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
+const commentary = await generateCommentary(retries);
+
+if (commentary) {
+  return commentary; // Return commentary if successful
+}
+
+retries++;
+}
+
+console.error(`Failed to generate commentary for ${poiName} after 5 retries.`);
+return ''; // Return an empty string if retries are exhausted
+};
+
+
 
 
 // Define the insertPointOfInterest function
@@ -232,10 +279,12 @@ export default function CreateNewTour() {
   const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     const bulletPattern = /^(\d+)\.\s(.+?)\s\((-?\d+\.\d+)°\s([NS]),\s(-?\d+\.\d+)°\s([EW])\)/gm;
     const matches = [];
-
+    
+    console.log(generatedTour, bulletPattern)
     let match;
 
     while ((match = bulletPattern.exec(generatedTour)) !== null) {
+      console.log(match)
       const poi = match[2];
       const latitude = parseFloat(match[3]);
       const latitudeDirection = match[4];
@@ -257,14 +306,18 @@ export default function CreateNewTour() {
     return matches;
   };
 
-  // Function to generate a walking tour
-  const generateWalkingTour = async () => {
+
+// Function to generate a walking tour with retry and timeout logic
+const generateWalkingTour = async () => {
+  let retries = 1;
+
+  // Define a function for generating the tour
+  const generateTour = async () => {
     try {
       setIsLoading(true); // Set loading to true
 
       // Log that the function is being called
       console.log('generateWalkingTour function called');
-
 
       // Sanitize the input values
       const sanitizedCity = sanitizeInput(tour.city);
@@ -278,13 +331,13 @@ export default function CreateNewTour() {
       // Determine the maximum allowed points of interest based on tour duration
       let maxPointsOfInterest;
       if (sanitizedDuration === '2 hours') {
-        maxPointsOfInterest = 10;
+        maxPointsOfInterest = 7;
       } else if (sanitizedDuration === 'Half-day') {
         maxPointsOfInterest = 15;
       } else if (sanitizedDuration === 'Full-day') {
         maxPointsOfInterest = 25;
       } else {
-        // Handle other duration options or invalid inputs
+        // Handle other duration options or invalid inputs, somehow.
         console.error('Invalid duration or duration not specified.');
         setIsLoading(false);
         return;
@@ -303,47 +356,39 @@ export default function CreateNewTour() {
         messages: [
           {
             role: 'system',
-            content: 'Create a self guided walking tour where a person can start somewhere and follow a route from start point to each point of interest and returning to the start point when the tour is over.  I only want the tour route and what points of interest are on that route with the coordinates for each point of interest. I will ask later for an in depth tour or each point of interest.',
+            content: 'Create a self-guided walking tour that starts at the first point of interest, continues to each point of interest, and returns to the first point of interest. Provide a circular tour route and list the points of interest on that route with their coordinates. Ensure that the last point in the list connects back to the first point to complete the tour loop. Do not include any additional information beyond the points of interest and their coordinates.',
           },
           {
             role: 'user',
-            content: prompt,
+            content: `Provide a clear and efficient route and ensure that the tour route is truly circular so that the first point of interest is also the last point of interest. Use only N, S, E, and W for directions. Do not use negative numbers. Minimize unnecessary backtracking or overlaps between adjacent locations`,
           },
           {
             role: 'user',
-            content: `Use this as a format example for the response I want to get. I do not want any additional information other than what is in this example, also notice how the start point and end point are the same.  The following is just an example of the format I want you to use.  1. Santa Maria del Mar (41.3836° N, 2.1810° E)\n2. Parc de la Ciutadella (41.3883° N, 2.1874° E)
-          
-            1. Plaça de Catalunya (Latitude: 41.3879, Longitude: 2.1699)
-            2. La Rambla (Latitude: 41.3799, Longitude: 2.1732)
-            3. Palau Güell (Latitude: 41.3752, Longitude: 2.1749)
-            4. Plaça Reial (Latitude: 41.3755, Longitude: 2.1759)
-            5. Barcelona Cathedral (Latitude: 41.3834, Longitude: 2.1765)
-            6. Santa Maria del Mar (Latitude: 41.3836, Longitude: 2.1810)
-            7. Picasso Museum (Latitude: 41.3859, Longitude: 2.1804)
-            8. Parc de la Ciutadella (Latitude: 41.3883, Longitude: 2.1874)
-            9. Arc de Triomf (Latitude: 41.3911, Longitude: 2.1804)
-            10. Sagrada Família (Latitude: 41.4044, Longitude: 2.1743)
-            11. Casa Batlló (Latitude: 41.3916, Longitude: 2.1635)
-            12. Casa Milà (La Pedrera) (Latitude: 41.3952, Longitude: 2.1619)
-            13. Passeig de Gràcia (Latitude: 41.3910, Longitude: 2.1635)
-            14. Plaça de Catalunya (Latitude: 41.3879, Longitude: 2.1699)
-            `
-          },
-          {
-            "role": "user",
-            "content": "Include coordinates for each point of interest, if there are none use \"coordinates\": { \"latitude\": 50.5000, \"longitude\": -50.5000 } as a placeholder."
+            content: `Tour Location: ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nMaximum Points of Interest: ${maxPointsOfInterest}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme}`,
           },
           {
             role: 'user',
-            content: 'Only return points of interest and coordinates.',
+            content: `Use the following format for the response, where each point of interest is listed with its coordinates (latitude and longitude):`,
           },
           {
             role: 'user',
-            content: 'Do not return more than 25 points of interest and coordinates.',
+            content: `1. Plaça de Catalunya (41.3879° N, 2.1699° E)\n2. La Rambla (41.3799° N, 2.1732° E)\n3. Palau Güell (41.3752° N, 2.1749° E)\n4. Plaça Reial (41.3755° N, 2.1759° E)\n5. Barcelona Cathedral (41.3834° N, 2.1765° E)\n6. (Continue listing all points of interest)\n7. Plaça de Catalunya (41.3879° N, 2.1699° E) `,
           },
           {
             role: 'user',
-            content: 'Return no more than the maxPointsOfInterest.',
+            content: `If a point of interest has no coordinates, use the following placeholder: "coordinates": { "latitude": 50.5000, "longitude": -50.5000 }`,
+          },
+          {
+            role: 'user',
+            content: 'Limit the response to no more than 25 points of interest and coordinates.',
+          },
+          {
+            role: 'user',
+            content: `Return no more than the maximum allowed points of interest: ${maxPointsOfInterest}.`,
+          },
+          {
+            role: 'user',
+            content: `Tour must start and end at the same points of interest.`,
           },
         ],
 
@@ -382,8 +427,35 @@ export default function CreateNewTour() {
     } catch (error) {
       console.error('Error:', error);
       setIsLoading(false); // Set loading to false in case of an error
+      return null;
     }
   };
+
+  let tourData = null;
+
+  while (retries < 6) { // Set the maximum number of retries to 5
+    console.log(`Attempt ${retries}: Generating tour...`);
+    tourData = await generateTour();
+
+    // If the tour is generated successfully and sanitizedPointsOfInterest is not empty, break the loop
+    if (tourData && tourData.sanitizedPointsOfInterest.length > 0) {
+      setIsLoading(false); // Set loading to false if the tour data is successfully generated
+      break;
+    }
+
+    retries++;
+  }
+
+  if (!tourData || tourData.sanitizedPointsOfInterest.length === 0) {
+    console.error(`Failed to generate tour after 5 retries.`);
+    setIsLoading(false); // Set loading to false if retries are exhausted
+    return null; // Return null if retries are exhausted or no points of interest were generated
+  }
+
+  return tourData;
+};
+
+
 
   // Event handler for dropdown select
   const handleDropdownChange = (event) => {
