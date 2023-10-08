@@ -693,7 +693,7 @@ const generateWalkingTour = async () => {
             <p>Loading...</p>
 
             <div style={{ margin: '16px 0' }}>
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center h-screen">
                 <img src={loadingAnimation} alt="Loading..." className="w-32 mx-auto" />
                 {cityPhoto && (
                   <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2 rounded-lg float-right" style={{ width: '275px', height: '275px' }} />
