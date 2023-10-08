@@ -25,7 +25,7 @@ function About() {
     },
 
     {
-      name: "Raydelys M. Reyes",
+      name: "Raydelys Morrobel Reyes",
       photo: RaydelysPhoto,
       bio: `Presently, I hold the title of a Full Stack Web Development Fellow at Pursuit, a prestigious 12-month software engineering fellowship with funding from Google. With an acceptance rate of just 9%.
 

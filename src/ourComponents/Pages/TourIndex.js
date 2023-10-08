@@ -17,10 +17,10 @@ export default function TourIndex() {
 
     const cardVariants = {
         expanded: {
-            width: "400px"
+            width: "900px"
         },
         collapsed: {
-            width: "200px"
+            width: "170px"
         }
     }
 
@@ -60,7 +60,7 @@ export default function TourIndex() {
                     </h1>
                     <p className='mt-4 text-xl text-gray-300'></p>
                 </div>
-                <div className='mt-12 flex flex-col md:flex-row justify-center items-center gap-5 overflow-x-auto overscroll-none'>
+                <div className='ml-8 mr-8 mt-12 flex flex-col md:flex-row justify-center items-center gap-5 overflow-x-auto overscroll-none'>
                     {
                         tours.map((tour, index) => {
                             return <motion.div
