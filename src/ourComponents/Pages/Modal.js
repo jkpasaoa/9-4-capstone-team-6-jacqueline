@@ -31,12 +31,14 @@ export default function Modal({ toggleModal, img, name, commentary }) {
     }
 
     return (
-        <div className="modal-content content-center">
-            <h1 className="text-4xl font-bold dark:text-white text-sky-950">{name}</h1>
-            <img src={img} alt='img' className='w-[400px] ml-[13%] rounded-lg' />
+        <div className="modal-content content-center object-center">
+            <h1 className="text-4xl font-bold dark:text-white text-sky-950 mb-2">{name}</h1>
+            <div className='flex justify-center'>
+                <img src={img} alt='img' className='w-[500px] rounded-lg h-[290px] mb-2' />
+            </div>
             <p className="ml-3 inline-flex text-sky-800"><Link onClick={() => textToSpeech()} className="inline-flex text-sky-800"><HiPlay className="mt-1" /> PLAY </Link> &nbsp; &nbsp; &nbsp; <Link className="inline-flex text-sky-800" onClick={() => speechPause()}> <HiMiniPause className="mt-1" />PAUSE</Link> &nbsp; &nbsp; &nbsp; <Link onClick={() => speechStop()} className="inline-flex text-sky-800"><HiStop className="mt-1" /> STOP</Link>&nbsp;</p>
-            <div className='max-h-[170px] overflow-y-auto'>
-                <p>{commentary}</p>
+            <div className='max-h-[170px] overflow-y-auto mt-[5px] mb-[10px]'>
+                <p className='text-gray-500 dark:text-gray-400 h-[150px] typewriter'>{commentary}</p>
             </div>
             <button onClick={() => toggleModal()} className="close-modal">{<AiOutlineCloseSquare />}</button>
         </div>
