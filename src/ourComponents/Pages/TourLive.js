@@ -20,12 +20,7 @@ export default function Tour() {
     const [currentPoi, setCurrentPoi] = useState('')
     const [modalCommentary, setModalCommentary] = useState('')
 
-    // const [date, setDate] = useState([])
-
     const { id } = useParams()
-
-    // let speech = new SpeechSynthesisUtterance();
-    // let synth = window.speechSyntehsis
 
     useEffect(() => {
         axios.get(`${API}/tours/${id}`)
@@ -44,41 +39,6 @@ export default function Tour() {
             .catch((e) => console.warn(e))
     }, [id])
 
-    // const capitalizeFirstLetter = (word) => {
-    //     const capitalized =
-    //         word.charAt(0).toUpperCase()
-    //         + word.slice(1)
-
-    //     return capitalized
-    // }
-
-    // console.log(allPointsOfInterest)
-
-    // const stringToDate = (string) => {
-    //     setDate(new Date(string)) 
-    //     console.log(date)
-    // }
-
-    // useEffect(()=>{
-    //     stringToDate("2023-08-21T15:30:00.000Z")
-    //     console.log(date)
-    // },[z])
-
-
-
-    // let textToSpeech1 = (textParam) => {
-    //     if(!synth.speaking && !synth.paused){
-    //         speech.text= textParam || "TESTING. DUMMY DATA"
-    //         speech.rate = 0.75
-    //         synth.speak(speech)
-    //     } else {
-    //         synth.paused ? synth.resume() : synth.pause();
-    //     }
-    // }
-
-    // let speechStop = () => {
-    //     synth.cancel()
-    // }
     const currentPointOfInterest = allPointsOfInterest.find((el) => el.poi_name === currentPoi)
 
     const toggleModal = () => {
@@ -104,7 +64,6 @@ export default function Tour() {
                     <div>
                         <h4 className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Welcome to your {tour.tour_name}</h4>
                     </div>
-                    {/* <p>Created on { }</p> */}
                     <br />
                     <div className="grid grid-cols-2 gap-5 ml-[-110px] h-screen h-[700px] flex justify-center">
                         <div className='sticky overflow-y-scroll h-4/6 overscroll-contain shadow-2xl max-h-[685px]'>
@@ -113,15 +72,12 @@ export default function Tour() {
                                 {
                                     pointsOfInterest.length && allPointsOfInterest.length && pointsOfInterest.map((poi, index) => {
                                         const allPoi = allPointsOfInterest.find((el) => el.poi_name === poi)
-                                        // console.log(allPoi)
-                                        // return allPoi
                                         return <PointOfInterestCard poi_id={allPoi.id} name={allPoi.poi_name} img={allPoi.image_url} key={index} setActiveMarker={setActiveMarker} toggleModal={toggleModal} setCurrentPoi={setCurrentPoi} setModalCommentary={setModalCommentary} />
                                     })
                                 }
                             </ul>
                         </div>
                         <figure className="max-w-lg">
-                            {/* <img src={tour.image_url} alt={tour.city} className="h-auto max-w-full rounded-lg" /> */}
                             {
                                 pointsOfInterest.length && allPointsOfInterest.length &&
                                 <Map className="h-auto max-w-full rounded-lg" activeMarker={activeMarker} pointsOfInterest={pointsOfInterest} allPointsOfInterest={allPointsOfInterest} />
