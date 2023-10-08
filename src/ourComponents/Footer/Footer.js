@@ -15,7 +15,10 @@ function Footer() {
                 <Link to="/about" className="hover:underline">About</Link>
               </li>
               <li className="mb-4">
-                <Link to="#" className="hover:underline">Blog</Link>
+                <Link to="https://github.com/jRodriguezIV/9-4-capstone-team-6" className="hover:underline">Front-end Repo</Link>
+              </li>
+              <li className="mb-4">
+                <Link to="https://github.com/MarkRobertson67/9-4-capstone-team-6-backend" className="hover:underline">Back-end Repo</Link>
               </li>
             </ul>
           </div>
