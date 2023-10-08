@@ -14,8 +14,8 @@
 
 /* Styling to tour index, background */
 .gradient-day-to-night {
-    background: linear-gradient(to right, #F9D423, #FFA07A, #FF4E50);
-  }
+  background: linear-gradient(to right, #F9D423, #FFA07A, #FF4E50);
+}
 
 body.active-modal {
   overflow-y: hidden;
@@ -77,6 +77,39 @@ body.active-modal {
   right: 10px;
   padding: 5px 7px;
 }
+
+.typewriter h4 {
+  overflow: hidden;
+  /* border-right: .15em solid orange; */
+  white-space: nowrap;
+  margin: 0 auto;
+  /* letter-spacing: .15em; */
+  animation:
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
+}
+
+/* @keyframes blink-caret {
+
+  from,
+  to {
+    border-color: transparent
+  }
+
+  50% {
+    border-color: orange;
+  }
+} */
 
 /* .live-img{
   height: 50%;
