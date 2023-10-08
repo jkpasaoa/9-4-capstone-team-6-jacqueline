@@ -138,8 +138,6 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
 };
 
 
-
-
 // Define the insertPointOfInterest function
 const insertPointOfInterest = async (poi, newTourId, coordinates, image_url) => {
   // Extract just the name from the poi parameter
@@ -431,19 +429,31 @@ export default function CreateNewTour() {
       }
     };
 
-    let tourData = null;
+      return { generatedTour, sanitizedPointsOfInterest, coordinates };
+    } catch (error) {
+      console.error('Error:', error);
+      // Set loading to false in case of an error
+      setIsLoading(false); 
+      return null;
+    }
+  };
+
+//     let tourData = null;
+
 
     while (retries < 6) { // Set the maximum number of retries to 5
       console.log(`Attempt ${retries}: Generating tour...`);
       tourData = await generateTour();
 
-      // If the tour is generated successfully and sanitizedPointsOfInterest is not empty, break the loop
-      if (tourData && tourData.sanitizedPointsOfInterest.length > 0) {
-        setIsLoading(false); // Set loading to false if the tour data is successfully generated
-        break;
-      }
+
+    // If the tour is generated successfully and sanitizedPointsOfInterest is not empty, break the loop
+    if (tourData && tourData.sanitizedPointsOfInterest.length > 0) {
+      // Set loading to false if the tour data is successfully generated
+      // setIsLoading(false);
+      break;
 
       retries++;
+
     }
 
     if (!tourData || tourData.sanitizedPointsOfInterest.length === 0) {
@@ -454,8 +464,6 @@ export default function CreateNewTour() {
 
     return tourData;
   };
-
-
 
   // Event handler for dropdown select
   const handleDropdownChange = (event) => {
@@ -481,6 +489,8 @@ export default function CreateNewTour() {
   // Event handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true); // Set loading to true before starting API calls
 
     let generatedWalkingTour = await generateWalkingTour();
 
