@@ -80,10 +80,8 @@ body.active-modal {
 
 .typewriter h4 {
   overflow: hidden;
-  /* border-right: .15em solid orange; */
   white-space: nowrap;
   margin: 0 auto;
-  /* letter-spacing: .15em; */
   animation:
     typing 3.5s steps(40, end),
     blink-caret .75s step-end infinite;
@@ -98,23 +96,3 @@ body.active-modal {
     width: 100%
   }
 }
-
-/* @keyframes blink-caret {
-
-  from,
-  to {
-    border-color: transparent
-  }
-
-  50% {
-    border-color: orange;
-  }
-} */
-
-/* .live-img{
-  height: 50%;
-  width: 50%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-} */
