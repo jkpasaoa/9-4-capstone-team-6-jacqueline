@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { AiFillAndroid }
-// import { AiFillWindows, AiFillApple } from 'react-icons/ai';
 import appStore from '../../assets/footerPhotos/download-app-store.png'
 import playStore from '../../assets/footerPhotos/download-google-playstore.png'
 
@@ -17,7 +15,10 @@ function Footer() {
                 <Link to="/about" className="hover:underline">About</Link>
               </li>
               <li className="mb-4">
-                <Link to="#" className="hover:underline">Blog</Link>
+                <Link to="https://github.com/jRodriguezIV/9-4-capstone-team-6" className="hover:underline">Front-end Repo</Link>
+              </li>
+              <li className="mb-4">
+                <Link to="https://github.com/MarkRobertson67/9-4-capstone-team-6-backend" className="hover:underline">Back-end Repo</Link>
               </li>
             </ul>
           </div>
@@ -66,20 +67,6 @@ function Footer() {
                   </img>
                 </Link>
               </li>
-              {/* <li className="mb-4 items-center">
-                <AiFillWindows size={32} color="blue"
-                style={{ marginLeft: '75px' }}
-                />
-                <Link to="#" className="hover:underline" style={{ display: 'inline-block' }}>Windows</Link>
-              </li>
-              <li className="mb-4" */}
-              {/* // style={{ display: 'flex', alignItems: 'center' }}
-              >
-                <AiFillApple size={32} color="black"
-                style={{ marginLeft: '75px' }}
-                />
-                <Link to="#" className="hover:underline">MacOS</Link>
-              </li> */}
             </ul>
           </div>
         </div>
