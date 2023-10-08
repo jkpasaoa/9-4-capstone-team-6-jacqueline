@@ -66,7 +66,9 @@ Our team who worked on City Whisperer.
 <a href="https://" target="_blank">GitHub</a>
 <a href="https://www.linkedin.com/" target="_blank">LinkedIn</a> -->
 
-Please view our Trello Board to view what we did when undertaking this project. <a href="https://trello.com/b/qayrci3H/9-4capstoneteam6trello" target="_blank" rel="noopener noreferrer" target="_blank"> Team 6 - City Whisperer - Trello Board</a>
+Please view our Trello Board to view what we did when undertaking this project
+<br />
+<a href="https://trello.com/b/qayrci3H/9-4capstoneteam6trello" target="_blank" rel="noopener noreferrer" target="_blank">Team 6 - City Whisperer - Trello Board</a>
 
 
 <!-- # **How to install**
