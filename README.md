@@ -1,14 +1,14 @@
 # City Whisperer App
-## 9-4-capstone-team-6
+## 9-4 Capstone Team 6
 
 <!-- ### *(Install procedure at end of this page)*  -->
 
 <!-- ## **About My Project**  -->
 
 <!-- <a href="https://scribehow.com" target="_blank">Click here for details on how to use the App !</a> -->
-<h1>
+<h3>
 <a href="https://citywhisperer.netlify.app/" target="_blank">Our Deployed Link for City Whisperer</a>
-</h1>
+</h3>
 
 <!-- <a href="" target="_blank">Too busy to read? Click here and my assistant will describe the App to you. </a> -->
 
