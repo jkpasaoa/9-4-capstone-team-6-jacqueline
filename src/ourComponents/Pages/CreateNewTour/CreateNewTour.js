@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import loadingAnimation from '../../../assets/S-Loop_transnparent.gif'; // Import the loading animation
 import '../CreateNewTour/CreateNewTour.css'
+// import tempImage from '../../../assets/travelPhotos/billy-huynh-v9bnfMCyKbg-unsplash.jpg'
 
 // Sanitizer function to prevent SQL injection
 function sanitizeInput(input) {
@@ -558,10 +559,10 @@ const generateWalkingTour = async () => {
 
   return (
 
-    <div className="flex flex-col items-center justify-center min-h-screen full-background-color"
-      style={{ paddingTop: '200px' }}
+    <div className="min-h-screen gradient-day-to-night"
+      style={{ paddingTop: '175px' }}
     >
-      <div className=" ">
+      <div className="">
         <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold text-sky-950 drop-shadow-lg">
           Ready to Explore?
         </h1>
@@ -570,7 +571,7 @@ const generateWalkingTour = async () => {
           Explore the world and create your own adventure! Whether you're a history buff, a foodie, or an outdoor enthusiast, there's a unique journey waiting for you. Uncover hidden gems, savor local flavors, and embark on unforgettable experiences.
         </p>
         <div className="content-container background-image rounded-lg">
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-evenly">
             <div className="fields-container rounded-lg">
               {/* City Input */}
               <div className="field mb-3">
@@ -666,6 +667,8 @@ const generateWalkingTour = async () => {
                   <option value="Museums">Museums</option>
                   <option value="Pubs">Pubs</option>
                 </select>
+
+              
                 {/* Generate Button */}
                 <div className="mb-3 text-center">
                   <button
@@ -679,28 +682,34 @@ const generateWalkingTour = async () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        {/* Loading animation */}
+            {isLoading && (
+          <div className=' max-w-xl '>
+            {cityPhoto && (
+
+               <img src={cityPhoto ? cityPhoto : ""} alt={`${tour.city}`}  />
+            )}
+                </div>
+
+            ) }
+
+                {/* Loading animation */}
         {isLoading ? (
           // Conditional rendering for loading animation
           <div className="loading-logo text-center fixed inset-0 flex flex-col items-center justify-center bg-gray-800 bg-opacity-50">
             <p>Loading...</p>
 
             <div style={{ margin: '16px 0' }}>
-              <div className="flex justify-center items-center">
-                <img src={loadingAnimation} alt="Loading..." className="w-32 mx-auto" />
-                {cityPhoto && (
-                  <img src={cityPhoto} alt={`${tour.city}`} className="city-photo w-3/4 mx-auto sm:w-1/2 rounded-lg float-right" style={{ width: '275px', height: '275px' }} />
-                )}
+              <div className="flex justify-center items-center h-screen">
+                <img src={loadingAnimation} alt="Loading..." className="w-1/4 mr-28" />
               </div>
             </div>
           </div>
         ) : (
-          <div className="flex flex-col sm:flex-row">
-
-          </div>
+          ""
         )}
+          </div>
+        </div>
+        
       </div>
     </div>
   );
