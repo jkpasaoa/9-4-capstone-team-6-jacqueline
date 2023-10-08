@@ -14,24 +14,24 @@ function NavBar() {
   };
 
   return (
-    <div>
+    <div className='mb-[-65px] navBar'>
       <nav
-        className={loc.pathname !== '/' ? 'bg-[#fffffff6] fixed w-full z-20 top-0  left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0 px-3 h-[15%] shadow-2xl' : 'bg-white bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0'}>
-        <div className="flex flex-wrap items-center justify-between mx-auto p-2 text-sky-950">
+        className={loc.pathname !== '/' ? 'bg-[#fffffff6] fixed w-full z-20 top-0  left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0 px-3 h-[12%] shadow-2xl' : 'bg-white bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0'}>
+        <div className="flex flex-wrap items-center justify-between mx-auto p-2 text-sky-950 ml-16 mr-16">
           <span className="logo ">
-            <a href="/" className="flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
+            <a href="/" className="w-[172px] h-auto flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
               <img
                 src={logo}
-                className="mr-3 drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
+                className="mt-1.5 mr-3 w-[120%] h-[120%] drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
                 alt="CityWhisperer Logo"
               />
-              <span className="text-center text-xs">Powered by chatGPT</span>
+              {/* <span className="text-center text-xs">Powered by chatGPT</span> */}
             </a>
           </span>
 
           <div className="flex md:order-2 ml-auto inline-flex text-xl font-bold">
             {/* Desktop Menu & Tablet Menu */}
-            <ul className="DESKTOP-MENU hidden space-x-8 md:flex lg:flex">
+            <ul className="DESKTOP-MENU hidden space-x-8 md:flex lg:flex text-xxl">
               <li>
                 <a href="/" className="nav-link home text-sky-950 text-shadow-white drop-shadow-lg">
                   Home

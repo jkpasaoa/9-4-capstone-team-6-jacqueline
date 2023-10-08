@@ -20,7 +20,6 @@
 
 .nav-link:hover {
   color: #E36E43;
-  font-size: 18px;
   text-decoration: underline;
   font-weight: bold;
 }
@@ -39,4 +38,8 @@
 
 .custom-border {
   width: 100%;
+}
+
+.navBar a:hover {
+  font-weight: bolder;
 }
