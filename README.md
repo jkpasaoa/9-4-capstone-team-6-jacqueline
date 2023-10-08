@@ -53,7 +53,9 @@ Join us in experiencing the thrill of urban exploration with City Whisperer. Emb
 
 ## Developer Team
 
-| Developers Names  |
+Our team who worked on City Whisperer.
+
+| Full Stack Developers  |
 | ------------- |
 | Mark Roberston |
 | Jacqueline Pasaoa |
@@ -64,7 +66,7 @@ Join us in experiencing the thrill of urban exploration with City Whisperer. Emb
 <a href="https://" target="_blank">GitHub</a>
 <a href="https://www.linkedin.com/" target="_blank">LinkedIn</a> -->
 
-<a href="https://trello.com/b/qayrci3H/9-4capstoneteam6trello" target="_blank" rel="noopener noreferrer" target="_blank">Trello Board</a>
+Please view our Trello Board to view what we did when undertaking this project. <a href="https://trello.com/b/qayrci3H/9-4capstoneteam6trello" target="_blank" rel="noopener noreferrer" target="_blank">Trello Board</a>
 
 
 <!-- # **How to install**
