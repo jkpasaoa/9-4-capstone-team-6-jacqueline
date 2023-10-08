@@ -62,7 +62,7 @@ export default function Home() {
             data-te-carousel-item
             data-te-carousel-active
           >
-            <video className="w-full" controls autoPlay loop muted>
+            <video className="w-full" controls autoPlay loop volume={0.5}>
               <source src={video1} type="video/mp4" />
             </video>
             <div className="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block">
@@ -75,7 +75,7 @@ export default function Home() {
             data-te-carousel-fade
             data-te-carousel-item
           >
-            <video className="w-full" autoPlay loop muted>
+            <video className="w-full" autoPlay loop volume={0.5}>
               <source src={video2} type="video/mp4" />
             </video>
             <div className="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-white md:block">
