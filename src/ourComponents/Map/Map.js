@@ -21,7 +21,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
   // })
 
   const [directionsResponse, setDirectionsResponse] = useState(null)
-  const [tourButton, setTourButton] = useState('START')
+  // const [tourButton, setTourButton] = useState('START')
   // const [currentPoi, setCurrentPoi] = useState({})
   // const [nextPoi, setNextPoi] = useState({})
   // const [distance, setDistance] = useState('')
@@ -29,7 +29,7 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
   // const [map, setMap] = useState(/** @type google.maps.Map */(null))
   // const [lat, setLat] = useState(0)
   // const [long, setLong] = useState(0)
-  const [steps, setSteps] = useState([])
+  // const [steps, setSteps] = useState([])
   // const [centerLat, setCenterLat] = useState(0)
   // const [centerLong, setCenterLong] = useState(0)
 
@@ -108,47 +108,47 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
     // setDuration(results.routes[0].legs[0].duration.text)
   }
 
-  const calculateNewRoute = async (start, next) => {
-    const results = await directionsService.route({
-      origin: start,
-      destination: next,
-      // eslint-disable-next-line no-undef
-      travelMode: google.maps.TravelMode.WALKING
-    })
-    setSteps(results.routes[0].legs[0].steps)
-    setDirectionsResponse(results)
-  }
+  // const calculateNewRoute = async (start, next) => {
+  //   const results = await directionsService.route({
+  //     origin: start,
+  //     destination: next,
+  //     // eslint-disable-next-line no-undef
+  //     travelMode: google.maps.TravelMode.WALKING
+  //   })
+  //   setSteps(results.routes[0].legs[0].steps)
+  //   setDirectionsResponse(results)
+  // }
 
-  let currentElement, nextElement
-  let currentLoc = {}
-  let nextLoc = {}
+  // let currentElement, nextElement
+  // let currentLoc = {}
+  // let nextLoc = {}
 
-  const startTour = () => {
-    // console.log(pointsOfInterest, "the points of interest")
-    const length = pointsOfInterest.length
-    for (let i = 0; i < pointsOfInterest.length; i++) {
-      currentElement = pointsOfInterest[i];
-      nextElement = pointsOfInterest[(i + 1) % length];
-      pointsOfInterest[i] = nextElement
-      nextElement = pointsOfInterest[(i + 1)]
-      setTourButton('NEXT')
-      // console.log("current", currentElement, "next:", nextElement)
-      // eslint-disable-next-line no-loop-func
-      const current = allPointsOfInterest.find((el) => el.poi_name === currentElement)
-      // eslint-disable-next-line no-loop-func
-      const next = allPointsOfInterest.find((el) => el.poi_name === nextElement)
-      // console.log(current, next, "this da routeeee")
-      currentLoc = { lat: Number(current.latitude), lng: Number(current.longitude) }
-      nextLoc = { lat: Number(next.latitude), lng: Number(next.longitude) }
+  // const startTour = () => {
+  //   // console.log(pointsOfInterest, "the points of interest")
+  //   const length = pointsOfInterest.length
+  //   for (let i = 0; i < pointsOfInterest.length; i++) {
+  //     currentElement = pointsOfInterest[i];
+  //     nextElement = pointsOfInterest[(i + 1) % length];
+  //     pointsOfInterest[i] = nextElement
+  //     nextElement = pointsOfInterest[(i + 1)]
+  //     setTourButton('NEXT')
+  //     // console.log("current", currentElement, "next:", nextElement)
+  //     // eslint-disable-next-line no-loop-func
+  //     const current = allPointsOfInterest.find((el) => el.poi_name === currentElement)
+  //     // eslint-disable-next-line no-loop-func
+  //     const next = allPointsOfInterest.find((el) => el.poi_name === nextElement)
+  //     // console.log(current, next, "this da routeeee")
+  //     currentLoc = { lat: Number(current.latitude), lng: Number(current.longitude) }
+  //     nextLoc = { lat: Number(next.latitude), lng: Number(next.longitude) }
 
-      calculateNewRoute(currentLoc, nextLoc)
-      console.log(currentLoc, nextLoc, "the states inside")
-      if (currentElement === pointsOfInterest[pointsOfInterest.length - 1]) {
-        break
-      }
-    }
-    console.log(currentLoc, nextLoc, "the states outside")
-  }
+  //     calculateNewRoute(currentLoc, nextLoc)
+  //     console.log(currentLoc, nextLoc, "the states inside")
+  //     if (currentElement === pointsOfInterest[pointsOfInterest.length - 1]) {
+  //       break
+  //     }
+  //   }
+  //   console.log(currentLoc, nextLoc, "the states outside")
+  // }
 
   useEffect(() => {
     calculateRoute()
@@ -182,23 +182,23 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
 
   // console.log(activeMarker)
 
-  const parseDirections = (html) => {
-    let cleanedHtml = html.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
+  // const parseDirections = (html) => {
+  //   let cleanedHtml = html.replace(/<div.*?>(.*?)<\/div>/g, '$1\n');
 
-    cleanedHtml = cleanedHtml.replace(/style=".*?"/g, '');
+  //   cleanedHtml = cleanedHtml.replace(/style=".*?"/g, '');
 
-    cleanedHtml = cleanedHtml.replace(/<wbr\/?>/g, ' ');
+  //   cleanedHtml = cleanedHtml.replace(/<wbr\/?>/g, ' ');
 
-    cleanedHtml = cleanedHtml.replace(/<b>(.*?)<\/b>/g, '$1');
+  //   cleanedHtml = cleanedHtml.replace(/<b>(.*?)<\/b>/g, '$1');
 
-    cleanedHtml = cleanedHtml.replace(/<\/?.*?>/g, '');
+  //   cleanedHtml = cleanedHtml.replace(/<\/?.*?>/g, '');
 
-    cleanedHtml = cleanedHtml.replace(/&nbsp;/g, ' ');
+  //   cleanedHtml = cleanedHtml.replace(/&nbsp;/g, ' ');
 
-    cleanedHtml = cleanedHtml.trim();
+  //   cleanedHtml = cleanedHtml.trim();
 
-    return cleanedHtml;
-  }
+  //   return cleanedHtml;
+  // }
 
   return (
     <div position='center' className='h-[300px] w-[600px]'>
@@ -234,20 +234,20 @@ export default function Map({ pointsOfInterest, allPointsOfInterest, activeMarke
           map.setZoom(10)
         }}
       /> */}
-        <button className='relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800' onClick={startTour}><span className='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>{tourButton}</span></button>
-        <button className='relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800'><Link className='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0' to={'/endtour'}>END TOUR</Link></button>
+        {/* <button className='relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800' onClick={startTour}><span className='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>{tourButton}</span></button> */}
+        <button className='mt-2 relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800'><Link className='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0' to={'/endtour'}>END TOUR</Link></button>
         {/* <button onClick={calculateRoute}> <span>  </span>SHOW ROUTE</button> */}
       </p>
       {/* <p><strong>Distance:</strong> {distance} <br /> <strong>Duration:</strong> {duration}</p> */}
       <br />
       <div>
-        <ul>
+        {/* <ul>
           {
             steps.map((step, index) => {
               return <li key={index}>{parseDirections(step.instructions)}</li>
             })
           }
-        </ul>
+        </ul> */}
       </div>
     </div>
   )
