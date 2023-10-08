@@ -8,7 +8,6 @@ function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const loc = useLocation()
-  console.log(loc, "loc")
 
   const toggleMenu = () => {
     setMenuOpen(menuOpen => !menuOpen);
@@ -18,7 +17,6 @@ function NavBar() {
     <div>
       <nav
         className={loc.pathname !== '/' ? 'bg-[#fffffff6] fixed w-full z-20 top-0  left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0 px-3 h-[15%] shadow-2xl' : 'bg-white bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0'}>
-        {/* "bg-[#dbd4db] bg-opacity-20 > */}
         <div className="flex flex-wrap items-center justify-between mx-auto p-2 text-sky-950">
           <span className="logo ">
             <a href="/" className="flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
@@ -70,12 +68,6 @@ function NavBar() {
                 >
                   <strong>Create New Tour</strong>
                 </Link>
-                {/* <Link
-                  to="/createnewtour"
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
-                >
-                  <strong>Create New Tour</strong>
-                </Link> */}
               </li>
             </ul>
             <button
@@ -93,21 +85,6 @@ function NavBar() {
                   toggled={menuOpen} //automatic open and close once clicked to another page
                 />
               </div>
-              {/* <svg
-                  className="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 17 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M1 1h15M1 7h15M1 13h15"
-                  />
-                </svg> */}
             </button>
           </div>
           {/* Mobile Menu */}
