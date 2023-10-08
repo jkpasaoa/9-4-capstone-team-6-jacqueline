@@ -7,7 +7,7 @@
 
 <!-- <a href="https://scribehow.com" target="_blank">Click here for details on how to use the App !</a> -->
 
-<a href="https://citywhisperer.netlify.app/" target="_blank">Click here - City Whisperer</a>
+<a href="https://citywhisperer.netlify.app/" target="_blank">Our Deployed Link for City Whisperer</a>
 
 <!-- <a href="" target="_blank">Too busy to read? Click here and my assistant will describe the App to you. </a> -->
 
@@ -51,7 +51,6 @@ Join us in experiencing the thrill of urban exploration with City Whisperer. Emb
 
 <!-- /Users/markrobertson/Desktop/ProductsAppFolder/frontend/src/assets/NewProductPage.png -->
 
-<br></br>
 ## Developer Team
 
 | Developers Names  |
@@ -64,8 +63,6 @@ Join us in experiencing the thrill of urban exploration with City Whisperer. Emb
 <!--
 <a href="https://" target="_blank">GitHub</a>
 <a href="https://www.linkedin.com/" target="_blank">LinkedIn</a> -->
-
-<br></br>
 
 <a href="https://trello.com/b/qayrci3H/9-4capstoneteam6trello" target="_blank" rel="noopener noreferrer" target="_blank">Trello Board</a>
 
