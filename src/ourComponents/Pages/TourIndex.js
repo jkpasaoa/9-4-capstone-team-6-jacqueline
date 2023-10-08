@@ -13,8 +13,6 @@ export default function TourIndex() {
         setExpandedIndex(index === expandedIndex ? -1 : index)
     }
 
-    //for testing purposes
-
     const cardVariants = {
         expanded: {
             width: "900px"
@@ -30,10 +28,6 @@ export default function TourIndex() {
             .catch((e) => console.warn(e))
     }, [])
 
-    // useEffect(() => {
-    //     console.log(tours)
-    // }, [tours])
-
     useEffect(() => {
         if (tours.length > 0) {
             console.log(tours);
@@ -44,14 +38,9 @@ export default function TourIndex() {
         <div>
             <br></br>
             <br></br>
-            <section className='pt-[150px] pb-[100px] gradient-day-to-night'
-            // 'bg-gradient-to-r from-beige-800 to-white-800'>
-            // style={{ paddingTop: '25vw' }}
-            >
+            <section className='pt-[150px] pb-[100px] gradient-day-to-night'>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
                     <h1 className='text-3xl font-extrabold luxury-font drop-shadow-lg'>
-                        {/* text-sky-950> */}
-                        {/* TOURS */}
                         Discover the World's Wonders
                     </h1>
                     <br />
