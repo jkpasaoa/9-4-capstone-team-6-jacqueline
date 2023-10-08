@@ -75,7 +75,7 @@ function About() {
   return (
     <div className="home-content flex justify-center items-center about-background mt-16 lg:mt-24">
       <div className="container mx-auto px-4">
-        <div className="about">
+        <div className="about p-4">
           <div className="app-summary-container bg-cyan-200 rounded-lg">
             <img src={marker} alt="markerPin" className="markerPin" />&nbsp;&nbsp;&nbsp;
             <strong className="luxury-font font-size text-sky-950 drop-shadow-lg">City Whisperer</strong>
