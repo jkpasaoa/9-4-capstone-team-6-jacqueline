@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+
+.luxury-font {
+  font-family: 'Dancing Script', cursive;
+  font-size: 45px;
+  /* color: #333; */
+}
+
+.dancing-script {
+  font-family: 'Dancing Script', cursive;
+  font-size: 55px;
+}
+
+.about-background {
+  background-image: url('../../../assets/aboutPhotos/about-page.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+.markerPin {
+  width: 2%;
+}
+
+.p {
+  padding-top: 0px;
+  padding-left: 10px;
+}
+
+
+.home-content {
+  padding-top: 175px;
+  background-color: rgba(53, 164, 233, 0.9)
+}
+
+.app-summary-container {
+  /* margin: 0px 150px 25px 150px; */
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.medium-photo {
+  width: 200px;
+  height: auto;
+}
+
+.centered-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.bio-paragraph {
+  margin: 0px 45px 10px 80px;
+}
+
+.about {
+  /* margin: 100px; */
+  text-align: left;
+}
+
+.about h1 {
+  font-weight: bold;
+}
+
+.team {
+  margin-top: 40px;
+}
+
+.team h1 {
+  font-weight: bold;
+}
+
+.team-member-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 750px; /* Adjust the maximum width for desktop */
+  margin: 0 20px 45px; /* Add marg50in for both sides to increase spacing */
+  background-color: rgba(255, 255, 255, 0.9)
+}
+
+.team-member-card h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.social-links a {
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+  .app-summary-container {
+    margin: 50px 50px 15px 50px;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-summary-container {
+    margin: 20px 20px 10px 20px;
+  }
+
+  .team {
+    margin: 0;
+  }
+}
+
+.team-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 150px 25px 150px;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.9);
+  /* height: 100vh; */
+}

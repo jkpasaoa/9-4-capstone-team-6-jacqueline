@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+
+
+.luxury-font {
+  font-family: 'Dancing Script', cursive;
+  font-size: 55px;
+  color: #333;
+  font-weight: bold;
+}
+
+.dancing-script {
+  font-family: 'Dancing Script', cursive;
+  font-size: 55px;
+}
+
+.full-background-color {
+  background-color: rgb(248 150 28);
+}
+
+.background-image {
+  background-image: url('../../../assets/createNewTourPhotos/solo_traveler.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: fixed;
+  padding-top: 80px;
+  padding-bottom: 0px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.custom-text {
+  font-size: 25px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.generator-directions {
+  margin: 0px 150px 25px 150px;
+}
+
+.container {
+}
+
+.fields-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  padding: 15px;
+  left: 200px;
+  top: 0px;
+  background-color: rgba(255, 255, 255, 0.754);
+  width: 385px;
+}
+
+@media screen and (max-width: 576px) {
+
+  .fields-container {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  .input {
+    /* width: 100vw; */
+  }
+
+  .field {
+    box-sizing: border-box;
+    padding: 0;
+    width: 100vw;
+    height: auto;
+  }
+}
+
+.input {
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.field {
+  box-sizing: border-box;
+  width: 350px;
+  height: 55px;
+}

@@ -1,0 +1,2 @@
+/* /index.html 200
+/api/* http://maps.googleapis.com/maps/api/:splat 200!
