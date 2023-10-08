@@ -15,7 +15,7 @@ export default function Modal({ toggleModal, img, name, commentary }) {
             speech.text = commentary
             speech.rate = 0.85
             synth.speak(speech)
-        } else if(synth.paused){
+        } else if (synth.paused) {
             // synth.paused ? synth.resume() : synth.pause();
             synth.resume()
 
@@ -23,7 +23,7 @@ export default function Modal({ toggleModal, img, name, commentary }) {
     }
 
     let speechPause = () => {
-         synth.pause()
+        synth.pause()
     }
 
     let speechStop = () => {
@@ -34,7 +34,7 @@ export default function Modal({ toggleModal, img, name, commentary }) {
         <div className="modal-content content-center">
             <h1 className="text-4xl font-bold dark:text-white text-sky-950">{name}</h1>
             <img src={img} alt='img' className='w-[400px] ml-[13%] rounded-lg' />
-            <p className="ml-3 inline-flex text-sky-800"><Link onClick={() => textToSpeech()} className="inline-flex text-sky-800"><HiPlay className="mt-1" /> PLAY </Link> &nbsp; <Link className="inline-flex text-sky-800" onClick={() => speechPause()}> <HiMiniPause className="mt-1" />PAUSE</Link><Link onClick={() => speechStop()} className="inline-flex text-sky-800"><HiStop className="mt-1" /> STOP</Link>&nbsp;</p>
+            <p className="ml-3 inline-flex text-sky-800"><Link onClick={() => textToSpeech()} className="inline-flex text-sky-800"><HiPlay className="mt-1" /> PLAY </Link> &nbsp; &nbsp; &nbsp; <Link className="inline-flex text-sky-800" onClick={() => speechPause()}> <HiMiniPause className="mt-1" />PAUSE</Link> &nbsp; &nbsp; &nbsp; <Link onClick={() => speechStop()} className="inline-flex text-sky-800"><HiStop className="mt-1" /> STOP</Link>&nbsp;</p>
             <div className='max-h-[170px] overflow-y-auto'>
                 <p>{commentary}</p>
             </div>
