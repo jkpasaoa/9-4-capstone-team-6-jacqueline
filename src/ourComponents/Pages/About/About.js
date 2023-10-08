@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useAnimation, useScroll } from 'framer-motion';
-import JosephPhoto from '../../../assets/aboutPhotos/Joseph.jpg';
+import JosephPhoto from '../../../assets/aboutPhotos/JosephR.png';
 import RaydelysPhoto from '../../../assets/aboutPhotos/Raydelys.jpg';
-import JacquelinePhoto from '../../../assets/aboutPhotos/Jacqueline.jpg';
+import JacquelinePhoto from '../../../assets/aboutPhotos/JacquelineP.png';
 import MarkPhoto from '../../../assets/aboutPhotos/Mark.jpg';
 import githubJPEG from '../../../assets/aboutPhotos/github.jpeg';
 import linkedinPNG from '../../../assets/aboutPhotos/linkedin.png';
@@ -123,6 +123,7 @@ function About() {
                   <motion.img
                     className="rounded-lg medium-photo"
                     src={member.photo}
+                    style={{ height: '200px', width: '200px' }}
                     alt={member.name}
                     initial={{ opacity: 0, y: 100 }} // Initial animation state
                     animate={scrollControls} // the animation controls
