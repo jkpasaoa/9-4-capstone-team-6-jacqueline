@@ -26,19 +26,19 @@ The front-end of our application is built on React, offering a seamless and intu
 <img src="./public/homescreen.png" alt="Screenshot a" width="68%" title="The Home Screen">
 ### The Home Screen
 
-| ![image](./frontend/src/assets/HomeScreen.png "The Home Screen") |
+| ![image](./src/assets/HomeScreen.png "The Home Screen") |
 |-|
 
 
 ### Tours Index Page
 
-| ![image](./frontend/src/assets/IndexPage.png "Index Page") |
+| ![image](./src/assets/IndexPage.png "Index Page") |
 |-|
 
 
 ### New Tour Page
 
-| ![image](./frontend/src/assets/NewTourPage.png "Create New Tour Page") |
+| ![image](./src/assets/NewTourPage.png "Create New Tour Page") |
 |-|
 
 
@@ -88,7 +88,7 @@ Before you begin, please ensure that you have the following software installed o
 5.  Start the front-end development server: npm start
 This will start the front-end server at http://localhost:3000.
 6.  Access the app in your web browser: Open your preferred web browser and visit http://localhost:3000 to see the City Whisperer App in action.
-7. Now you will need to install the backend.  
+7. Now you will need to install the backend.  <a href="https://github.com/MarkRobertson67/9-4-capstone-team-6-backend" target="_blank" rel="noopener noreferrer" target="_blank">Team 6 - City Whisperer - Backend Repo</a> 
 
 
 That's it! You should now have the City Whisperer App installed and running on your local machine. Enjoy exploring the world of AI self guided walking generated tours
