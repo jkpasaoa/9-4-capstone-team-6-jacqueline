@@ -33,23 +33,23 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
         const prompt = `Provide a 25-word commentary for ${poiName} in ${cityName}, ${countryName}.`;
 
         const requestBody = {
-      model: 'gpt-3.5-turbo',
-      messages: [
-        {
-          role: 'user',
-          content: prompt,
-        },
-        {
-          role: 'user',
-          content: 'Provide 25-word descriptions for each point of interest, as if you are a tour guide addressing your tour group. Use this as an example of the tone of voice for the response I want to get.',
-        },
-        {
-          role: 'user',
-          content: 'Double check that you ONLY provide JSON format for your response.',
-        },
-        {
-          role: 'assistant',
-          content: `As we stand here, gazing up at the towering steel arches of the Sydney Harbour Bridge, let's journey back in time to the early 20th century. Construction of this engineering marvel began in 1924 during the Great Depression, providing much-needed jobs to thousands of workers. It was a time when the idea of spanning the magnificent Sydney Harbour with a bridge seemed audacious, but determination prevailed.
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'user',
+              content: prompt,
+            },
+            {
+              role: 'user',
+              content: 'Provide 25-word descriptions for each point of interest, as if you are a tour guide addressing your tour group. Use this as an example of the tone of voice for the response I want to get.',
+            },
+            {
+              role: 'user',
+              content: 'Double check that you ONLY provide JSON format for your response.',
+            },
+            {
+              role: 'assistant',
+              content: `As we stand here, gazing up at the towering steel arches of the Sydney Harbour Bridge, let's journey back in time to the early 20th century. Construction of this engineering marvel began in 1924 during the Great Depression, providing much-needed jobs to thousands of workers. It was a time when the idea of spanning the magnificent Sydney Harbour with a bridge seemed audacious, but determination prevailed.
     
           The Sydney Harbour Bridge, often affectionately known as the "Coathanger" due to its distinctive shape, officially opened in 1932. It was an event of immense pride and celebration for the people of Sydney, marking the culmination of years of hard work and ingenuity. Today, it stands as a symbol of resilience and achievement.
     
@@ -64,77 +64,77 @@ const generatePOICommentary = async (poiName, cityName, countryName) => {
           I want to thank each of you for joining me on this journey across the Sydney Harbour Bridge today. Whether you're a first-time visitor or a seasoned traveler, this bridge offers an experience that leaves an indelible mark on your memories.
     
           So, as we continue to explore the vibrant city of Sydney, carry with you the awe-inspiring views and the sense of connection to this remarkable bridge. May your time in Sydney be filled with wonder and discovery.`
-        },
-        {
-          role: 'user',
-          content: 'Do not use the phrase \'Apologies for the confusion earlier—I will provide... or Certainly! Here is a 50-word commentary...\'',
-        },
-        {
-          role: 'user',
-          content: 'Do not return anything other than the commentary',
-        },
+            },
+            {
+              role: 'user',
+              content: 'Do not use the phrase \'Apologies for the confusion earlier—I will provide... or Certainly! Here is a 50-word commentary...\'',
+            },
+            {
+              role: 'user',
+              content: 'Do not return anything other than the commentary',
+            },
 
-      ],
-      max_tokens: 2000,
-    };
+          ],
+          max_tokens: 2000,
+        };
 
-    try {
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${config.openaiApiKey}`,
-        },
+        try {
+          const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${config.openaiApiKey}`,
+            },
+          });
+
+          const commentary = response.data.choices[0]?.message.content;
+
+          console.log('Generated Commentary:', commentary);
+
+          if (commentary) {
+            resolve(commentary); // Resolve the promise with commentary if successful
+          } else {
+            reject('Empty commentary'); // Reject the promise with an error message if commentary is empty
+          }
+        } catch (error) {
+          reject(error); // Reject the promise with the error if there's an issue with the request
+        }
       });
 
-      const commentary = response.data.choices[0]?.message.content;
+      // Use Promise.race to set a timeout of 15 seconds
+      const commentaryPromiseWithTimeout = Promise.race([
+        commentaryPromise,
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            reject('Timeout'); // Reject the promise with a timeout error after 15 seconds
+          }, 15000); // 15 seconds timeout
+        }),
+      ]);
 
-      console.log('Generated Commentary:', commentary);
+      const commentary = await commentaryPromiseWithTimeout;
 
-      if (commentary) {
-        resolve(commentary); // Resolve the promise with commentary if successful
-      } else {
-        reject('Empty commentary'); // Reject the promise with an error message if commentary is empty
-      }
+      return commentary; // Return commentary if successful
     } catch (error) {
-      reject(error); // Reject the promise with the error if there's an issue with the request
+      console.error(`Error generating commentary for ${poiName}:`, error);
     }
-  });
 
-  // Use Promise.race to set a timeout of 15 seconds
-  const commentaryPromiseWithTimeout = Promise.race([
-    commentaryPromise,
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        reject('Timeout'); // Reject the promise with a timeout error after 15 seconds
-      }, 15000); // 15 seconds timeout
-    }),
-  ]);
+    retries++;
+    console.log(`Attempt ${retryCount + 1}: Retrying...`);
+    return generateCommentary(retryCount + 1); // Retry by calling the function recursively
+  };
 
-  const commentary = await commentaryPromiseWithTimeout;
+  while (retries < 5) { // Set the maximum number of retries to 5
+    console.log(`Attempt ${retries + 1}: Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
+    const commentary = await generateCommentary(retries);
 
-  return commentary; // Return commentary if successful
-} catch (error) {
-  console.error(`Error generating commentary for ${poiName}:`, error);
-}
+    if (commentary) {
+      return commentary; // Return commentary if successful
+    }
 
-retries++;
-console.log(`Attempt ${retryCount + 1}: Retrying...`);
-return generateCommentary(retryCount + 1); // Retry by calling the function recursively
-};
+    retries++;
+  }
 
-while (retries < 5) { // Set the maximum number of retries to 5
-console.log(`Attempt ${retries + 1}: Generating commentary for "${poiName}" in ${cityName}, ${countryName}...`);
-const commentary = await generateCommentary(retries);
-
-if (commentary) {
-  return commentary; // Return commentary if successful
-}
-
-retries++;
-}
-
-console.error(`Failed to generate commentary for ${poiName} after 5 retries.`);
-return ''; // Return an empty string if retries are exhausted
+  console.error(`Failed to generate commentary for ${poiName} after 5 retries.`);
+  return ''; // Return an empty string if retries are exhausted
 };
 
 
@@ -279,7 +279,7 @@ export default function CreateNewTour() {
   const parsePointsOfInterestAndCoordinates = (generatedTour) => {
     const bulletPattern = /^(\d+)\.\s(.+?)\s\((-?\d+\.\d+)°\s([NS]),\s(-?\d+\.\d+)°\s([EW])\)/gm;
     const matches = [];
-    
+
     console.log(generatedTour, bulletPattern)
     let match;
 
@@ -307,153 +307,153 @@ export default function CreateNewTour() {
   };
 
 
-// Function to generate a walking tour with retry and timeout logic
-const generateWalkingTour = async () => {
-  let retries = 1;
+  // Function to generate a walking tour with retry and timeout logic
+  const generateWalkingTour = async () => {
+    let retries = 1;
 
-  // Define a function for generating the tour
-  const generateTour = async () => {
-    try {
-      setIsLoading(true); // Set loading to true
+    // Define a function for generating the tour
+    const generateTour = async () => {
+      try {
+        setIsLoading(true); // Set loading to true
 
-      // Log that the function is being called
-      console.log('generateWalkingTour function called');
+        // Log that the function is being called
+        console.log('generateWalkingTour function called');
 
-      // Sanitize the input values
-      const sanitizedCity = sanitizeInput(tour.city);
-      const sanitizedRegion = sanitizeInput(tour.region);
-      const sanitizedState = sanitizeInput(tour.state);
-      const sanitizedCountry = sanitizeInput(tour.country);
-      const sanitizedDuration = sanitizeInput(tour.duration);
-      const sanitizedDifficulty = sanitizeInput(tour.difficulty);
-      const sanitizedTheme = sanitizeInput(tour.theme);
+        // Sanitize the input values
+        const sanitizedCity = sanitizeInput(tour.city);
+        const sanitizedRegion = sanitizeInput(tour.region);
+        const sanitizedState = sanitizeInput(tour.state);
+        const sanitizedCountry = sanitizeInput(tour.country);
+        const sanitizedDuration = sanitizeInput(tour.duration);
+        const sanitizedDifficulty = sanitizeInput(tour.difficulty);
+        const sanitizedTheme = sanitizeInput(tour.theme);
 
-      // Determine the maximum allowed points of interest based on tour duration
-      let maxPointsOfInterest;
-      if (sanitizedDuration === '2 hours') {
-        maxPointsOfInterest = 7;
-      } else if (sanitizedDuration === 'Half-day') {
-        maxPointsOfInterest = 15;
-      } else if (sanitizedDuration === 'Full-day') {
-        maxPointsOfInterest = 25;
-      } else {
-        // Handle other duration options or invalid inputs, somehow.
-        console.error('Invalid duration or duration not specified.');
-        setIsLoading(false);
-        return;
+        // Determine the maximum allowed points of interest based on tour duration
+        let maxPointsOfInterest;
+        if (sanitizedDuration === '2 hours') {
+          maxPointsOfInterest = 7;
+        } else if (sanitizedDuration === 'Half-day') {
+          maxPointsOfInterest = 15;
+        } else if (sanitizedDuration === 'Full-day') {
+          maxPointsOfInterest = 25;
+        } else {
+          // Handle other duration options or invalid inputs, somehow.
+          console.error('Invalid duration or duration not specified.');
+          setIsLoading(false);
+          return;
+        }
+
+        console.log(`Maximum allowed points of interest for ${sanitizedDuration}: ${maxPointsOfInterest}`);
+
+        // Construct the prompt dynamically with the maximum allowed points of interest
+        const prompt = `Walking Tour in ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nMaximum Points of Interest: ${maxPointsOfInterest}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme}`;
+
+        console.log(sanitizedCountry)
+        console.log(prompt)
+
+        const requestBody = {
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'system',
+              content: 'Create a self-guided walking tour that starts at the first point of interest, continues to each point of interest, and returns to the first point of interest. Provide a circular tour route and list the points of interest on that route with their coordinates. Ensure that the last point in the list connects back to the first point to complete the tour loop. Do not include any additional information beyond the points of interest and their coordinates.',
+            },
+            {
+              role: 'user',
+              content: `Provide a clear and efficient route and ensure that the tour route is truly circular so that the first point of interest is also the last point of interest. Use only N, S, E, and W for directions. Do not use negative numbers. Minimize unnecessary backtracking or overlaps between adjacent locations`,
+            },
+            {
+              role: 'user',
+              content: `Tour Location: ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nMaximum Points of Interest: ${maxPointsOfInterest}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme}`,
+            },
+            {
+              role: 'user',
+              content: `Use the following format for the response, where each point of interest is listed with its coordinates (latitude and longitude):`,
+            },
+            {
+              role: 'user',
+              content: `1. Plaça de Catalunya (41.3879° N, 2.1699° E)\n2. La Rambla (41.3799° N, 2.1732° E)\n3. Palau Güell (41.3752° N, 2.1749° E)\n4. Plaça Reial (41.3755° N, 2.1759° E)\n5. Barcelona Cathedral (41.3834° N, 2.1765° E)\n6. (Continue listing all points of interest)\n7. Plaça de Catalunya (41.3879° N, 2.1699° E) `,
+            },
+            {
+              role: 'user',
+              content: `If a point of interest has no coordinates, use the following placeholder: "coordinates": { "latitude": 50.5000, "longitude": -50.5000 }`,
+            },
+            {
+              role: 'user',
+              content: 'Limit the response to no more than 25 points of interest and coordinates.',
+            },
+            {
+              role: 'user',
+              content: `Return no more than the maximum allowed points of interest: ${maxPointsOfInterest}.`,
+            },
+            {
+              role: 'user',
+              content: `Tour must start and end at the same points of interest.`,
+            },
+          ],
+
+          // Add a max_tokens parameter to limit the response length
+          // max_tokens: 500, // to limit photos temp.
+        };
+
+
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${config.openaiApiKey}`,
+          },
+        });
+
+        const generatedTour = response.data.choices[0]?.message.content;
+
+        console.log('Generated Tour: ', generatedTour)
+        console.log('Response.data: ', response.data)
+        console.log('response.data.choices[0]?.message.content:', response.data.choices[0]?.message.content)
+
+        // Parse points of interest and extract coordinates from the generated tour content
+        const pointsOfInterestWithCoordinates = parsePointsOfInterestAndCoordinates(generatedTour);
+
+        // Separate the points of interest and coordinates into two arrays
+        const pointsOfInterest = pointsOfInterestWithCoordinates.map((poi) => poi.poi);
+        const coordinates = pointsOfInterestWithCoordinates.map((poi) => poi.coordinates);
+
+        // Sanitize each point of interest
+        const sanitizedPointsOfInterest = pointsOfInterest.map(sanitizeInput);
+
+        console.log('Points of Interest: ', sanitizedPointsOfInterest);
+        console.log('Coordinates: ', coordinates);
+
+        return { generatedTour, sanitizedPointsOfInterest, coordinates };
+      } catch (error) {
+        console.error('Error:', error);
+        setIsLoading(false); // Set loading to false in case of an error
+        return null;
+      }
+    };
+
+    let tourData = null;
+
+    while (retries < 6) { // Set the maximum number of retries to 5
+      console.log(`Attempt ${retries}: Generating tour...`);
+      tourData = await generateTour();
+
+      // If the tour is generated successfully and sanitizedPointsOfInterest is not empty, break the loop
+      if (tourData && tourData.sanitizedPointsOfInterest.length > 0) {
+        setIsLoading(false); // Set loading to false if the tour data is successfully generated
+        break;
       }
 
-      console.log(`Maximum allowed points of interest for ${sanitizedDuration}: ${maxPointsOfInterest}`);
-
-      // Construct the prompt dynamically with the maximum allowed points of interest
-      const prompt = `Walking Tour in ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nMaximum Points of Interest: ${maxPointsOfInterest}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme}`;
-
-      console.log(sanitizedCountry)
-      console.log(prompt)
-
-      const requestBody = {
-        model: 'gpt-3.5-turbo',
-        messages: [
-          {
-            role: 'system',
-            content: 'Create a self-guided walking tour that starts at the first point of interest, continues to each point of interest, and returns to the first point of interest. Provide a circular tour route and list the points of interest on that route with their coordinates. Ensure that the last point in the list connects back to the first point to complete the tour loop. Do not include any additional information beyond the points of interest and their coordinates.',
-          },
-          {
-            role: 'user',
-            content: `Provide a clear and efficient route and ensure that the tour route is truly circular so that the first point of interest is also the last point of interest. Use only N, S, E, and W for directions. Do not use negative numbers. Minimize unnecessary backtracking or overlaps between adjacent locations`,
-          },
-          {
-            role: 'user',
-            content: `Tour Location: ${sanitizedCity}, ${sanitizedRegion}, ${sanitizedState}, ${sanitizedCountry}\nTour Duration: ${sanitizedDuration}\nMaximum Points of Interest: ${maxPointsOfInterest}\nDifficulty Level: ${sanitizedDifficulty}\nTour Theme: ${sanitizedTheme}`,
-          },
-          {
-            role: 'user',
-            content: `Use the following format for the response, where each point of interest is listed with its coordinates (latitude and longitude):`,
-          },
-          {
-            role: 'user',
-            content: `1. Plaça de Catalunya (41.3879° N, 2.1699° E)\n2. La Rambla (41.3799° N, 2.1732° E)\n3. Palau Güell (41.3752° N, 2.1749° E)\n4. Plaça Reial (41.3755° N, 2.1759° E)\n5. Barcelona Cathedral (41.3834° N, 2.1765° E)\n6. (Continue listing all points of interest)\n7. Plaça de Catalunya (41.3879° N, 2.1699° E) `,
-          },
-          {
-            role: 'user',
-            content: `If a point of interest has no coordinates, use the following placeholder: "coordinates": { "latitude": 50.5000, "longitude": -50.5000 }`,
-          },
-          {
-            role: 'user',
-            content: 'Limit the response to no more than 25 points of interest and coordinates.',
-          },
-          {
-            role: 'user',
-            content: `Return no more than the maximum allowed points of interest: ${maxPointsOfInterest}.`,
-          },
-          {
-            role: 'user',
-            content: `Tour must start and end at the same points of interest.`,
-          },
-        ],
-
-        // Add a max_tokens parameter to limit the response length
-        // max_tokens: 500, // to limit photos temp.
-      };
-
-
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${config.openaiApiKey}`,
-        },
-      });
-
-      const generatedTour = response.data.choices[0]?.message.content;
-
-      console.log('Generated Tour: ', generatedTour)
-      console.log('Response.data: ', response.data)
-      console.log('response.data.choices[0]?.message.content:', response.data.choices[0]?.message.content)
-
-      // Parse points of interest and extract coordinates from the generated tour content
-      const pointsOfInterestWithCoordinates = parsePointsOfInterestAndCoordinates(generatedTour);
-
-      // Separate the points of interest and coordinates into two arrays
-      const pointsOfInterest = pointsOfInterestWithCoordinates.map((poi) => poi.poi);
-      const coordinates = pointsOfInterestWithCoordinates.map((poi) => poi.coordinates);
-
-      // Sanitize each point of interest
-      const sanitizedPointsOfInterest = pointsOfInterest.map(sanitizeInput);
-
-      console.log('Points of Interest: ', sanitizedPointsOfInterest);
-      console.log('Coordinates: ', coordinates);
-
-      return { generatedTour, sanitizedPointsOfInterest, coordinates };
-    } catch (error) {
-      console.error('Error:', error);
-      setIsLoading(false); // Set loading to false in case of an error
-      return null;
+      retries++;
     }
+
+    if (!tourData || tourData.sanitizedPointsOfInterest.length === 0) {
+      console.error(`Failed to generate tour after 5 retries.`);
+      setIsLoading(false); // Set loading to false if retries are exhausted
+      return null; // Return null if retries are exhausted or no points of interest were generated
+    }
+
+    return tourData;
   };
-
-  let tourData = null;
-
-  while (retries < 6) { // Set the maximum number of retries to 5
-    console.log(`Attempt ${retries}: Generating tour...`);
-    tourData = await generateTour();
-
-    // If the tour is generated successfully and sanitizedPointsOfInterest is not empty, break the loop
-    if (tourData && tourData.sanitizedPointsOfInterest.length > 0) {
-      setIsLoading(false); // Set loading to false if the tour data is successfully generated
-      break;
-    }
-
-    retries++;
-  }
-
-  if (!tourData || tourData.sanitizedPointsOfInterest.length === 0) {
-    console.error(`Failed to generate tour after 5 retries.`);
-    setIsLoading(false); // Set loading to false if retries are exhausted
-    return null; // Return null if retries are exhausted or no points of interest were generated
-  }
-
-  return tourData;
-};
 
 
 
@@ -566,16 +566,16 @@ const generateWalkingTour = async () => {
     <div className="flex flex-col items-center justify-center min-h-screen full-background-color"
       style={{ paddingTop: '200px' }}
     >
-      <div className="container flex flex-col items-center justify-center ">
+      <div className=" ">
         <h1 className="luxury-font text-3xl text-center mb-4 font-extrabold text-sky-950 drop-shadow-lg">
           Ready to Explore?
         </h1>
-        <p className='generator-directions text-lg font-semibold text-sky-950 drop-shadow-lg'>
+        <p className="generator-directions text-lg font-semibold text-sky-950 drop-shadow-lg">
 
           Explore the world and create your own adventure! Whether you're a history buff, a foodie, or an outdoor enthusiast, there's a unique journey waiting for you. Uncover hidden gems, savor local flavors, and embark on unforgettable experiences.
         </p>
         <div className="content-container background-image rounded-lg">
-          <div className="container flex flex-col items-center justify-center ">
+          <div className="flex justify-center items-center">
             <div className="fields-container rounded-lg">
               {/* City Input */}
               <div className="field mb-3">
@@ -703,7 +703,7 @@ const generateWalkingTour = async () => {
           </div>
         ) : (
           <div className="flex flex-col sm:flex-row">
-            <p>Something isn't right !</p>
+
           </div>
         )}
       </div>

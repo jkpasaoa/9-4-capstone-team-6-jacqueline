@@ -44,9 +44,10 @@ export default function TourIndex() {
         <div>
             <br></br>
             <br></br>
-            <section className='py-16 pb-[300px] gradient-day-to-night'
-                // 'bg-gradient-to-r from-beige-800 to-white-800'>
-                style={{ paddingTop: '175px' }}>
+            <section className='pt-[150px] pb-[100px] gradient-day-to-night'
+            // 'bg-gradient-to-r from-beige-800 to-white-800'>
+            // style={{ paddingTop: '25vw' }}
+            >
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
                     <h1 className='text-3xl font-extrabold luxury-font drop-shadow-lg'>
                         {/* text-sky-950> */}
