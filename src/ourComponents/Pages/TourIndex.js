@@ -17,7 +17,7 @@ export default function TourIndex() {
 
     const cardVariants = {
         expanded: {
-            width: "400px"
+            width: "800px"
         },
         collapsed: {
             width: "200px"
