@@ -390,9 +390,9 @@ export default function CreateNewTour() {
             },
           ],
 
-          // Add a max_tokens parameter to limit the response length
-          // max_tokens: 500, // to limit photos temp.
-        };
+        // Add a max_tokens parameter to limit the response length
+        // max_tokens: 500, // to limit photos temp.
+      };
 
 
         const response = await axios.post('https://api.openai.com/v1/chat/completions', requestBody, {
