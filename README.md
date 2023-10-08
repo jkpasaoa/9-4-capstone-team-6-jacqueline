@@ -23,8 +23,6 @@ The front-end of our application is built on React, offering a seamless and intu
 
 ## App Screenshots
 
-<img src="./public/homescreen.png" alt="Screenshot a" width="68%" title="The Home Screen">
-### The Home Screen
 
 | ![image](./src/assets/HomeScreen.png "The Home Screen") |
 |-|
