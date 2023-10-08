@@ -73,7 +73,7 @@ function About() {
   }, [scrollControls, scrollY]);
 
   return (
-    <div className="home-content flex justify-center items-center about-background">
+    <div className="home-content flex justify-center items-center about-background mt-16 lg:mt-24">
       <div className="container mx-auto px-4">
         <div className="about">
           <div className="app-summary-container bg-cyan-200 rounded-lg">
