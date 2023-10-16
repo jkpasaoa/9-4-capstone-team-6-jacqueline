@@ -17,12 +17,12 @@ function NavBar() {
     <div className='mb-[-65px] navBar'>
       <nav
         className={loc.pathname !== '/' ? 'bg-[#fffffff6] fixed w-full z-20 top-0  left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0 px-3 h-[12%] shadow-2xl' : 'bg-white bg-opacity-0 fixed w-full z-20 top-0 left-0 border-b-0 border-gray-200 custom-border pb-0 pt-0'}>
-        <div className="flex flex-wrap items-center justify-between mx-auto p-2 text-sky-950 ml-16 mr-16">
+        <div className="flex flex-wrap items-center justify-between  mx-auto p-2 text-sky-950 ml-16 mr-16">
           <span className="logo ">
             <a href="/" className="w-[172px] h-auto flex flex-col items-center"> {/* Use flex-col to stack items vertically */}
               <img
                 src={logo}
-                className="mt-1.5 mr-3 w-[120%] h-[120%] drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
+                className="mt-1.5 mr-3 w-[120%] h-[120%]  max-[760px]:w-[20%]  max-[760px]:h-[auto] left-[0px] drop-shadow-[2px_0px_5px_rgba(255,255,255,0.5)]"
                 alt="CityWhisperer Logo"
               />
               {/* <span className="text-center text-xs">Powered by chatGPT</span> */}
